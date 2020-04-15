@@ -7,4 +7,13 @@ public interface GameEnums
         MINING,
         MILITARY
     }
+
+    enum ResourceType
+    {
+        RED,
+        GREEN,
+        BLUE,
+        BLACK,
+        ARTIFACT
+    }
 }
