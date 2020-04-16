@@ -9,4 +9,6 @@ public interface Constants
     int MILITARY_SHIP_MAX_WEAPON_CAPACITY = 6;
     int MILITARY_SHIP_MAX_SHIELD_CAPACITY = 9;
     int MILITARY_SHIP_MAX_CARGO_LEVEL = 2;
+
+    int DRONE_MAX_HEALTH = 6;
 }
