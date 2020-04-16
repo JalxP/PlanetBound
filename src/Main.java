@@ -1,7 +1,5 @@
-package model;
-
 import controller.GameController;
-import ui.TextUI;
+import view.text.TextUI;
 
 public class Main
 {

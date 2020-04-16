@@ -2,7 +2,6 @@ package model.data;
 
 public class GameData implements GameEnums
 {
-    private ShipType shipType;
     private Ship ship;
 
     public GameData()
@@ -10,9 +9,19 @@ public class GameData implements GameEnums
         // TODO
     }
 
-    public void setShipType(ShipType shipType)
+    public void selectShipType(ShipType shipType)
     {
-        this.shipType = shipType;
         ship = new Ship(shipType);
+    }
+
+    /* Info */
+    public String getShipType()
+    {
+        return "OK";
+        // TODO need to check state before!!
+//        if (ship.getShipType() == ShipType.MILITARY)
+//            return "Military Ship";
+//        else
+//            return "Mining Ship";
     }
 }

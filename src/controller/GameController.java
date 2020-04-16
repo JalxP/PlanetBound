@@ -37,4 +37,9 @@ public class GameController implements GameEnums
         setState(state.selectShip(shipType));
     }
 
+    /* Info */
+    public String getShipType()
+    {
+        return gameData.getShipType();
+    }
 }

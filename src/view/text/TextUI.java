@@ -1,4 +1,4 @@
-package ui;
+package view.text;
 
 import controller.GameController;
 import model.data.GameEnums;

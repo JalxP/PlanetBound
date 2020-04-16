@@ -14,7 +14,7 @@ public class AwaitShipSelection extends StateAdapter
     @Override
     public IState selectShip(ShipType shipType)
     {
-        getGameData().setShipType(shipType);
+        getGameData().selectShipType(shipType);
 
         return null; // TODO next state goes here
     }
