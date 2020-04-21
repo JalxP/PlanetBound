@@ -4,11 +4,14 @@ import model.data.GameData;
 import model.states.IState;
 import model.states.StateAdapter;
 
+import static model.data.Constants.*;
+
 public class AwaitShipSelection extends StateAdapter
 {
     public AwaitShipSelection(GameData gameData)
     {
         super(gameData);
+        getGameData().setMessage(SELECT_SHIP_MESSAGE);
     }
 
     @Override
@@ -16,6 +19,6 @@ public class AwaitShipSelection extends StateAdapter
     {
         getGameData().selectShipType(shipType);
 
-        return null; // TODO next state goes here
+        return new AwaitMovement(getGameData());
     }
 }

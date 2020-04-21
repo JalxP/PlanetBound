@@ -1,11 +1,13 @@
 package view.graphical.panes.board;
 
 import controller.ObservableGame;
-import javafx.scene.layout.HBox;
-import model.states.concrete.AwaitShipSelection;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import static view.graphical.ConstantsUI.*;
 
 public class ViewPane extends HBox implements PropertyChangeListener
 {
@@ -18,11 +20,23 @@ public class ViewPane extends HBox implements PropertyChangeListener
         this.observableGame = observableGame;
         infoPane = new InfoPane(observableGame);
 
+        // TODO add events to listen here
+
+        setupSize();
         setupLayout();
+    }
+
+    private void setupSize()
+    {
+        setMinHeight(VIEW_PANE_HEIGHT);
     }
 
     private void setupLayout()
     {
+
+        // TODO Remove me
+        setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         getChildren().clear();
 
         getChildren().addAll(infoPane);
@@ -32,6 +46,10 @@ public class ViewPane extends HBox implements PropertyChangeListener
     {
 
     }
+
+    /* Handlers */
+
+    /* Events */
 
     @Override
     public void propertyChange(PropertyChangeEvent evt)

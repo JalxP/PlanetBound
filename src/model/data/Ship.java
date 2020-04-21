@@ -1,6 +1,10 @@
 package model.data;
 
-public class Ship implements GameEnums, Constants
+import model.data.GameEnums.*;
+
+import static model.data.Constants.*;
+
+public class Ship
 {
     private ShipType shipType;
     private CargoHold cargoHold;

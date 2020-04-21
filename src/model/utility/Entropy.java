@@ -2,14 +2,14 @@ package model.utility;
 
 import java.util.Random;
 
-public class Entropy
+public abstract class Entropy
 {
-    private static Random entropy = new Random();
+    private static final Random random = new Random();
 
-    public Entropy(){}
+    private Entropy(){}
 
     public static int throwDie(int numSides)
     {
-        return entropy.nextInt(numSides) + 1;
+        return random.nextInt(numSides) + 1;
     }
 }

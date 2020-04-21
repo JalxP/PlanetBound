@@ -4,9 +4,12 @@ public class GameData implements GameEnums
 {
     private Ship ship;
 
+    private StringBuilder message;
+
     public GameData()
     {
         // TODO
+        message = new StringBuilder();
     }
 
     public void selectShipType(ShipType shipType)
@@ -23,5 +26,29 @@ public class GameData implements GameEnums
 //            return "Military Ship";
 //        else
 //            return "Mining Ship";
+    }
+
+    /* Log */
+    private void clearMessage()
+    {
+        message.setLength(0);
+    }
+
+    public void setMessage(String msg)
+    {
+        clearMessage();
+        message.append(msg);
+    }
+
+    public void appendToMessage(String msg)
+    {
+        message.append("\n" + msg);
+    }
+
+    public String getMessage()
+    {
+        String tmp = message.toString();
+        clearMessage();
+        return tmp;
     }
 }

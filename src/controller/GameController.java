@@ -42,4 +42,11 @@ public class GameController implements GameEnums
     {
         return gameData.getShipType();
     }
+
+
+    /* Log */
+    public String getMessage()
+    {
+        return gameData.getMessage();
+    }
 }

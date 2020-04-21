@@ -1,7 +1,19 @@
 
-y
-java:S1450"WRemove the "shipType" field and declare it as a local variable in the relevant methods.(ÿœ†èýÿÿÿÿ8¡ÕÚ‘–.
+J
+java:S1068"(Remove this unused "ship" private field.(‚»ÉÏþÿÿÿÿ8îèØ¾˜.
+T
+java:S18542"7Remove this useless assignment to local variable "tmp".(µ…ÿá8»ï·Ë˜.
+[
+java:S3400"9Remove this method and declare a constant for this value.(•¿×Åþÿÿÿÿ8îèØ¾˜.
+T
+java:S1135"2Complete the task associated to this TODO comment.(‡¿•Éúÿÿÿÿ8îèØ¾˜.
 O
-java:S1135	"2Complete the task associated to this TODO comment.(…ïœ†8â“Û‘–.
-N
-java:S1068",Remove this unused "shipType" private field.(ÿœ†èýÿÿÿÿ8Í¤Ù‘–.
+java:S11355"2Complete the task associated to this TODO comment.(ÇŒ¦Ö8æá¸Ë˜.
+X	java:S125"<This block of commented-out lines of code should be removed.(šáÆ¾8îèØ¾˜.
+O
+java:S1135"2Complete the task associated to this TODO comment.(…ïœ†8â“Û‘–.
+u
+java:S1450"SRemove the "ship" field and declare it as a local variable in the relevant methods.(‚»ÉÏþÿÿÿÿ8îèØ¾˜.
+E
+java:S14812"(Remove this unused "tmp" local variable.(µ…ÿá8»ï·Ë˜.
+X	java:S125"<This block of commented-out lines of code should be removed.(ó½Åµ8îèØ¾˜.

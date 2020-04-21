@@ -1,18 +1,16 @@
 package view.graphical.panes.menu;
 
 import controller.ObservableGame;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import static view.graphical.ConstantsUI.*;
 
-public class MenuPane extends MenuBar implements PropertyChangeListener
+public class MenuPane extends MenuBar
 {
     private final ObservableGame observableGame;
 
@@ -24,14 +22,20 @@ public class MenuPane extends MenuBar implements PropertyChangeListener
 
     private Menu other;
     private MenuItem about;
+    private MenuItem showState;
 
     public MenuPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
-        // TODO add propertyChangeListener
 
+        setupSize();
         setupLayout();
         setupListeners();
+    }
+
+    private void setupSize()
+    {
+        setHeight(MENU_PANE_HEIGHT);
     }
 
     private void setupLayout()
@@ -51,25 +55,42 @@ public class MenuPane extends MenuBar implements PropertyChangeListener
         other = new Menu("_Other");
         about = new MenuItem("About");
         about.setAccelerator(new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN));
-        other.getItems().add(about);
-
+        showState = new MenuItem("Show State");
+        other.getItems().addAll(about, showState);
         getMenus().addAll(file, other);
     }
 
     private void setupListeners()
     {
-        // TODO setOnAction(new newGameMenuItemClicked());
+        newGame.setOnAction(new NewGameMenuItemClicked());
+
+        // TODO add rest of handlers
+        showState.setOnAction(new ShowStateMenuItemClicked());
     }
 
 
-    /* Events */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt)
+    /* Handlers */
+    class NewGameMenuItemClicked implements EventHandler<ActionEvent>
     {
-        switch (evt.getPropertyName())
+        @Override
+        public void handle(ActionEvent actionEvent)
         {
-            default:
-                System.out.println("<DEBUG> Something fired @ " + this.getClass() );
+            observableGame.startGame();
+        }
+    }
+
+    class ShowStateMenuItemClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            String rawStateString = observableGame.getState() + "";
+            rawStateString = rawStateString.split("\\.")[3].split("@")[0];
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("State Log");
+            alert.setHeaderText("The current state is:");
+            alert.setContentText(rawStateString);
+            alert.showAndWait();
         }
     }
 }
