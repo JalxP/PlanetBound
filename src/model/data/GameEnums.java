@@ -16,4 +16,20 @@ public interface GameEnums
         BLACK,
         ARTIFACT
     }
+
+    enum PlanetType
+    {
+        GREEN,
+        BLACK,
+        RED,
+        BLUE
+    }
+
+    enum AlienType
+    {
+        BLACK,
+        GREEN,
+        BLUE,
+        RED
+    }
 }

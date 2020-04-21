@@ -15,6 +15,10 @@ public abstract class Constants
 
     public static final int DRONE_MAX_HEALTH = 6;
 
+    public static final double PROBABILITY_SPACE_STATION = 3/10d;
+    public static final double PROBABILITY_WORM_HOLE = 1/8d;
+
+
     /* Strings */
     public static final String START_GAME_MESSAGE = "Press Start to begin your game.";
     public static final String SELECT_SHIP_MESSAGE = "Select your type of ship.";

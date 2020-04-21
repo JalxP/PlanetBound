@@ -3,12 +3,15 @@ package model.data;
 public class GameData implements GameEnums
 {
     private Ship ship;
+    private Crew crew;
 
     private StringBuilder message;
 
     public GameData()
     {
-        // TODO
+        ship = null;
+        crew = new Crew();
+
         message = new StringBuilder();
     }
 
@@ -17,6 +20,10 @@ public class GameData implements GameEnums
         ship = new Ship(shipType);
     }
 
+    public void move()
+    {
+        // TODO
+    }
     /* Info */
     public String getShipType()
     {
@@ -24,6 +31,16 @@ public class GameData implements GameEnums
             return "Military Ship";
         else
             return "Mining Ship";
+    }
+
+    public boolean getCrewStatusByIndex(int i)
+    {
+        return crew.getCrewStatusByIndex(i);
+    }
+
+    public String getCrewNameByIndex(int i)
+    {
+        return crew.getCrewNameByIndex(i);
     }
 
     /* Log */
@@ -49,4 +66,6 @@ public class GameData implements GameEnums
         clearMessage();
         return tmp;
     }
+
+
 }

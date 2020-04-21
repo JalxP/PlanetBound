@@ -49,10 +49,30 @@ public class ObservableGame extends PropertyChangeSupport
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
+    public void move()
+    {
+        gameController.move();
+
+        // TODO what should be fired here?
+        // update the view panel
+        // update the interacion panel
+        // update the log panel
+    }
+
     /* Info */
     public String getShipType()
     {
         return gameController.getShipType();
+    }
+
+    public boolean getCrewStatusByIndex(int i)
+    {
+        return gameController.getCrewStatusByIndex(i);
+    }
+
+    public String getCrewNameByIndex(int i)
+    {
+        return gameController.getCrewNameByIndex(i);
     }
 
 

@@ -37,4 +37,10 @@ public class StateAdapter implements IState, GameEnums
     {
         return this;
     }
+
+    @Override
+    public IState move()
+    {
+        return this;
+    }
 }

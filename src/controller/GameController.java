@@ -37,10 +37,25 @@ public class GameController implements GameEnums
         setState(state.selectShip(shipType));
     }
 
+    public void move()
+    {
+        gameData.move();
+    }
+
     /* Info */
     public String getShipType()
     {
         return gameData.getShipType();
+    }
+
+    public boolean getCrewStatusByIndex(int i)
+    {
+        return gameData.getCrewStatusByIndex(i);
+    }
+
+    public String getCrewNameByIndex(int i)
+    {
+        return gameData.getCrewNameByIndex(i);
     }
 
 
@@ -49,4 +64,6 @@ public class GameController implements GameEnums
     {
         return gameData.getMessage();
     }
+
+
 }

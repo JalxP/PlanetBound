@@ -31,12 +31,12 @@ public class Crew
         return count;
     }
 
-    public String getNameByIndex(int i)
+    public String getCrewNameByIndex(int i)
     {
         return crewNames.get(i);
     }
 
-    public boolean getStatusByIndex(int i)
+    public boolean getCrewStatusByIndex(int i)
     {
         return crewStatuses.get(i);
     }

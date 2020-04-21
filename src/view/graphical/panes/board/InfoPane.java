@@ -2,11 +2,8 @@ package view.graphical.panes.board;
 
 import controller.ObservableGame;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -16,9 +13,9 @@ public class InfoPane extends VBox
 {
     private final ObservableGame observableGame;
 
-    private Text shipType;
-    private Text crewTitle;
-    private CrewPane crewPane;
+    private final Text shipType;
+    private final Text crewTitle;
+    private final CrewPane crewPane;
 
     public InfoPane(ObservableGame observableGame)
     {
@@ -38,6 +35,9 @@ public class InfoPane extends VBox
 
     private void setupLayout()
     {
+        setBorder(new Border(new BorderStroke(Color.RED,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
         getChildren().clear();
         getChildren().addAll(shipType,
                 new Separator(),

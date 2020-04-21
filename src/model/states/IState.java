@@ -10,4 +10,5 @@ public interface IState
 
     IState startGame();
     IState selectShip(ShipType shipType);
+    IState move();
 }
