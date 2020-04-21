@@ -53,11 +53,6 @@ public class RootPane extends VBox implements PropertyChangeListener
         observableGame.addPropertyChangeListener(EVENT_UPDATE_LOG_PANE, this);
     }
 
-    private void updateInteractionPane()
-    {
-        interactionPane.update();
-    }
-
     /* Events */
 
     @Override
@@ -66,7 +61,10 @@ public class RootPane extends VBox implements PropertyChangeListener
         switch (evt.getPropertyName())
         {
             case EVENT_UPDATE_INTERACTION_PANE:
-                updateInteractionPane();
+                interactionPane.update();
+                break;
+            case EVENT_UPDATE_VIEW_PANE:
+                viewPane.update();
                 break;
 
         }

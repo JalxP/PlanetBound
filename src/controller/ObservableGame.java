@@ -1,6 +1,6 @@
 package controller;
 
-import model.data.GameEnums;
+
 import model.states.IState;
 
 import static view.graphical.EventNames.*;

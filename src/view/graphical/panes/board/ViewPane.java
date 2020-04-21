@@ -4,16 +4,15 @@ import controller.ObservableGame;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import static view.graphical.ConstantsUI.*;
 
-public class ViewPane extends HBox implements PropertyChangeListener
+public class ViewPane extends HBox
 {
     private final ObservableGame observableGame;
 
     private InfoPane infoPane;
+    //private SpacePane spacePane;
+    //private PlanetPane planetPane;
 
     public ViewPane(ObservableGame observableGame)
     {
@@ -42,22 +41,10 @@ public class ViewPane extends HBox implements PropertyChangeListener
         getChildren().addAll(infoPane);
     }
 
-    private void setupListeners()
+    public void update()
     {
-
+        infoPane.update();
     }
 
-    /* Handlers */
 
-    /* Events */
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt)
-    {
-        switch (evt.getPropertyName())
-        {
-            default:
-                System.out.println("<DEBUG> Something fired ("+ evt.getPropertyName() + ") @ " + this.getClass());
-        }
-    }
 }

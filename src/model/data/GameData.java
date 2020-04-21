@@ -20,12 +20,10 @@ public class GameData implements GameEnums
     /* Info */
     public String getShipType()
     {
-        return "OK";
-        // TODO need to check state before!!
-//        if (ship.getShipType() == ShipType.MILITARY)
-//            return "Military Ship";
-//        else
-//            return "Mining Ship";
+        if (ship.getShipType() == ShipType.MILITARY)
+            return "Military Ship";
+        else
+            return "Mining Ship";
     }
 
     /* Log */

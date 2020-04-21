@@ -5,8 +5,6 @@ M
 src/model/data/GameEnums.java,6\a\6a80427d6118df4f9db355bbacbf02a3defc9e32
 a
 1src/model/states/concrete/AwaitShipSelection.java,e\3\e37f5641b8a7df1044ed5beedc22bfe062b946b8
-Z
-*src/model/states/concrete/AwaitToMove.java,1\b\1b4604deacd427719bd66418f4776800cb6d5fdb
 X
 (src/model/states/concrete/StartGame.java,0\8\087ee6afc998f1e59a5ce4a8aa89d7a73b15c7cc
 L
@@ -43,9 +41,23 @@ H
 ,src/view/graphical/panes/board/ViewPane.java,d\c\dc8a3dacf5193da036aa22f755af57ea592f259e
 f
 6src/view/graphical/panes/controls/InteractionPane.java,3\f\3fab6f60a071e11bc870693642dbdfe57329f97c
-R
-"src/view/graphical/ContantsUI.java,6\2\6275b221cc1c644913f5e1e972dfbd770eb048c4
 c
 3src/view/graphical/panes/controls/MessagesPane.java,c\1\c121e2e3fd9c6026136fbf0cb24cc6a76331300f
 R
 "src/controller/ObservableGame.java,6\4\645c48dc5908a656371fd057f5d96d5f774fd0fa
+H
+.idea/libraries/lib1.xml,0\c\0c365873abaed37e63ae68c9caa59daee764f84a
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+\
+,src/model/states/concrete/AwaitMovement.java,c\3\c38734297fe050f9b97226eea7d843a53ad90f01
+c
+3src/view/graphical/panes/controls/ActionButton.java,e\a\ea15542c1334fbce7d492770938cbe0ad6aeac0a
+S
+#src/view/graphical/ConstantsUI.java,3\c\3c4f54b5b1bf19ab1dca9fc6136540cd67f180fd
+?
+PlanetBound.iml,d\3\d374c7da75e87bf0326ca017b6f8012416dacf86
+b
+2src/view/graphical/panes/controls/ButtonsPane.java,8\d\8d00a44e37d4dff8c1e2515e0c03d32ecf56bfe9
+\
+,src/view/graphical/panes/board/CrewPane.java,0\b\0b3709a7251d9c00b39e8d28c64c0c602cfba48f
