@@ -4,15 +4,19 @@ public class GameData implements GameEnums
 {
     private Ship ship;
     private Crew crew;
+    private TravelSpace travelSpace;
 
-    private StringBuilder message;
+    private String message;
+    private StringBuilder log;
 
     public GameData()
     {
         ship = null;
         crew = new Crew();
+        travelSpace = new TravelSpace();
 
-        message = new StringBuilder();
+        message = "";
+        log = new StringBuilder();
     }
 
     public void selectShipType(ShipType shipType)
@@ -22,7 +26,7 @@ public class GameData implements GameEnums
 
     public void move()
     {
-        // TODO
+        travelSpace.move();
     }
     /* Info */
     public String getShipType()
@@ -43,29 +47,42 @@ public class GameData implements GameEnums
         return crew.getCrewNameByIndex(i);
     }
 
-    /* Log */
-    private void clearMessage()
-    {
-        message.setLength(0);
-    }
 
+    /* Message */
     public void setMessage(String msg)
     {
-        clearMessage();
-        message.append(msg);
-    }
-
-    public void appendToMessage(String msg)
-    {
-        message.append("\n" + msg);
+        message = msg;
     }
 
     public String getMessage()
     {
-        String tmp = message.toString();
-        clearMessage();
+        return message;
+    }
+
+    /* Log */
+    private void clearLog()
+    {
+        log.setLength(0);
+    }
+
+    public void setLog(String msg)
+    {
+        clearLog();
+        log.append(msg);
+    }
+
+    public void appendToLog(String msg)
+    {
+        log.append("\n" + msg);
+    }
+
+    public String getLog()
+    {
+        String tmp = log.toString();
+        clearLog();
         return tmp;
     }
+
 
 
 }

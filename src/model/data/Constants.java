@@ -1,5 +1,11 @@
 package model.data;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static model.data.GameEnums.*;
+
 public abstract class Constants
 {
     private Constants() {}
@@ -17,6 +23,15 @@ public abstract class Constants
 
     public static final double PROBABILITY_SPACE_STATION = 3/10d;
     public static final double PROBABILITY_WORM_HOLE = 1/8d;
+
+    public static final List<GameEnums.ResourceType> LIST_RESOURCES_ON_GREEN_PLANET = new ArrayList<>(
+            Arrays.asList(ResourceType.RED, ResourceType.GREEN));
+    public static final List<GameEnums.ResourceType> LIST_RESOURCES_ON_BLACK_PLANET = new ArrayList<>(
+            Arrays.asList(ResourceType.BLACK, ResourceType.BLUE));
+    public static final List<GameEnums.ResourceType> LIST_RESOURCES_ON_RED_PLANET = new ArrayList<>(
+            Arrays.asList(ResourceType.RED, ResourceType.BLUE));
+    public static final List<GameEnums.ResourceType> LIST_RESOURCES_ON_BLUE_PLANET = new ArrayList<>(
+            Arrays.asList(ResourceType.BLACK, ResourceType.GREEN, ResourceType.BLUE, ResourceType.ARTIFACT));
 
 
     /* Strings */

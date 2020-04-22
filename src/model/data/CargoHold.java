@@ -1,6 +1,6 @@
 package model.data;
 
-import model.utility.Entropy;
+import model.utility.Utility;
 
 public class CargoHold implements GameEnums
 {
@@ -83,7 +83,7 @@ public class CargoHold implements GameEnums
             return;
         }
 
-        int resourcesGenerated = Entropy.throwDie(6);
+        int resourcesGenerated = Utility.throwDie(6);
 
         switch (resourceType)
         {

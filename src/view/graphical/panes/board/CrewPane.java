@@ -5,13 +5,12 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import view.graphical.resources.ImagesCrew;
+import view.graphical.resources.Images;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static view.graphical.resources.ResourcesPaths.*;
-import static view.graphical.resources.ResourcesPaths.WEAPONS_DEAD;
 
 public class CrewPane extends GridPane
 {
@@ -26,19 +25,19 @@ public class CrewPane extends GridPane
         aliveCrew = new ArrayList<>();
         deadCrew = new ArrayList<>();
 
-        aliveCrew.add(new ImageView(ImagesCrew.getImage(CAPTAIN)));
-        aliveCrew.add(new ImageView(ImagesCrew.getImage(NAVIGATION)));
-        aliveCrew.add(new ImageView(ImagesCrew.getImage(LANDING)));
-        aliveCrew.add(new ImageView(ImagesCrew.getImage(SHIELDS)));
-        aliveCrew.add(new ImageView(ImagesCrew.getImage(WEAPONS)));
-        aliveCrew.add(new ImageView(ImagesCrew.getImage(CARGO)));
+        aliveCrew.add(new ImageView(Images.getImage(CAPTAIN)));
+        aliveCrew.add(new ImageView(Images.getImage(NAVIGATION)));
+        aliveCrew.add(new ImageView(Images.getImage(LANDING)));
+        aliveCrew.add(new ImageView(Images.getImage(SHIELDS)));
+        aliveCrew.add(new ImageView(Images.getImage(WEAPONS)));
+        aliveCrew.add(new ImageView(Images.getImage(CARGO)));
 
-        deadCrew.add(new ImageView(ImagesCrew.getImage(CAPTAIN_DEAD)));
-        deadCrew.add(new ImageView(ImagesCrew.getImage(NAVIGATION_DEAD)));
-        deadCrew.add(new ImageView(ImagesCrew.getImage(LANDING_DEAD)));
-        deadCrew.add(new ImageView(ImagesCrew.getImage(SHIELDS_DEAD)));
-        deadCrew.add(new ImageView(ImagesCrew.getImage(WEAPONS_DEAD)));
-        deadCrew.add(new ImageView(ImagesCrew.getImage(CARGO_DEAD)));
+        deadCrew.add(new ImageView(Images.getImage(CAPTAIN_DEAD)));
+        deadCrew.add(new ImageView(Images.getImage(NAVIGATION_DEAD)));
+        deadCrew.add(new ImageView(Images.getImage(LANDING_DEAD)));
+        deadCrew.add(new ImageView(Images.getImage(SHIELDS_DEAD)));
+        deadCrew.add(new ImageView(Images.getImage(WEAPONS_DEAD)));
+        deadCrew.add(new ImageView(Images.getImage(CARGO_DEAD)));
 
         for (int i = 0; i < 6; i++)
         {

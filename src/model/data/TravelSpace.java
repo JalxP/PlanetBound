@@ -5,10 +5,17 @@ import java.util.List;
 
 public class TravelSpace
 {
-    private List<Sector> sectorList; // TODO CONTINUE HERE
+    private final List<Sector> sectorList;
 
     public TravelSpace()
     {
         sectorList = new ArrayList<>();
     }
+
+    public void move()
+    {
+        sectorList.add(new Sector(sectorList.size()));
+    }
+
+
 }

@@ -36,4 +36,18 @@ public class ResourcesPaths
     public static final String PATH_CARGO_DEAD = "../assets/crew/cargo_dead.png";
 
     /* Planets */
+    public static final String UNKNOWN_PLANET = "Unknown Planet";
+    public static final String PATH_UNKNOWN_PLANET = "../assets/travel/unknown_planet.png";
+
+    public static final String GREEN_PLANET_SHIP = "Green Planet";
+    public static final String PATH_GREEN_PLANET_SHIP = "../assets/crew/green_planet_ship.png";
+
+    public static final String BLACK_PLANET_SHIP = "Black Planet";
+    public static final String PATH_BLACK_PLANET_SHIP = "../assets/crew/black_planet_ship.png";
+
+    public static final String RED_PLANET_SHIP = "Red Planet";
+    public static final String PATH_RED_PLANET_SHIP = "../assets/crew/red_planet_ship.png";
+
+    public static final String BLUE_PLANET_SHIP = "Blue Planet";
+    public static final String PATH_BLUE_PLANET_SHIP = "../assets/crew/blue_planet_ship.png";
 }

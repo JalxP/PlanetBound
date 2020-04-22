@@ -29,8 +29,6 @@ R
 "src/view/graphical/EventNames.java,6\4\64fc452a316ecfb268b92e4b46fd0629179f5154
 [
 +src/view/graphical/panes/PaneOrganizer.java,e\1\e1f7cbf09462e678ec8e2cc2f7274187476c9f0e
-N
-src/model/utility/Entropy.java,9\9\992aa5a73c3df0934ba0689138051fc53c1e6486
 M
 src/model/data/CargoHold.java,d\f\df1c990295a9061e1c92bc557713ed7e9805c4d8
 H
@@ -61,3 +59,17 @@ b
 2src/view/graphical/panes/controls/ButtonsPane.java,8\d\8d00a44e37d4dff8c1e2515e0c03d32ecf56bfe9
 \
 ,src/view/graphical/panes/board/CrewPane.java,0\b\0b3709a7251d9c00b39e8d28c64c0c602cfba48f
+[
++src/view/graphical/resources/Resources.java,e\8\e83d1ef2a75f106da38ae89ef0c7762f8d02592c
+N
+src/model/utility/Utility.java,c\4\c4278b8301ba6894a63475cae45043abca9f90d3
+X
+(src/view/graphical/resources/Images.java,9\2\9264fef76ccf66a5e76fa1b392259a28997baa66
+`
+0src/view/graphical/resources/ResourcesPaths.java,8\5\856c4edd3a197a0fc636dcb53cddcaca334ba114
+O
+src/model/data/TravelSpace.java,3\f\3fa4b5c68553846af34c3ecc714fdfba18f197a5
+^
+.src/view/graphical/panes/board/TravelPane.java,f\7\f7ddab57e4f50c68ed7a39be0bfc291f51252a24
+J
+src/model/data/Sector.java,8\7\879ca31a3b8c0f4d87aa577730806bdf47851312
