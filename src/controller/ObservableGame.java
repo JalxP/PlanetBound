@@ -53,10 +53,9 @@ public class ObservableGame extends PropertyChangeSupport
     {
         gameController.move();
 
-        // TODO what should be fired here?
-        // update the view panel
-        // update the interacion panel
-        // update the log panel
+        firePropertyChange(EVENT_UPDATE_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
     /* Info */

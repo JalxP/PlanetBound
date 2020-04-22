@@ -1,6 +1,8 @@
 package view.graphical.panes.board;
 
 import controller.ObservableGame;
+import javafx.geometry.Orientation;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -11,13 +13,14 @@ public class ViewPane extends HBox
     private final ObservableGame observableGame;
 
     private InfoPane infoPane;
-    //private SpacePane spacePane;
+    private TravelPane travelPane;
     //private PlanetPane planetPane;
 
     public ViewPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
         infoPane = new InfoPane(observableGame);
+        travelPane = new TravelPane(observableGame);
 
         // TODO add events to listen here
 
@@ -38,7 +41,9 @@ public class ViewPane extends HBox
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         getChildren().clear();
 
-        getChildren().addAll(infoPane);
+        getChildren().addAll(infoPane,
+                new Separator(Orientation.VERTICAL),
+                travelPane);
     }
 
     public void update()

@@ -47,6 +47,10 @@ public class GameData implements GameEnums
         return crew.getCrewNameByIndex(i);
     }
 
+    public boolean isCurrentSectorPlanet()
+    {
+        return travelSpace.isCurrentSectorPlanet();
+    }
 
     /* Message */
     public void setMessage(String msg)

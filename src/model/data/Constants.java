@@ -35,8 +35,13 @@ public abstract class Constants
 
 
     /* Strings */
+    public static final String AVAILABLE_RESOURCES = "Available Resources: ";
+
+    /* Messages */
     public static final String START_GAME_MESSAGE = "Press Start to begin your game.";
     public static final String SELECT_SHIP_MESSAGE = "Select your type of ship.";
     public static final String MOVE_SHIP_MESSAGE = "Press Move to move your ship.";
+    public static final String SELECT_ACTION_MESSAGE = "Select your desired action.";
+    public static final String SELECT_EVENT_MESSAGE = "Select your event.";
 
 }

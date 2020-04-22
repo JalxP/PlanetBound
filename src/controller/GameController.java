@@ -39,7 +39,7 @@ public class GameController implements GameEnums
 
     public void move()
     {
-        gameData.move();
+        setState(state.move());
     }
 
     /* Info */

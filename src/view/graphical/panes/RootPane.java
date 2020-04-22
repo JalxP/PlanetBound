@@ -68,6 +68,6 @@ public class RootPane extends VBox implements PropertyChangeListener
                 break;
 
         }
-        System.out.println("<DEBUG> Something fired ("+ evt.getPropertyName() + ") @ " + this.getClass());
+        System.out.println("<DEBUG> Got ("+ evt.getPropertyName() + ") @ " + this.getClass());
     }
 }

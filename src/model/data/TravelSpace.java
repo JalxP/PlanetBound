@@ -17,5 +17,9 @@ public class TravelSpace
         sectorList.add(new Sector(sectorList.size()));
     }
 
+    public boolean isCurrentSectorPlanet()
+    {
+        return sectorList.get(sectorList.size() - 1).isPlanet();
+    }
 
 }

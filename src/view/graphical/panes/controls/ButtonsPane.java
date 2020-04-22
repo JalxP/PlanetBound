@@ -6,22 +6,21 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import model.states.IState;
+import model.states.concrete.AwaitMovement;
 import model.states.concrete.AwaitShipSelection;
 import model.states.concrete.StartGame;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import static model.data.GameEnums.*;
 import static view.graphical.ConstantsUI.*;
 
-public class ButtonsPane extends HBox implements PropertyChangeListener
+public class ButtonsPane extends HBox
 {
     private final ObservableGame observableGame;
 
     private ActionButton startGameButton;
     private ActionButton militaryShipSelectionButton;
     private ActionButton miningShipSelectionButton;
+    private ActionButton moveButton;
 
     public ButtonsPane(ObservableGame observableGame)
     {
@@ -29,6 +28,7 @@ public class ButtonsPane extends HBox implements PropertyChangeListener
         startGameButton = new ActionButton("Start Game");
         militaryShipSelectionButton = new ActionButton("Military Ship");
         miningShipSelectionButton = new ActionButton("Mining Ship");
+        moveButton = new ActionButton("Move");
 
         setupSize();
         setupLayout();
@@ -46,6 +46,7 @@ public class ButtonsPane extends HBox implements PropertyChangeListener
         startGameButton.managedProperty().bind(startGameButton.visibleProperty());
         militaryShipSelectionButton.managedProperty().bind(militaryShipSelectionButton.visibleProperty());
         miningShipSelectionButton.managedProperty().bind(miningShipSelectionButton.visibleProperty());
+        moveButton.managedProperty().bind(moveButton.visibleProperty());
 
     }
 
@@ -53,11 +54,14 @@ public class ButtonsPane extends HBox implements PropertyChangeListener
     {
         getChildren().clear();
         setAlignment(Pos.CENTER);
+        setSpacing(10);
         militaryShipSelectionButton.setVisible(false);
         miningShipSelectionButton.setVisible(false);
+        moveButton.setVisible(false);
         getChildren().addAll(startGameButton,
                 militaryShipSelectionButton,
-                miningShipSelectionButton);
+                miningShipSelectionButton,
+                moveButton);
     }
 
     private void setupListeners()
@@ -65,6 +69,7 @@ public class ButtonsPane extends HBox implements PropertyChangeListener
         startGameButton.setOnAction(new StartGameButtonClicked());
         militaryShipSelectionButton.setOnAction(new MilitaryShipSelectionButtonClicked());
         miningShipSelectionButton.setOnAction(new MiningShipSelectionButtonClicked());
+        moveButton.setOnAction(new MoveButtonClicked());
     }
 
     public void update()
@@ -75,6 +80,8 @@ public class ButtonsPane extends HBox implements PropertyChangeListener
 
         militaryShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
         miningShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
+
+        moveButton.setVisible(currentState instanceof AwaitMovement);
 
     }
 
@@ -106,15 +113,12 @@ public class ButtonsPane extends HBox implements PropertyChangeListener
         }
     }
 
-    /* Events */
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt)
+    private class MoveButtonClicked implements EventHandler<ActionEvent>
     {
-        switch (evt.getPropertyName())
+        @Override
+        public void handle(ActionEvent actionEvent)
         {
-            default:
-                System.out.println("<DEBUG> Something fired ("+ evt.getPropertyName() + ") @ " + this.getClass());
+            observableGame.move();
         }
     }
 }

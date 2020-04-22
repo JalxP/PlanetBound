@@ -14,10 +14,16 @@ public class AwaitMovement extends StateAdapter
         getGameData().setMessage(MOVE_SHIP_MESSAGE);
     }
 
+
+    @Override
     public IState move()
     {
-        // TODO me
-        return null;
+        getGameData().move();
+
+        if (getGameData().isCurrentSectorPlanet())
+            return new AwaitActionType(getGameData());
+
+        return new AwaitEventSelection(getGameData());
     }
 
 }

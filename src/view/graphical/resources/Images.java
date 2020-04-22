@@ -33,10 +33,12 @@ public class Images
 
         /* Planets */
         imageMap.put(UNKNOWN_PLANET, new Image(Resources.getResourceFile(PATH_UNKNOWN_PLANET)));
-        imageMap.put(GREEN_PLANET_SHIP, new Image(Resources.getResourceFile(PATH_GREEN_PLANET_SHIP)));
-        imageMap.put(BLACK_PLANET_SHIP, new Image(Resources.getResourceFile(PATH_BLACK_PLANET_SHIP)));
-        imageMap.put(RED_PLANET_SHIP, new Image(Resources.getResourceFile(PATH_RED_PLANET_SHIP)));
-        imageMap.put(BLUE_PLANET_SHIP, new Image(Resources.getResourceFile(PATH_BLUE_PLANET_SHIP)));
+        imageMap.put(GREEN_PLANET, new Image(Resources.getResourceFile(PATH_GREEN_PLANET)));
+        imageMap.put(BLACK_PLANET, new Image(Resources.getResourceFile(PATH_BLACK_PLANET)));
+        imageMap.put(RED_PLANET, new Image(Resources.getResourceFile(PATH_RED_PLANET)));
+        imageMap.put(BLUE_PLANET, new Image(Resources.getResourceFile(PATH_BLUE_PLANET)));
+        imageMap.put(SPACE_STATION, new Image(Resources.getResourceFile(PATH_SPACE_STATION)));
+        imageMap.put(EVENT_TOKEN, new Image(Resources.getResourceFile(PATH_EVENT_TOKEN)));
     }
 
     public static Image getImage(String name)

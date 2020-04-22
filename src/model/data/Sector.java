@@ -10,33 +10,22 @@ import static model.data.GameEnums.*;
 public class Sector
 {
     private boolean isPlanet;
-    private boolean isPath;
-    private boolean isEvent;
     private boolean hasSpaceStation;
-    private boolean isWormHole;
+    private boolean travelWormHole;
     private PlanetType planetType;
     private List<ResourceType> possibleResources;
     private int availableResources;
 
     public Sector(int index)
     {
-        if (index % 4 == 0)
+        travelWormHole = Utility.didItHappenWithProbability(PROBABILITY_WORM_HOLE);
+        isPlanet = index % 2 == 0;
+        if (isPlanet)
         {
-            isPlanet = true;
             hasSpaceStation = Utility.didItHappenWithProbability(PROBABILITY_SPACE_STATION);
             planetType = Utility.getRandomPlanetType();
             possibleResources = Utility.getAvailableResourcesByPlanetType(planetType);
             availableResources = possibleResources != null ? possibleResources.size() : 0;
-        }
-        else
-        {
-            if (index % 2 == 0)
-                isEvent = true;
-            else
-            {
-                isPath = true;
-                isWormHole = Utility.didItHappenWithProbability(PROBABILITY_WORM_HOLE);
-            }
         }
     }
 
@@ -45,24 +34,14 @@ public class Sector
         return isPlanet;
     }
 
-    public boolean isPath()
-    {
-        return isPath;
-    }
-
-    public boolean isEvent()
-    {
-        return isEvent;
-    }
-
     public boolean isHasSpaceStation()
     {
         return hasSpaceStation;
     }
 
-    public boolean isWormHole()
+    public boolean istTravelWormHole()
     {
-        return isWormHole;
+        return travelWormHole;
     }
 
     public PlanetType getPlanetType()
