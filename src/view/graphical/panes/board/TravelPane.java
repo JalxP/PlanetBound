@@ -13,6 +13,7 @@ import view.graphical.resources.Images;
 
 import static view.graphical.resources.ResourcesPaths.*;
 import static model.data.Constants.*;
+import static model.data.GameEnums.*;
 
 public class TravelPane extends GridPane
 {
@@ -60,13 +61,43 @@ public class TravelPane extends GridPane
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         add(travelTitle,0,0);
-        add(new Text("Warp"), 0,1);
+        add(new Text("Travel Mode"), 0,1);
         add(unknownPlanet, 1,1);
     }
 
     public void update()
     {
-        // TODO continue here, get path images, etc...
+        getChildren().clear();
+
+        String travelMode = "Travel mode: ";
+        ImageView currentPlanet = unknownPlanet;
+        PlanetType planetType = observableGame.getCurrentSectorPlanetType();
+        if (planetType != null)
+        {
+            switch (planetType)
+            {
+                case GREEN:
+                    currentPlanet = greenPlanet;
+                    break;
+                case BLACK:
+                    currentPlanet = blackPlanet;
+                    break;
+                case RED:
+                    currentPlanet = redPlanet;
+                    break;
+                case BLUE:
+                    currentPlanet = bluePlanet;
+                    break;
+                default: break;
+            }
+            travelMode += observableGame.isCurrentSectorTravelModeWormHole() ? "wormhole" : "normal";
+        }
+        else
+            travelMode += "None";
+
+        add(travelTitle, 0, 0);
+        add(new Text(travelMode), 0, 1);
+        add(currentPlanet, 1, 1);
     }
 
     private void setupToolTips()

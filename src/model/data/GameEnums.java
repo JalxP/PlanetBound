@@ -30,6 +30,6 @@ public interface GameEnums
         BLACK,
         GREEN,
         BLUE,
-        RED
+        RE
     }
 }

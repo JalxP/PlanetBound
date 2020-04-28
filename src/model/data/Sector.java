@@ -18,8 +18,14 @@ public class Sector
 
     public Sector(int index)
     {
+        if (index == 0)
+        {
+            initialize();
+            return;
+        }
+
         travelWormHole = Utility.didItHappenWithProbability(PROBABILITY_WORM_HOLE);
-        isPlanet = index % 2 == 0;
+        isPlanet = index % 2 != 0;
         if (isPlanet)
         {
             hasSpaceStation = Utility.didItHappenWithProbability(PROBABILITY_SPACE_STATION);
@@ -27,6 +33,16 @@ public class Sector
             possibleResources = Utility.getAvailableResourcesByPlanetType(planetType);
             availableResources = possibleResources != null ? possibleResources.size() : 0;
         }
+    }
+
+    private void initialize()
+    {
+        isPlanet = true;
+        hasSpaceStation = false;
+        travelWormHole = false;
+        planetType = null;
+        possibleResources = null;
+        availableResources = 0;
     }
 
     public boolean isPlanet()
@@ -39,7 +55,7 @@ public class Sector
         return hasSpaceStation;
     }
 
-    public boolean istTravelWormHole()
+    public boolean isTravelWormHole()
     {
         return travelWormHole;
     }

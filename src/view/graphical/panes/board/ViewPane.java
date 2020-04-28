@@ -49,6 +49,7 @@ public class ViewPane extends HBox
     public void update()
     {
         infoPane.update();
+        travelPane.update();
     }
 
 

@@ -52,6 +52,16 @@ public class GameData implements GameEnums
         return travelSpace.isCurrentSectorPlanet();
     }
 
+    public boolean isCurrentSectorTravelModeWormHole()
+    {
+        return travelSpace.isCurrentSectorTravelModeWormHole();
+    }
+
+    public PlanetType getCurrentSectorPlanetType()
+    {
+        return travelSpace.getCurrentSectorPlanetType();
+    }
+
     /* Message */
     public void setMessage(String msg)
     {

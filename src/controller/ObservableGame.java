@@ -74,6 +74,15 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.getCrewNameByIndex(i);
     }
 
+    public boolean isCurrentSectorTravelModeWormHole()
+    {
+        return gameController.isCurrentSectorTravelModeWormHole();
+    }
+
+    public PlanetType getCurrentSectorPlanetType()
+    {
+        return gameController.getCurrentSectorPlanetType();
+    }
 
     /* Log */
     public String getMessage()

@@ -58,6 +58,15 @@ public class GameController implements GameEnums
         return gameData.getCrewNameByIndex(i);
     }
 
+    public boolean isCurrentSectorTravelModeWormHole()
+    {
+        return gameData.isCurrentSectorTravelModeWormHole();
+    }
+
+    public PlanetType getCurrentSectorPlanetType()
+    {
+        return gameData.getCurrentSectorPlanetType();
+    }
 
     /* Log */
     public String getMessage()
