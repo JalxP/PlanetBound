@@ -14,7 +14,7 @@ public class Sector
     private boolean travelWormHole;
     private PlanetType planetType;
     private List<ResourceType> possibleResources;
-    private int availableResources;
+    private PlanetSurface planetSurface;
 
     public Sector(int index)
     {
@@ -31,7 +31,7 @@ public class Sector
             hasSpaceStation = Utility.didItHappenWithProbability(PROBABILITY_SPACE_STATION);
             planetType = Utility.getRandomPlanetType();
             possibleResources = Utility.getAvailableResourcesByPlanetType(planetType);
-            availableResources = possibleResources != null ? possibleResources.size() : 0;
+            planetSurface = new PlanetSurface(planetType);
         }
     }
 
@@ -42,7 +42,6 @@ public class Sector
         travelWormHole = false;
         planetType = null;
         possibleResources = null;
-        availableResources = 0;
     }
 
     public boolean isPlanet()
@@ -50,7 +49,7 @@ public class Sector
         return isPlanet;
     }
 
-    public boolean isHasSpaceStation()
+    public boolean hasSpaceStation()
     {
         return hasSpaceStation;
     }
@@ -70,8 +69,23 @@ public class Sector
         return possibleResources;
     }
 
-    public int getAvailableResources()
+    List<ResourceType> getAvailableResources()
     {
-        return availableResources;
+        return planetSurface.getAvailableResources();
+    }
+
+    public ResourceType[][] getPlanetSurface()
+    {
+        return planetSurface.getSurface();
+    }
+
+    public int getDroneRow()
+    {
+        return planetSurface.getDroneRow();
+    }
+
+    public int getDroneCol()
+    {
+        return planetSurface.getDroneCol();
     }
 }

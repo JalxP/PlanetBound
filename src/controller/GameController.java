@@ -42,6 +42,21 @@ public class GameController implements GameEnums
         setState(state.move());
     }
 
+    public void explore()
+    {
+        setState(state.explore());
+    }
+
+    public void endTurn()
+    {
+        setState(state.endTurn());
+    }
+
+    public ResourceType [][] getPlanetSurface()
+    {
+        return gameData.getPlanetSurface();
+    }
+
     /* Info */
     public String getShipType()
     {
@@ -68,11 +83,41 @@ public class GameController implements GameEnums
         return gameData.getCurrentSectorPlanetType();
     }
 
+    public String getShieldAmount()
+    {
+        return gameData.getShieldAmount();
+    }
+
+    public String getFuelAmount()
+    {
+        return gameData.getFuelAmount();
+    }
+
+    public String getDronesAmount()
+    {
+        return gameData.getDronesAmount();
+    }
+
+    public String getArtifactsAmount()
+    {
+        return gameData.getArtifactsAmount();
+    }
+
+    public boolean canUpgrade()
+    {
+        return gameData.canUpgrade();
+    }
+
+    public boolean canExplore()
+    {
+        return gameData.canExplore();
+    }
+
     /* Log */
+
     public String getMessage()
     {
         return gameData.getMessage();
     }
-
 
 }

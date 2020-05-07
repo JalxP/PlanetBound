@@ -56,4 +56,27 @@ public class ResourcesPaths
 
     public static final String EVENT_TOKEN = "Event Token";
     public static final String PATH_EVENT_TOKEN = "assets\\travel\\event_planet.png";
+
+    /* Planet Surface */
+    public static final String SURFACE_NONE = "No Resource";
+    public static final String SURFACE_NONE_PATH = "assets\\terrain\\no_resource.png";
+
+    public static final String SURFACE_BLACK = "Black Resource";
+    public static final String SURFACE_BLACK_PATH = "assets\\terrain\\black_resource.png";
+
+    public static final String SURFACE_BLUE = "Blue Resource";
+    public static final String SURFACE_BLUE_PATH = "assets\\terrain\\blue_resource.png";
+
+    public static final String SURFACE_GREEN = "Green Resource";
+    public static final String SURFACE_GREEN_PATH = "assets\\terrain\\green_resource.png";
+
+    public static final String SURFACE_RED = "Red Resource";
+    public static final String SURFACE_RED_PATH = "assets\\terrain\\red_resource.png";
+
+    public static final String SURFACE_ARTIFACT = "Artifact";
+    public static final String SURFACE_ARTIFACT_PATH = "assets\\terrain\\artifact.png";
+
+    public static final String SURFACE_DRONE= "Drone";
+    public static final String SURFACE_DRONE_PATH = "assets\\terrain\\drone.png";
+
 }

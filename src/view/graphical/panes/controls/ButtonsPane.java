@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import model.states.IState;
+import model.states.concrete.AwaitActionType;
 import model.states.concrete.AwaitMovement;
 import model.states.concrete.AwaitShipSelection;
 import model.states.concrete.StartGame;
@@ -21,6 +22,9 @@ public class ButtonsPane extends HBox
     private ActionButton militaryShipSelectionButton;
     private ActionButton miningShipSelectionButton;
     private ActionButton moveButton;
+    private ActionButton exploreButton;
+    private ActionButton upgradeButton;
+    private ActionButton endTurnButton;
 
     public ButtonsPane(ObservableGame observableGame)
     {
@@ -29,6 +33,9 @@ public class ButtonsPane extends HBox
         militaryShipSelectionButton = new ActionButton("Military Ship");
         miningShipSelectionButton = new ActionButton("Mining Ship");
         moveButton = new ActionButton("Move");
+        exploreButton = new ActionButton("Explore");
+        upgradeButton = new ActionButton("Upgrade");
+        endTurnButton = new ActionButton("End Turn");
 
         setupSize();
         setupLayout();
@@ -47,6 +54,8 @@ public class ButtonsPane extends HBox
         militaryShipSelectionButton.managedProperty().bind(militaryShipSelectionButton.visibleProperty());
         miningShipSelectionButton.managedProperty().bind(miningShipSelectionButton.visibleProperty());
         moveButton.managedProperty().bind(moveButton.visibleProperty());
+        exploreButton.managedProperty().bind(exploreButton.visibleProperty());
+        upgradeButton.managedProperty().bind(upgradeButton.visibleProperty());
 
     }
 
@@ -55,13 +64,21 @@ public class ButtonsPane extends HBox
         getChildren().clear();
         setAlignment(Pos.CENTER);
         setSpacing(10);
+
         militaryShipSelectionButton.setVisible(false);
         miningShipSelectionButton.setVisible(false);
         moveButton.setVisible(false);
+        exploreButton.setVisible(false);
+        upgradeButton.setVisible(false);
+        endTurnButton.setVisible(false);
+
         getChildren().addAll(startGameButton,
                 militaryShipSelectionButton,
                 miningShipSelectionButton,
-                moveButton);
+                moveButton,
+                exploreButton,
+                upgradeButton,
+                endTurnButton);
     }
 
     private void setupListeners()
@@ -70,6 +87,10 @@ public class ButtonsPane extends HBox
         militaryShipSelectionButton.setOnAction(new MilitaryShipSelectionButtonClicked());
         miningShipSelectionButton.setOnAction(new MiningShipSelectionButtonClicked());
         moveButton.setOnAction(new MoveButtonClicked());
+        exploreButton.setOnAction(new ExploreButtonClicked());
+        upgradeButton.setOnAction(new UpgradeButtonClicked());
+        endTurnButton.setOnAction(new EndTurnButtonClicked());
+
     }
 
     public void update()
@@ -83,10 +104,16 @@ public class ButtonsPane extends HBox
 
         moveButton.setVisible(currentState instanceof AwaitMovement);
 
+        exploreButton.setVisible(currentState instanceof AwaitActionType && observableGame.canExplore());
+
+        upgradeButton.setVisible(currentState instanceof AwaitActionType && observableGame.canUpgrade());
+
+        endTurnButton.setVisible(currentState instanceof AwaitActionType);
+
     }
 
     /* Handlers */
-    class StartGameButtonClicked implements EventHandler<ActionEvent>
+    private class StartGameButtonClicked implements EventHandler<ActionEvent>
     {
         @Override
         public void handle(ActionEvent actionEvent)
@@ -95,7 +122,7 @@ public class ButtonsPane extends HBox
         }
     }
 
-    class MilitaryShipSelectionButtonClicked implements EventHandler<ActionEvent>
+    private class MilitaryShipSelectionButtonClicked implements EventHandler<ActionEvent>
     {
         @Override
         public void handle(ActionEvent actionEvent)
@@ -104,7 +131,7 @@ public class ButtonsPane extends HBox
         }
     }
 
-    class MiningShipSelectionButtonClicked implements EventHandler<ActionEvent>
+    private class MiningShipSelectionButtonClicked implements EventHandler<ActionEvent>
     {
         @Override
         public void handle(ActionEvent actionEvent)
@@ -119,6 +146,31 @@ public class ButtonsPane extends HBox
         public void handle(ActionEvent actionEvent)
         {
             observableGame.move();
+        }
+    }
+
+    private class ExploreButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.explore();
+        }
+    }
+
+    private class UpgradeButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            // observableGame.upgrade(); TODO
+        }
+    }
+
+    private class EndTurnButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.endTurn();
         }
     }
 }

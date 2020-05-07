@@ -48,7 +48,8 @@ public class RootPane extends VBox implements PropertyChangeListener
     {
         // TODO setup these listeners
 
-        observableGame.addPropertyChangeListener(EVENT_UPDATE_VIEW_PANE, this);
+        observableGame.addPropertyChangeListener(EVENT_UPDATE_FULL_VIEW_PANE, this);
+        observableGame.addPropertyChangeListener(EVENT_UPDATE_PLANET_SURFACE_PANE, this);
         observableGame.addPropertyChangeListener(EVENT_UPDATE_INTERACTION_PANE, this);
         observableGame.addPropertyChangeListener(EVENT_UPDATE_LOG_PANE, this);
     }
@@ -63,9 +64,11 @@ public class RootPane extends VBox implements PropertyChangeListener
             case EVENT_UPDATE_INTERACTION_PANE:
                 interactionPane.update();
                 break;
-            case EVENT_UPDATE_VIEW_PANE:
+            case EVENT_UPDATE_FULL_VIEW_PANE:
                 viewPane.update();
                 break;
+            case EVENT_UPDATE_PLANET_SURFACE_PANE:
+                viewPane.updatePlanetSurface();
 
         }
         System.out.println("<DEBUG> Got ("+ evt.getPropertyName() + ") @ " + this.getClass());

@@ -10,6 +10,7 @@ public interface GameEnums
 
     enum ResourceType
     {
+        NONE,
         RED,
         GREEN,
         BLUE,
@@ -30,6 +31,14 @@ public interface GameEnums
         BLACK,
         GREEN,
         BLUE,
-        RE
+        RED
+    }
+
+    enum DroneDirection
+    {
+        UP,
+        RIGHT,
+        DOWN,
+        LEFT
     }
 }

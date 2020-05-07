@@ -39,6 +39,16 @@ public class Images
         imageMap.put(BLUE_PLANET, new Image(Resources.getResourceFile(PATH_BLUE_PLANET)));
         imageMap.put(SPACE_STATION, new Image(Resources.getResourceFile(PATH_SPACE_STATION)));
         imageMap.put(EVENT_TOKEN, new Image(Resources.getResourceFile(PATH_EVENT_TOKEN)));
+
+        /* Surface */
+        imageMap.put(SURFACE_NONE, new Image(Resources.getResourceFile(SURFACE_NONE_PATH)));
+        imageMap.put(SURFACE_BLACK, new Image(Resources.getResourceFile(SURFACE_BLACK_PATH)));
+        imageMap.put(SURFACE_BLUE, new Image(Resources.getResourceFile(SURFACE_BLUE_PATH)));
+        imageMap.put(SURFACE_GREEN, new Image(Resources.getResourceFile(SURFACE_GREEN_PATH)));
+        imageMap.put(SURFACE_RED, new Image(Resources.getResourceFile(SURFACE_RED_PATH)));
+        imageMap.put(SURFACE_ARTIFACT, new Image(Resources.getResourceFile(SURFACE_ARTIFACT_PATH)));
+        imageMap.put(SURFACE_DRONE, new Image(Resources.getResourceFile(SURFACE_DRONE_PATH)));
+
     }
 
     public static Image getImage(String name)

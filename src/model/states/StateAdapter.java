@@ -43,4 +43,28 @@ public class StateAdapter implements IState, GameEnums
     {
         return this;
     }
+
+    @Override
+    public IState explore()
+    {
+        return this;
+    }
+
+    @Override
+    public IState moveDrone(DroneDirection droneDirection)
+    {
+        return this;
+    }
+
+    @Override
+    public IState endTurn()
+    {
+        return this;
+    }
+
+    @Override
+    public IState endGame()
+    {
+        return this;
+    }
 }

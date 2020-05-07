@@ -30,6 +30,11 @@ public abstract class Utility
         return values.get(random.nextInt(values.size()));
     }
 
+    public static ResourceType pickRandomResourceFromPossible(List<ResourceType> possibleResources)
+    {
+        return possibleResources.get(random.nextInt(possibleResources.size()));
+    }
+
     public static List<ResourceType> getAvailableResourcesByPlanetType(PlanetType planetType)
     {
         switch (planetType)

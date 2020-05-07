@@ -14,18 +14,19 @@ public class ViewPane extends HBox
 
     private InfoPane infoPane;
     private TravelPane travelPane;
-    //private PlanetPane planetPane;
+    private PlanetSurfacePane planetSurfacePane;
 
     public ViewPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
         infoPane = new InfoPane(observableGame);
         travelPane = new TravelPane(observableGame);
+        planetSurfacePane = new PlanetSurfacePane(observableGame);
 
         // TODO add events to listen here
 
         setupSize();
-        setupLayout();
+        setupPrimaryLayout();
     }
 
     private void setupSize()
@@ -33,7 +34,7 @@ public class ViewPane extends HBox
         setMinHeight(VIEW_PANE_HEIGHT);
     }
 
-    private void setupLayout()
+    private void setupPrimaryLayout()
     {
 
         // TODO Remove me
@@ -46,11 +47,30 @@ public class ViewPane extends HBox
                 travelPane);
     }
 
+    private void setupSecondaryLayout()
+    {
+        // TODO Remove me
+        setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        getChildren().clear();
+
+        getChildren().addAll(infoPane,
+                new Separator(Orientation.VERTICAL),
+                travelPane,
+                new Separator(Orientation.VERTICAL),
+                planetSurfacePane);
+    }
+
     public void update()
     {
         infoPane.update();
         travelPane.update();
     }
 
+    public void updatePlanetSurface()
+    {
+        setupSecondaryLayout();
+        planetSurfacePane.update();
+    }
 
 }

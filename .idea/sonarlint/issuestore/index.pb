@@ -73,3 +73,7 @@ O
 .src/view/graphical/panes/board/TravelPane.java,f\7\f7ddab57e4f50c68ed7a39be0bfc291f51252a24
 J
 src/model/data/Sector.java,8\7\879ca31a3b8c0f4d87aa577730806bdf47851312
+^
+.src/model/states/concrete/AwaitActionType.java,d\f\df15bc8044cbc0af51b4e48e48ce3194e55d48fb
+b
+2src/model/states/concrete/AwaitEventSelection.java,1\1\11418ebe111f1f72ed30ef07fb8f9e5e63240d49

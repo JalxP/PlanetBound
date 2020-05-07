@@ -11,4 +11,8 @@ public interface IState
     IState startGame();
     IState selectShip(ShipType shipType);
     IState move();
+    IState explore();
+    IState moveDrone(DroneDirection droneDirection);
+    IState endTurn();
+    IState endGame();
 }

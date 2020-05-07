@@ -22,17 +22,36 @@ public class TravelSpace
 
     public boolean isCurrentSectorPlanet()
     {
-        return sectorList.get(sectorList.size() - 1).isPlanet();
+        return getCurrentSector().isPlanet();
     }
 
     public boolean isCurrentSectorTravelModeWormHole()
     {
-        return sectorList.get(sectorList.size() - 1).isTravelWormHole();
+        return getCurrentSector().isTravelWormHole();
+    }
+
+    public boolean currentSectorHasSpaceStation()
+    {
+        return getCurrentSector().hasSpaceStation();
     }
 
     public PlanetType getCurrentSectorPlanetType()
     {
-        return sectorList.get(sectorList.size() - 1).getPlanetType();
+        return getCurrentSector().getPlanetType();
     }
 
+    public ResourceType [][] getCurrectSectorPlanetSurface()
+    {
+        return getCurrentSector().getPlanetSurface();
+    }
+
+    public List<ResourceType> getAvailableResourcesOnCurrentSector()
+    {
+        return getCurrentSector().getAvailableResources();
+    }
+
+    private Sector getCurrentSector()
+    {
+        return sectorList.get(sectorList.size() - 1);
+    }
 }

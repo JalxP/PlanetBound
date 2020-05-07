@@ -1,5 +1,7 @@
 package model.data;
 
+import static model.data.Constants.SURFACE_SIDE_SIZE;
+
 public class GameData implements GameEnums
 {
     private Ship ship;
@@ -27,6 +29,17 @@ public class GameData implements GameEnums
     public void move()
     {
         travelSpace.move();
+    }
+
+    public void explore()
+    {
+        // TODO
+    }
+
+    public void endTurn()
+    {
+        // TODO
+        // fuel and stuff
     }
     /* Info */
     public String getShipType()
@@ -60,6 +73,61 @@ public class GameData implements GameEnums
     public PlanetType getCurrentSectorPlanetType()
     {
         return travelSpace.getCurrentSectorPlanetType();
+    }
+
+    public String getShieldAmount()
+    {
+        return ship.getShieldCurrent() + "/" + ship.getShieldMax();
+    }
+
+    public String getFuelAmount()
+    {
+        return ship.getFuelCurrent() + "/" + ship.getFuelMax();
+    }
+
+    public String getDronesAmount()
+    {
+        return ship.getDronesCurrent() + "";
+    }
+
+    public String getArtifactsAmount()
+    {
+        return ship.getArtifactsAmount() + "";
+    }
+
+    public boolean canUpgrade()
+    {
+        return travelSpace.currentSectorHasSpaceStation();
+    }
+
+    public boolean canExplore()
+    {
+        boolean hasDrone = ship.getDronesCurrent() > 0;
+        boolean hasLandingParty = crew.getAliveCount() > 2;
+        boolean hasResources = travelSpace.getAvailableResourcesOnCurrentSector().size() > 0;
+
+        return hasDrone && hasLandingParty && hasResources;
+    }
+
+    public boolean gameIsOver()
+    {
+        return ship.getArtifactsAmount() >= 5;
+    }
+
+    public boolean canContinue()
+    {
+        return ship.getFuelCurrent() > 0 && ship.getShieldCurrent() > 0 && crew.getAliveCount() > 0;
+    }
+
+    public ResourceType [][] getPlanetSurface()
+    {
+        ResourceType [][] original = travelSpace.getCurrectSectorPlanetSurface();
+        ResourceType [][] surface = new ResourceType[SURFACE_SIDE_SIZE][];
+
+        for (int i = 0; i < original.length; i++)
+            surface[i] = original[i].clone();
+
+        return surface;
     }
 
     /* Message */
