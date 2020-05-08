@@ -57,9 +57,6 @@ public class CrewPane extends GridPane
 
     private void setupLayout()
     {
-        setBorder(new Border(new BorderStroke(Color.RED,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
         for (int i = 0; i < 6; i++)
             add(deadCrew.get(i), i, 0);
     }

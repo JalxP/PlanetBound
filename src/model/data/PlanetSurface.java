@@ -10,7 +10,7 @@ import static model.data.Constants.*;
 
 public class PlanetSurface
 {
-    private PlanetType planetType;
+    private final PlanetType planetType;
     private ResourceType[][] surface;
     private List<ResourceType> possibleResources;
     private List<ResourceType> availableResources;
@@ -32,16 +32,16 @@ public class PlanetSurface
         switch (planetType)
         {
             case BLACK:
-                possibleResources = new ArrayList<>(LIST_RESOURCES_ON_BLACK_PLANET);
+                possibleResources = LIST_RESOURCES_ON_BLACK_PLANET;
                 break;
             case GREEN:
-                possibleResources = new ArrayList<>(LIST_RESOURCES_ON_GREEN_PLANET);
+                possibleResources = LIST_RESOURCES_ON_GREEN_PLANET;
                 break;
             case RED:
-                possibleResources = new ArrayList<>(LIST_RESOURCES_ON_RED_PLANET);
+                possibleResources = LIST_RESOURCES_ON_RED_PLANET;
                 break;
             case BLUE:
-                possibleResources = new ArrayList<>(LIST_RESOURCES_ON_BLUE_PLANET);
+                possibleResources = LIST_RESOURCES_ON_BLUE_PLANET;
                 break;
             default: break;
         }
@@ -61,7 +61,7 @@ public class PlanetSurface
         int randomRow = Utility.throwDie(6) - 1;
         int randomCol = Utility.throwDie(6) - 1;
 
-        surface[randomRow][randomCol] = Utility.pickRandomResourceFromPossible(possibleResources);
+        surface[randomRow][randomCol] = Utility.pickRandomResourceFromPossible(availableResources);
 
         do
         {
@@ -75,7 +75,7 @@ public class PlanetSurface
 
     public void removeResourceFromPlanet(ResourceType resourceType)
     {
-        possibleResources.removeIf(r -> r == resourceType);
+        availableResources.removeIf(r -> r == resourceType);
     }
 
     public ResourceType[][] getSurface()

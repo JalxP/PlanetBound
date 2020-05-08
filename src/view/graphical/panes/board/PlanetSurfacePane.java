@@ -2,6 +2,7 @@ package view.graphical.panes.board;
 
 import controller.ObservableGame;
 import javafx.geometry.Pos;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -31,12 +32,22 @@ public class PlanetSurfacePane extends GridPane
         this.observableGame = observableGame;
 
         blackResource = new ImageView(Images.getImage(SURFACE_BLACK));
-        blueResource = new ImageView(Images.getImage(SURFACE_BLACK));
+        Tooltip.install(blackResource, new Tooltip(SURFACE_BLACK));
+
+        blueResource = new ImageView(Images.getImage(SURFACE_BLUE));
+        Tooltip.install(blueResource, new Tooltip(SURFACE_BLUE));
+
         greenResource = new ImageView(Images.getImage(SURFACE_GREEN));
+        Tooltip.install(greenResource, new Tooltip(SURFACE_GREEN));
+
         redResource = new ImageView(Images.getImage(SURFACE_RED));
+        Tooltip.install(redResource, new Tooltip(SURFACE_RED));
 
         artifact = new ImageView(Images.getImage(SURFACE_ARTIFACT));
+        Tooltip.install(artifact, new Tooltip(SURFACE_ARTIFACT));
+
         drone = new ImageView(Images.getImage(SURFACE_DRONE));
+        Tooltip.install(drone, new Tooltip(SURFACE_DRONE));
 
 
     }

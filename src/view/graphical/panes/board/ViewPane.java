@@ -36,22 +36,16 @@ public class ViewPane extends HBox
 
     private void setupPrimaryLayout()
     {
-
-        // TODO Remove me
-        setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         getChildren().clear();
 
         getChildren().addAll(infoPane,
                 new Separator(Orientation.VERTICAL),
-                travelPane);
+                travelPane,
+                new Separator(Orientation.VERTICAL));
     }
 
     private void setupSecondaryLayout()
     {
-        // TODO Remove me
-        setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         getChildren().clear();
 
         getChildren().addAll(infoPane,

@@ -21,11 +21,11 @@ public class InfoPane extends VBox
     public InfoPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
-        shipType = new Text();
+        shipType = new Text("Ship Type");
         shipType.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
         crewTitle = new Text("Crew");
-        crewTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        crewTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 
         crewPane = new CrewPane(observableGame);
 
@@ -38,9 +38,6 @@ public class InfoPane extends VBox
 
     private void setupLayout()
     {
-        setBorder(new Border(new BorderStroke(Color.RED,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
         getChildren().clear();
         getChildren().addAll(shipType,
                 new Separator(),

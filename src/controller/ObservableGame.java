@@ -97,6 +97,16 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.isCurrentSectorTravelModeWormHole();
     }
 
+    public boolean currentSectorHasSpaceStation()
+    {
+        return gameController.currentSectorHasSpaceStation();
+    }
+
+    public boolean currentSectorIsEvent()
+    {
+        return gameController.currentSectorIsEvent();
+    }
+
     public PlanetType getCurrentSectorPlanetType()
     {
         return gameController.getCurrentSectorPlanetType();

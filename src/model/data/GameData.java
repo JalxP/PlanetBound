@@ -29,6 +29,18 @@ public class GameData implements GameEnums
     public void move()
     {
         travelSpace.move();
+
+        if (travelSpace.isCurrentSectorTravelModeWormHole())
+        {
+            //TODO Log me
+            // -3 fuel
+            // -2 shields
+
+            // if no shield officer
+            // -1 extra fuel
+            // -2 extra shields
+
+        }
     }
 
     public void explore()
@@ -68,6 +80,16 @@ public class GameData implements GameEnums
     public boolean isCurrentSectorTravelModeWormHole()
     {
         return travelSpace.isCurrentSectorTravelModeWormHole();
+    }
+
+    public boolean currentSectorHasSpaceStation()
+    {
+        return travelSpace.currentSectorHasSpaceStation();
+    }
+
+    public boolean currentSectorIsEvent()
+    {
+        return !travelSpace.isCurrentSectorPlanet();
     }
 
     public PlanetType getCurrentSectorPlanetType()

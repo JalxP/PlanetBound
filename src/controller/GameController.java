@@ -78,6 +78,16 @@ public class GameController implements GameEnums
         return gameData.isCurrentSectorTravelModeWormHole();
     }
 
+    public boolean currentSectorHasSpaceStation()
+    {
+        return gameData.currentSectorHasSpaceStation();
+    }
+
+    public boolean currentSectorIsEvent()
+    {
+        return gameData.currentSectorIsEvent();
+    }
+
     public PlanetType getCurrentSectorPlanetType()
     {
         return gameData.getCurrentSectorPlanetType();

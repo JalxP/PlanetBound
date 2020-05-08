@@ -1,6 +1,8 @@
 package view.graphical.panes.board;
 
 import controller.ObservableGame;
+import javafx.geometry.Pos;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -15,11 +17,17 @@ import static view.graphical.resources.ResourcesPaths.*;
 import static model.data.Constants.*;
 import static model.data.GameEnums.*;
 
-public class TravelPane extends GridPane
+public class TravelPane extends VBox
 {
     private ObservableGame observableGame;
 
     private final Text travelTitle;
+    private final Text travelTypeTitle;
+    private final Text travelTypeText;
+    private final Text planetTitle;
+    private final Text availableResourcesTitle;
+    private final GridPane planetGridPane;
+    private final GridPane availableResources;
 
     private ImageView unknownPlanet;
     private ImageView greenPlanet;
@@ -35,6 +43,20 @@ public class TravelPane extends GridPane
 
         travelTitle = new Text("Space");
         travelTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+
+        travelTypeTitle = new Text("Travel Type");
+        travelTypeTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        travelTypeText = new Text("*");
+        travelTypeText.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
+
+        planetTitle = new Text("Planet Type");
+        planetTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+
+        availableResourcesTitle = new Text("Available Resources");
+        availableResourcesTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+
+        planetGridPane = new GridPane();
+        availableResources = new GridPane();
 
         unknownPlanet = new ImageView(Images.getImage(UNKNOWN_PLANET));
         greenPlanet = new ImageView(Images.getImage(GREEN_PLANET));
@@ -56,20 +78,30 @@ public class TravelPane extends GridPane
 
     private void setupLayout()
     {
-        // TODO setupLayout() on TravelPane
-        setBorder(new Border(new BorderStroke(Color.RED,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        setAlignment(Pos.TOP_CENTER);
 
-        add(travelTitle,0,0);
-        add(new Text("Travel Mode"), 0,1);
-        add(unknownPlanet, 1,1);
+        planetGridPane.setAlignment(Pos.CENTER);
+        planetGridPane.add(unknownPlanet,0,0);
+
+        getChildren().addAll(travelTitle,
+                new Separator(),
+                travelTypeTitle,
+                travelTypeText,
+                new Separator(),
+                planetTitle,
+                planetGridPane,
+                new Separator(),
+                availableResourcesTitle,
+                availableResources);
     }
 
     public void update()
     {
         getChildren().clear();
+        planetGridPane.getChildren().clear();
+        availableResources.getChildren().clear();
 
-        String travelMode = "Travel mode: ";
+
         ImageView currentPlanet = unknownPlanet;
         PlanetType planetType = observableGame.getCurrentSectorPlanetType();
         if (planetType != null)
@@ -90,14 +122,28 @@ public class TravelPane extends GridPane
                     break;
                 default: break;
             }
-            travelMode += observableGame.isCurrentSectorTravelModeWormHole() ? "wormhole" : "normal";
         }
-        else
-            travelMode += "None";
 
-        add(travelTitle, 0, 0);
-        add(new Text(travelMode), 0, 1);
-        add(currentPlanet, 1, 1);
+        travelTypeText.setText(observableGame.isCurrentSectorTravelModeWormHole() ? "Wormhole" : "Normal");
+
+        planetGridPane.add(currentPlanet, 0, 0);
+
+        /* Extra Layers */
+        if (observableGame.currentSectorHasSpaceStation())
+            planetGridPane.add(spaceStation, 0, 0);
+        if (observableGame.currentSectorIsEvent())
+            planetGridPane.add(eventToken, 0, 0);
+
+        getChildren().addAll(travelTitle,
+                new Separator(),
+                travelTypeTitle,
+                travelTypeText,
+                new Separator(),
+                planetTitle,
+                planetGridPane,
+                new Separator(),
+                availableResourcesTitle,
+                availableResources);
     }
 
     private void setupToolTips()
