@@ -54,6 +54,11 @@ public class GameData implements GameEnums
     public void moveDrone(DroneDirection droneDirection)
     {
         travelSpace.moveDrone(droneDirection);
+        // move alien
+        // check if alien is next to drone
+        // attack him if so
+        // check drone health
+
     }
 
     public void endTurn()

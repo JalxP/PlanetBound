@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.states.IState;
@@ -135,7 +136,6 @@ public class ButtonsPane extends HBox
         rightButton.setOnAction(new RightButtonClicked());
         downButton.setOnAction(new DownButtonClicked());
         leftButton.setOnAction(new LeftButtonClicked());
-
     }
 
     public void update()

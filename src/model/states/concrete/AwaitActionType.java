@@ -17,7 +17,7 @@ public class AwaitActionType extends StateAdapter
     @Override
     public IState explore()
     {
-        getGameData().explore();
+        getGameData().explore(); // TODO is this needed?
 
         return new AwaitExplorationPhase(getGameData());
     }
