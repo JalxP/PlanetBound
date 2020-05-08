@@ -5,6 +5,8 @@ import model.data.GameEnums;
 import model.states.IState;
 import model.states.concrete.StartGame;
 
+import java.util.List;
+
 public class GameController implements GameEnums
 {
     private GameData gameData;
@@ -52,17 +54,17 @@ public class GameController implements GameEnums
         setState(state.endTurn());
     }
 
-    public ResourceType [][] getPlanetSurface()
+    public void moveDrone(DroneDirection droneDirection)
     {
-        return gameData.getPlanetSurface();
+        setState(state.moveDrone(droneDirection));
     }
 
     /* Info */
+
     public String getShipType()
     {
         return gameData.getShipType();
     }
-
     public boolean getCrewStatusByIndex(int i)
     {
         return gameData.getCrewStatusByIndex(i);
@@ -93,6 +95,11 @@ public class GameController implements GameEnums
         return gameData.getCurrentSectorPlanetType();
     }
 
+    public List<ResourceType> getAvailableResourcesOnCurrentPlanet()
+    {
+        return gameData.getAvailableResourcesOnCurrentPlanet();
+    }
+
     public String getShieldAmount()
     {
         return gameData.getShieldAmount();
@@ -111,6 +118,36 @@ public class GameController implements GameEnums
     public String getArtifactsAmount()
     {
         return gameData.getArtifactsAmount();
+    }
+
+    public ResourceType [][] getPlanetSurface()
+    {
+        return gameData.getPlanetSurface();
+    }
+
+    public AlienType getAlienType()
+    {
+        return gameData.getAlienType();
+    }
+
+    public int [] getDronePosition()
+    {
+        return gameData.getDronePosition();
+    }
+
+    public int [] getLandingPosition()
+    {
+        return gameData.getLandingPosition();
+    }
+
+    public int [] getAlienPosition()
+    {
+        return gameData.getAlienPosition();
+    }
+
+    public boolean droneCanMove(DroneDirection droneDirection)
+    {
+        return gameData.droneCanMove(droneDirection);
     }
 
     public boolean canUpgrade()

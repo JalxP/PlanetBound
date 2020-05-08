@@ -48,6 +48,11 @@ public class Images
         imageMap.put(SURFACE_RED, new Image(Resources.getResourceFile(SURFACE_RED_PATH)));
         imageMap.put(SURFACE_ARTIFACT, new Image(Resources.getResourceFile(SURFACE_ARTIFACT_PATH)));
         imageMap.put(SURFACE_DRONE, new Image(Resources.getResourceFile(SURFACE_DRONE_PATH)));
+        imageMap.put(SURFACE_LANDING, new Image(Resources.getResourceFile(SURFACE_LANDING_PATH)));
+        imageMap.put(SURFACE_BLACK_ALIEN, new Image(Resources.getResourceFile(SURFACE_BLACK_ALIEN_PATH)));
+        imageMap.put(SURFACE_BLUE_ALIEN, new Image(Resources.getResourceFile(SURFACE_BLUE_ALIEN_PATH)));
+        imageMap.put(SURFACE_GREEN_ALIEN, new Image(Resources.getResourceFile(SURFACE_GREEN_ALIEN_PATH)));
+        imageMap.put(SURFACE_RED_ALIEN, new Image(Resources.getResourceFile(SURFACE_RED_ALIEN_PATH)));
 
     }
 

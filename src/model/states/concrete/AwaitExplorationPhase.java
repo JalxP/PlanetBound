@@ -14,9 +14,13 @@ public class AwaitExplorationPhase extends StateAdapter
         getGameData().setMessage(DRONE_ACTION_MESSAGE);
     }
 
-//    @Override
-//    public IState moveDrone(DroneDirection droneDirection)
-//    {
-//        // TODO getGameData.moveDrone(droneDirection);
-//    }
+    @Override
+    public IState moveDrone(DroneDirection droneDirection)
+    {
+        getGameData().moveDrone(droneDirection);
+
+        // TODO check if drone can still keep moving here
+
+        return this;
+    }
 }

@@ -7,6 +7,7 @@ import static view.graphical.EventNames.*;
 import static model.data.GameEnums.*;
 
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 
 public class ObservableGame extends PropertyChangeSupport
 {
@@ -44,7 +45,7 @@ public class ObservableGame extends PropertyChangeSupport
     {
         gameController.selectShip(shipType);
 
-        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INFO_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
@@ -53,7 +54,8 @@ public class ObservableGame extends PropertyChangeSupport
     {
         gameController.move();
 
-        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INFO_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_TRAVEL_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
@@ -70,6 +72,15 @@ public class ObservableGame extends PropertyChangeSupport
     public void endTurn()
     {
         gameController.endTurn();
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void moveDrone(DroneDirection droneDirection)
+    {
+        gameController.moveDrone(droneDirection);
 
         firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
@@ -112,6 +123,11 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.getCurrentSectorPlanetType();
     }
 
+    public List<ResourceType> getAvailableResourcesOnCurrentPlanet()
+    {
+        return gameController.getAvailableResourcesOnCurrentPlanet();
+    }
+
     public String getShieldAmount()
     {
         return gameController.getShieldAmount();
@@ -132,6 +148,37 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.getArtifactsAmount();
     }
 
+    public ResourceType [][] getPlanetSurface()
+    {
+        return gameController.getPlanetSurface();
+    }
+
+    public AlienType getAlienType()
+    {
+        return gameController.getAlienType();
+    }
+
+    public int [] getDronePosition()
+    {
+        return gameController.getDronePosition();
+    }
+
+    public int [] getLandingPosition()
+    {
+        return gameController.getLandingPosition();
+    }
+
+    public int [] getAlienPosition()
+    {
+        return gameController.getAlienPosition();
+    }
+
+    public boolean droneCanMove(DroneDirection droneDirection)
+    {
+        return gameController.droneCanMove(droneDirection);
+    }
+
+
     public boolean canUpgrade()
     {
         return gameController.canUpgrade();
@@ -140,11 +187,6 @@ public class ObservableGame extends PropertyChangeSupport
     public boolean canExplore()
     {
         return gameController.canExplore();
-    }
-
-    public ResourceType [][] getPlanetSurface()
-    {
-        return gameController.getPlanetSurface();
     }
 
     /* Log */

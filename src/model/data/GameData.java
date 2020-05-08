@@ -1,5 +1,8 @@
 package model.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static model.data.Constants.SURFACE_SIDE_SIZE;
 
 public class GameData implements GameEnums
@@ -46,6 +49,11 @@ public class GameData implements GameEnums
     public void explore()
     {
         // TODO
+    }
+
+    public void moveDrone(DroneDirection droneDirection)
+    {
+        travelSpace.moveDrone(droneDirection);
     }
 
     public void endTurn()
@@ -150,6 +158,36 @@ public class GameData implements GameEnums
             surface[i] = original[i].clone();
 
         return surface;
+    }
+
+    public AlienType getAlienType()
+    {
+        return travelSpace.getAlienType();
+    }
+
+    public int [] getDronePosition()
+    {
+        return travelSpace.getDronePosition();
+    }
+
+    public int [] getLandingPosition()
+    {
+        return travelSpace.getLandingPosition();
+    }
+
+    public int [] getAlienPosition()
+    {
+        return travelSpace.getAlienPosition();
+    }
+
+    public boolean droneCanMove(DroneDirection droneDirection)
+    {
+        return travelSpace.droneCanMove(droneDirection);
+    }
+
+    public List<ResourceType> getAvailableResourcesOnCurrentPlanet()
+    {
+        return new ArrayList<>(travelSpace.getAvailableResourcesOnCurrentSector());
     }
 
     /* Message */

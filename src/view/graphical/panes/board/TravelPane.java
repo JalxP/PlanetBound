@@ -13,6 +13,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import view.graphical.resources.Images;
 
+import java.util.List;
+
 import static view.graphical.resources.ResourcesPaths.*;
 import static model.data.Constants.*;
 import static model.data.GameEnums.*;
@@ -29,6 +31,7 @@ public class TravelPane extends VBox
     private final GridPane planetGridPane;
     private final GridPane availableResources;
 
+    /* Planets */
     private ImageView unknownPlanet;
     private ImageView greenPlanet;
     private ImageView blackPlanet;
@@ -36,6 +39,13 @@ public class TravelPane extends VBox
     private ImageView bluePlanet;
     private ImageView spaceStation;
     private ImageView eventToken;
+
+    /* Resources */
+    private ImageView blackResource;
+    private ImageView blueResource;
+    private ImageView greenResource;
+    private ImageView redResource;
+    private ImageView artifact;
 
     public TravelPane(ObservableGame observableGame)
     {
@@ -66,6 +76,18 @@ public class TravelPane extends VBox
         spaceStation = new ImageView(Images.getImage(SPACE_STATION));
         eventToken = new ImageView(Images.getImage(EVENT_TOKEN));
 
+        blackResource = new ImageView(Images.getImage(SURFACE_BLACK));
+        blueResource = new ImageView(Images.getImage(SURFACE_BLUE));
+        greenResource = new ImageView(Images.getImage(SURFACE_GREEN));
+        redResource = new ImageView(Images.getImage(SURFACE_RED));
+        artifact = new ImageView(Images.getImage(SURFACE_ARTIFACT));
+
+        Tooltip.install(blackResource, new Tooltip(SURFACE_BLACK));
+        Tooltip.install(blueResource, new Tooltip(SURFACE_BLUE));
+        Tooltip.install(greenResource, new Tooltip(SURFACE_GREEN));
+        Tooltip.install(redResource, new Tooltip(SURFACE_RED));
+        Tooltip.install(artifact, new Tooltip(SURFACE_ARTIFACT));
+
         setupSize();
         setupLayout();
         setupToolTips();
@@ -79,6 +101,8 @@ public class TravelPane extends VBox
     private void setupLayout()
     {
         setAlignment(Pos.TOP_CENTER);
+        availableResources.setHgap(10);
+        availableResources.setVgap(10);
 
         planetGridPane.setAlignment(Pos.CENTER);
         planetGridPane.add(unknownPlanet,0,0);
@@ -128,11 +152,40 @@ public class TravelPane extends VBox
 
         planetGridPane.add(currentPlanet, 0, 0);
 
+        if (observableGame.currentSectorIsEvent())
+            planetGridPane.add(eventToken, 0, 0);
+        else
+        {
+            List<ResourceType> availableResourcesList = observableGame.getAvailableResourcesOnCurrentPlanet();
+            int gridIndex = 0;
+            for (int i = 0; i < availableResourcesList.size(); i++)
+            {
+                switch (availableResourcesList.get(i))
+                {
+                    case ARTIFACT:
+                        availableResources.add(artifact, gridIndex++, 0);
+                        break;
+                    case BLUE:
+                        availableResources.add(blueResource, gridIndex++, 0);
+                        break;
+                    case BLACK:
+                        availableResources.add(blackResource, gridIndex++, 0);
+                        break;
+                    case GREEN:
+                        availableResources.add(greenResource, gridIndex++, 0);
+                        break;
+                    case RED:
+                        availableResources.add(redResource, gridIndex++, 0);
+                        break;
+                    default: break;
+
+                }
+            }
+        }
+
         /* Extra Layers */
         if (observableGame.currentSectorHasSpaceStation())
             planetGridPane.add(spaceStation, 0, 0);
-        if (observableGame.currentSectorIsEvent())
-            planetGridPane.add(eventToken, 0, 0);
 
         getChildren().addAll(travelTitle,
                 new Separator(),
@@ -149,15 +202,9 @@ public class TravelPane extends VBox
     private void setupToolTips()
     {
         Tooltip.install(unknownPlanet, new Tooltip(UNKNOWN_PLANET));
-        Tooltip.install(greenPlanet, new Tooltip(AVAILABLE_RESOURCES +
-                LIST_RESOURCES_ON_GREEN_PLANET));
-        Tooltip.install(blackPlanet, new Tooltip(AVAILABLE_RESOURCES +
-                LIST_RESOURCES_ON_BLACK_PLANET));
-        Tooltip.install(redPlanet, new Tooltip(AVAILABLE_RESOURCES +
-                LIST_RESOURCES_ON_RED_PLANET));
-        Tooltip.install(bluePlanet, new Tooltip(AVAILABLE_RESOURCES +
-                LIST_RESOURCES_ON_BLUE_PLANET));
-        Tooltip.install(greenPlanet, new Tooltip(AVAILABLE_RESOURCES +
-                LIST_RESOURCES_ON_GREEN_PLANET));
+        Tooltip.install(greenPlanet, new Tooltip(GREEN_PLANET));
+        Tooltip.install(blackPlanet, new Tooltip(BLACK_PLANET));
+        Tooltip.install(redPlanet, new Tooltip(RED_PLANET));
+        Tooltip.install(bluePlanet, new Tooltip(BLUE_PLANET));
     }
 }

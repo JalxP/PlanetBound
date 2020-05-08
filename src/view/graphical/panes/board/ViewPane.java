@@ -4,7 +4,6 @@ import controller.ObservableGame;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import static view.graphical.ConstantsUI.*;
 
@@ -59,9 +58,20 @@ public class ViewPane extends HBox
     {
         infoPane.update();
         travelPane.update();
+        planetSurfacePane.update();
     }
 
-    public void updatePlanetSurface()
+    public void updateInfoPane()
+    {
+        infoPane.update();
+    }
+
+    public void updateTravelPane()
+    {
+        travelPane.update();
+    }
+
+    public void updatePlanetSurfacePane()
     {
         setupSecondaryLayout();
         planetSurfacePane.update();

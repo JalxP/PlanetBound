@@ -4,15 +4,16 @@ import controller.ObservableGame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.states.IState;
-import model.states.concrete.AwaitActionType;
-import model.states.concrete.AwaitMovement;
-import model.states.concrete.AwaitShipSelection;
-import model.states.concrete.StartGame;
+import model.states.concrete.*;
+import view.graphical.resources.Images;
 
 import static model.data.GameEnums.*;
 import static view.graphical.ConstantsUI.*;
+import static view.graphical.resources.ResourcesPaths.SURFACE_DRONE;
 
 public class ButtonsPane extends HBox
 {
@@ -26,6 +27,15 @@ public class ButtonsPane extends HBox
     private ActionButton upgradeButton;
     private ActionButton endTurnButton;
 
+    private ActionButton upButton;
+    private ActionButton rightButton;
+    private ActionButton downButton;
+    private ActionButton leftButton;
+
+    private BorderPane movementButtons;
+
+    private ImageView drone;
+
     public ButtonsPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
@@ -36,6 +46,15 @@ public class ButtonsPane extends HBox
         exploreButton = new ActionButton("Explore");
         upgradeButton = new ActionButton("Upgrade");
         endTurnButton = new ActionButton("End Turn");
+
+        upButton = new ActionButton("↑");
+        rightButton = new ActionButton("→");
+        downButton = new ActionButton("↓");
+        leftButton = new ActionButton("←");
+
+        movementButtons = new BorderPane();
+
+        drone = new ImageView(Images.getImage(SURFACE_DRONE));
 
         setupSize();
         setupLayout();
@@ -56,7 +75,12 @@ public class ButtonsPane extends HBox
         moveButton.managedProperty().bind(moveButton.visibleProperty());
         exploreButton.managedProperty().bind(exploreButton.visibleProperty());
         upgradeButton.managedProperty().bind(upgradeButton.visibleProperty());
+        upButton.managedProperty().bind(upButton.visibleProperty());
+        rightButton.managedProperty().bind(rightButton.visibleProperty());
+        downButton.managedProperty().bind(downButton.visibleProperty());
+        leftButton.managedProperty().bind(leftButton.visibleProperty());
 
+        movementButtons.managedProperty().bind(movementButtons.visibleProperty());
     }
 
     private void setupLayout()
@@ -72,13 +96,30 @@ public class ButtonsPane extends HBox
         upgradeButton.setVisible(false);
         endTurnButton.setVisible(false);
 
+        //upButton.setVisible(false);
+        //rightButton.setVisible(false);
+        //downButton.setVisible(false);
+        //leftButton.setVisible(false);
+        movementButtons.setVisible(false);
+
+        movementButtons.setTop(upButton);
+        movementButtons.setAlignment(upButton, Pos.CENTER);
+        movementButtons.setRight(rightButton);
+        movementButtons.setAlignment(rightButton, Pos.CENTER_RIGHT);
+        movementButtons.setBottom(downButton);
+        movementButtons.setAlignment(downButton, Pos.CENTER);
+        movementButtons.setLeft(leftButton);
+        movementButtons.setAlignment(leftButton, Pos.CENTER_LEFT);
+        movementButtons.setCenter(drone);
+
         getChildren().addAll(startGameButton,
                 militaryShipSelectionButton,
                 miningShipSelectionButton,
                 moveButton,
                 exploreButton,
                 upgradeButton,
-                endTurnButton);
+                endTurnButton,
+                movementButtons);
     }
 
     private void setupListeners()
@@ -90,6 +131,10 @@ public class ButtonsPane extends HBox
         exploreButton.setOnAction(new ExploreButtonClicked());
         upgradeButton.setOnAction(new UpgradeButtonClicked());
         endTurnButton.setOnAction(new EndTurnButtonClicked());
+        upButton.setOnAction(new UpButtonClicked());
+        rightButton.setOnAction(new RightButtonClicked());
+        downButton.setOnAction(new DownButtonClicked());
+        leftButton.setOnAction(new LeftButtonClicked());
 
     }
 
@@ -109,6 +154,16 @@ public class ButtonsPane extends HBox
         upgradeButton.setVisible(currentState instanceof AwaitActionType && observableGame.canUpgrade());
 
         endTurnButton.setVisible(currentState instanceof AwaitActionType);
+
+        if (currentState instanceof AwaitExplorationPhase)
+        {
+            movementButtons.setVisible(true);
+
+            upButton.setDisable(!observableGame.droneCanMove(DroneDirection.UP));
+            rightButton.setDisable(!observableGame.droneCanMove(DroneDirection.RIGHT));
+            downButton.setDisable(!observableGame.droneCanMove(DroneDirection.DOWN));
+            leftButton.setDisable(!observableGame.droneCanMove(DroneDirection.LEFT));
+        }
 
     }
 
@@ -171,6 +226,38 @@ public class ButtonsPane extends HBox
         public void handle(ActionEvent actionEvent)
         {
             observableGame.endTurn();
+        }
+    }
+
+    private class UpButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.moveDrone(DroneDirection.UP);
+        }
+    }
+
+    private class RightButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.moveDrone(DroneDirection.RIGHT);
+        }
+    }
+
+    private class DownButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.moveDrone(DroneDirection.DOWN);
+        }
+    }
+
+    private class LeftButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.moveDrone(DroneDirection.LEFT);
         }
     }
 }

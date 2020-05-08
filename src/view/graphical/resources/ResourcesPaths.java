@@ -76,7 +76,22 @@ public class ResourcesPaths
     public static final String SURFACE_ARTIFACT = "Artifact";
     public static final String SURFACE_ARTIFACT_PATH = "assets\\terrain\\artifact.png";
 
-    public static final String SURFACE_DRONE= "Drone";
+    public static final String SURFACE_DRONE = "Drone";
     public static final String SURFACE_DRONE_PATH = "assets\\terrain\\drone.png";
+
+    public static final String SURFACE_LANDING = "Landing Zone";
+    public static final String SURFACE_LANDING_PATH = "assets\\terrain\\landing.png";
+
+    public static final String SURFACE_BLACK_ALIEN = "Black Alien";
+    public static final String SURFACE_BLACK_ALIEN_PATH = "assets\\terrain\\black_alien.png";
+
+    public static final String SURFACE_BLUE_ALIEN = "Blue Alien";
+    public static final String SURFACE_BLUE_ALIEN_PATH = "assets\\terrain\\blue_alien.png";
+
+    public static final String SURFACE_GREEN_ALIEN = "Green Alien";
+    public static final String SURFACE_GREEN_ALIEN_PATH = "assets\\terrain\\green_alien.png";
+
+    public static final String SURFACE_RED_ALIEN = "Red Alien";
+    public static final String SURFACE_RED_ALIEN_PATH = "assets\\terrain\\red_alien.png";
 
 }

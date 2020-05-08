@@ -79,6 +79,11 @@ public class Sector
         return planetSurface.getSurface();
     }
 
+    public AlienType getAlienType()
+    {
+        return planetSurface.getAlienType();
+    }
+
     public int getDroneRow()
     {
         return planetSurface.getDroneRow();
@@ -87,5 +92,46 @@ public class Sector
     public int getDroneCol()
     {
         return planetSurface.getDroneCol();
+    }
+
+    public int getLandingRow()
+    {
+        return planetSurface.getLandingRow();
+    }
+
+    public int getLandingCol()
+    {
+        return planetSurface.getLandingCol();
+    }
+
+    public int getAlienRow()
+    {
+        return planetSurface.getAlienRow();
+    }
+
+    public int getAlienCol()
+    {
+        return planetSurface.getAlienCol();
+    }
+
+    public boolean droneCanMove(DroneDirection droneDirection)
+    {
+        switch (droneDirection)
+        {
+            case UP:
+                return getDroneRow() > 0;
+            case RIGHT:
+                return getDroneCol() < 5;
+            case DOWN:
+                return getDroneRow() < 5;
+            case LEFT:
+                return getDroneCol() > 0;
+            default: return false;
+        }
+    }
+
+    public void moveDrone(DroneDirection droneDirection)
+    {
+        planetSurface.moveDrone(droneDirection);
     }
 }

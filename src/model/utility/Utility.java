@@ -30,6 +30,12 @@ public abstract class Utility
         return values.get(random.nextInt(values.size()));
     }
 
+    public static AlienType getRandomAlienType()
+    {
+        List<AlienType> values = List.of(AlienType.values());
+        return values.get(random.nextInt(values.size()));
+    }
+
     public static ResourceType pickRandomResourceFromPossible(List<ResourceType> possibleResources)
     {
         return possibleResources.get(random.nextInt(possibleResources.size()));
@@ -51,4 +57,5 @@ public abstract class Utility
                 return null;
         }
     }
+
 }
