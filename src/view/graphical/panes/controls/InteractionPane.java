@@ -1,6 +1,7 @@
 package view.graphical.panes.controls;
 
 import controller.ObservableGame;
+import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 
 import static view.graphical.ConstantsUI.*;
@@ -27,7 +28,8 @@ public class InteractionPane extends VBox
 
     private void setupSize()
     {
-        setMinHeight(INTERACTION_PANE_MESSAGE_HEIGHT + INTERACTION_PANE_HEIGHT);
+        setMinHeight(INTERACTION_PANE_MESSAGE_HEIGHT + INTERACTION_PANE_HEIGHT - 10);
+        setMargin(this, new Insets(0,0,10,0));
     }
 
     private void setupLayout()

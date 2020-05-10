@@ -17,8 +17,11 @@ public class Sector
     private PlanetSurface planetSurface;
     private int availableResources;
 
+    private Logger logger;
+
     public Sector(int index)
     {
+        logger = new Logger();
         if (index == 0)
         {
             initialize();
@@ -26,12 +29,20 @@ public class Sector
         }
 
         travelWormHole = Utility.didItHappenWithProbability(PROBABILITY_WORM_HOLE);
+
+        logger.add((travelWormHole) ? "[!]Traveled through a wormhole!" : "[OK]Traveled through space.");
+
         isPlanet = index % 2 != 0;
         if (isPlanet)
         {
             hasSpaceStation = Utility.didItHappenWithProbability(PROBABILITY_SPACE_STATION);
+            logger.add((hasSpaceStation) ? "[!]A space station was detected!": "[OK]No space station detected.");
+
             planetType = Utility.getRandomPlanetType();
+            logger.add("[!]Detected a " + planetType.name() + " planet!");
+
             possibleResources = Utility.getAvailableResourcesByPlanetType(planetType);
+
             availableResources = possibleResources != null ? possibleResources.size() : 0;
             planetSurface = new PlanetSurface(planetType);
         }

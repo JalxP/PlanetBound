@@ -25,10 +25,14 @@ public class PlanetSurface
     private int alienRow;
     private int alienCol;
 
+    private Logger logger;
+
     public PlanetSurface(PlanetType planetType)
     {
         this.planetType = planetType;
         surface = new ResourceType[SURFACE_SIDE_SIZE][SURFACE_SIDE_SIZE];
+
+        logger = new Logger();
 
         getPossibleResources();
         generateSurface();
@@ -70,6 +74,8 @@ public class PlanetSurface
 
         surface[randomRow][randomCol] = Utility.pickRandomResourceFromPossible(availableResources);
 
+        logger.add("[OK]New " + surface[randomRow][randomCol].name() + " generated at (" + randomRow + "," + randomCol + ")");
+
         do
         {
             randomRow = Utility.throwDie(6) - 1;
@@ -77,6 +83,7 @@ public class PlanetSurface
         } while (surface[randomRow][randomCol] != ResourceType.NONE);
 
         // TODO add randomRow and randomCol to LOG
+        logger.add("[OK]New landing zone generated at (" + randomRow + "," + randomCol + ")");
 
         droneRow = randomRow;
         droneCol = randomCol;
@@ -101,6 +108,8 @@ public class PlanetSurface
         alienRow = randomRow;
         alienCol = randomCol;
         alienType = Utility.getRandomAlienType();
+
+        logger.add("[OK]New " + alienType.name() + " generated at (" + randomRow + "," + randomCol + ")");
     }
 
     public void moveDrone(DroneDirection droneDirection)

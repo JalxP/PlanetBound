@@ -101,4 +101,14 @@ public class Ship
     {
         return droneHealth < 1;
     }
+
+    public void decreaseShieldsBy(int amount)
+    {
+        shieldCurrent -= amount;
+    }
+
+    public void decreaseFuelBy(int amount)
+    {
+        fuelCurrent -= amount;
+    }
 }

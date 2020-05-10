@@ -40,7 +40,6 @@ public class PlanetSurfacePane extends VBox
     private ImageView redAlien;
 
 
-
     public PlanetSurfacePane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;

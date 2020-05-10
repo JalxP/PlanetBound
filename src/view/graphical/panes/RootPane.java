@@ -3,6 +3,7 @@ package view.graphical.panes;
 import controller.ObservableGame;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
+import view.graphical.panes.board.LogPane;
 import view.graphical.panes.board.ViewPane;
 import view.graphical.panes.controls.InteractionPane;
 import view.graphical.panes.menu.MenuPane;
@@ -20,6 +21,7 @@ public class RootPane extends VBox implements PropertyChangeListener
     private MenuPane menuPane;
     private ViewPane viewPane;
     private InteractionPane interactionPane;
+    private LogPane logPane;
 
     public RootPane(ObservableGame observableGame)
     {
@@ -27,6 +29,8 @@ public class RootPane extends VBox implements PropertyChangeListener
         menuPane = new MenuPane(observableGame);
         viewPane = new ViewPane(observableGame);
         interactionPane = new InteractionPane(observableGame);
+        logPane = new LogPane(observableGame);
+
 
         setupLayout();
         setupListeners();
@@ -40,7 +44,9 @@ public class RootPane extends VBox implements PropertyChangeListener
                 new Separator(),
                 viewPane,
                 new Separator(),
-                interactionPane
+                interactionPane,
+                new Separator(),
+                logPane
         );
     }
 

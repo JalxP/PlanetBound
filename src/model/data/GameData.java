@@ -35,17 +35,23 @@ public class GameData implements GameEnums
     {
         sectors.add(new Sector(sectors.size()));
 
-
         if (getCurrentSector().isTravelWormHole())
         {
-            //TODO Log me
-            // -3 fuel
-            // -2 shields
+            int spentFuel = (crew.getCrewStatusByIndex(3)) ? 3 : 4;
+            logger.add("[!]Spent " + spentFuel + "fuel units.");
+            ship.decreaseFuelBy(spentFuel);
 
-            // if no shield officer
-            // -1 extra fuel
-            // -2 extra shields
-
+            if (ship.getShieldCurrent() < 1)
+            {
+                crew.killMember();
+                logger.add("[X]A crew member was lost while traveling through the wormhole.");
+            }
+            else
+            {
+                int spentShields = (crew.getCrewStatusByIndex(3)) ? 2 : 4;
+                logger.add("[!]Spent " + spentShields + " shield units.");
+                ship.decreaseShieldsBy(spentShields);
+            }
         }
     }
 
