@@ -15,11 +15,6 @@ public class TravelSpace
         sectorList.add(new Sector(0));
     }
 
-    public void move()
-    {
-        sectorList.add(new Sector(sectorList.size()));
-    }
-
     public boolean isCurrentSectorPlanet()
     {
         return getCurrentSector().isPlanet();
@@ -77,9 +72,29 @@ public class TravelSpace
         return alienPosition;
     }
 
+    public List<ResourceType> getPossibleResources()
+    {
+        return getCurrentSector().getPossibleResources();
+    }
+
+    private Sector getCurrentSector()
+    {
+        return sectorList.get(sectorList.size() - 1);
+    }
+
     public boolean droneCanMove(DroneDirection droneDirection)
     {
         return getCurrentSector().droneCanMove(droneDirection);
+    }
+
+    public boolean droneCanGatherResource()
+    {
+        return getCurrentSector().droneCanGatherResource();
+    }
+
+    public void gatherResource()
+    {
+        getCurrentSector().gatherResource();
     }
 
     public void moveDrone(DroneDirection droneDirection)
@@ -87,13 +102,18 @@ public class TravelSpace
         getCurrentSector().moveDrone(droneDirection);
     }
 
-    public List<ResourceType> getAvailableResourcesOnCurrentSector()
+    public void moveAlien()
     {
-        return getCurrentSector().getAvailableResources();
+        getCurrentSector().moveAlien();
     }
 
-    private Sector getCurrentSector()
+    public boolean alienIsNextToDrone()
     {
-        return sectorList.get(sectorList.size() - 1);
+        return getCurrentSector().alienIsNextToDrone();
+    }
+
+    public void generateAlien()
+    {
+        getCurrentSector().generateAlien();
     }
 }

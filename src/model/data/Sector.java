@@ -15,6 +15,7 @@ public class Sector
     private PlanetType planetType;
     private List<ResourceType> possibleResources;
     private PlanetSurface planetSurface;
+    private int availableResources;
 
     public Sector(int index)
     {
@@ -31,6 +32,7 @@ public class Sector
             hasSpaceStation = Utility.didItHappenWithProbability(PROBABILITY_SPACE_STATION);
             planetType = Utility.getRandomPlanetType();
             possibleResources = Utility.getAvailableResourcesByPlanetType(planetType);
+            availableResources = possibleResources != null ? possibleResources.size() : 0;
             planetSurface = new PlanetSurface(planetType);
         }
     }
@@ -42,6 +44,7 @@ public class Sector
         travelWormHole = false;
         planetType = null;
         possibleResources = null;
+        availableResources = 0;
     }
 
     public boolean isPlanet()
@@ -64,12 +67,7 @@ public class Sector
         return planetType;
     }
 
-    public List<ResourceType> getPossibleResources()
-    {
-        return possibleResources;
-    }
-
-    List<ResourceType> getAvailableResources()
+    List<ResourceType> getPossibleResources()
     {
         return planetSurface.getAvailableResources();
     }
@@ -77,6 +75,11 @@ public class Sector
     public ResourceType[][] getPlanetSurface()
     {
         return planetSurface.getSurface();
+    }
+
+    public int getAvailableResources()
+    {
+        return availableResources;
     }
 
     public AlienType getAlienType()
@@ -130,8 +133,43 @@ public class Sector
         }
     }
 
+    public boolean canLeavePlanet()
+    {
+        return planetSurface.canLeavePlanet();
+    }
+
+    public boolean droneCanGatherResource()
+    {
+        return planetSurface.droneCanGatherResource();
+    }
+
+    public ResourceType getPlanetResource()
+    {
+        return planetSurface.getPlanetResource();
+    }
+
+    public void gatherResource()
+    {
+        planetSurface.gatherResource();
+    }
+
     public void moveDrone(DroneDirection droneDirection)
     {
         planetSurface.moveDrone(droneDirection);
+    }
+
+    public void moveAlien()
+    {
+        planetSurface.moveAlien();
+    }
+
+    public boolean alienIsNextToDrone()
+    {
+        return planetSurface.alienIsNextToDrone();
+    }
+
+    public void generateAlien()
+    {
+        planetSurface.generateAlien();
     }
 }

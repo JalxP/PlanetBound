@@ -4,6 +4,7 @@ import model.data.GameData;
 import model.data.GameEnums;
 
 public class StateAdapter implements IState, GameEnums
+
 {
     private GameData gameData;
 
@@ -39,7 +40,7 @@ public class StateAdapter implements IState, GameEnums
     }
 
     @Override
-    public IState move()
+    public IState travel()
     {
         return this;
     }
@@ -52,6 +53,12 @@ public class StateAdapter implements IState, GameEnums
 
     @Override
     public IState moveDrone(DroneDirection droneDirection)
+    {
+        return this;
+    }
+
+    @Override
+    public IState leavePlanet()
     {
         return this;
     }

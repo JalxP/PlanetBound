@@ -1,8 +1,7 @@
 
-H
-java:S1135&"2Complete the task associated to this TODO comment.(Ãž±ã
 G
 java:S11351"2Complete the task associated to this TODO comment.(ÀþÆ
-a
-java:S1301="KReplace this "switch" statement by "if" statements to increase readability.(ø“Î»
->	java:S131=""Add a default case to this switch.(ø“Î»8þ±ÏÐ™.
+X	java:S125T"<This block of commented-out lines of code should be removed.(Ó¸Ï8Ôè·¢Ÿ.
+H
+java:S1135&"2Complete the task associated to this TODO comment.(Ãž±ã
+>	java:S131B""Add a default case to this switch.(ø“Î»8‚Í­¢Ÿ.

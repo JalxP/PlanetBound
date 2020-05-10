@@ -77,3 +77,15 @@ J
 .src/model/states/concrete/AwaitActionType.java,d\f\df15bc8044cbc0af51b4e48e48ce3194e55d48fb
 b
 2src/model/states/concrete/AwaitEventSelection.java,1\1\11418ebe111f1f72ed30ef07fb8f9e5e63240d49
+U
+%src/model/states/concrete/Defeat.java,8\f\8f1a4aa80e319d96cba5abee053d21d7c46ef20c
+V
+&src/model/states/concrete/Victory.java,3\4\34b634131a8c92251c9c7daa3b1df64b70ab732c
+]
+-src/view/graphical/panes/board/StatsPane.java,f\2\f2d24fc56879cda46fa6ccdd626d45642880a755
+d
+4src/model/states/concrete/AwaitExplorationPhase.java,6\0\6056b92f49b0ee6d5902c9f5b8af5580fbf4efbe
+e
+5src/view/graphical/panes/board/PlanetSurfacePane.java,b\2\b2324c29fcdd527a6708ca9b2778f235ac5bc8bc
+Q
+!src/model/data/PlanetSurface.java,f\0\f085ba516def949e8e73b956a7ed2bc0fa9a0de6

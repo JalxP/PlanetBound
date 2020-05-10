@@ -11,6 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import model.states.concrete.AwaitExplorationPhase;
 import view.graphical.resources.Images;
 
 import static view.graphical.resources.ResourcesPaths.*;
@@ -84,6 +85,8 @@ public class PlanetSurfacePane extends VBox
     {
         getChildren().clear();
         surfaceMap.getChildren().clear();
+        if (!(observableGame.getState() instanceof AwaitExplorationPhase))
+            return;
 
         setAlignment(Pos.TOP_RIGHT);
 
@@ -177,6 +180,7 @@ public class PlanetSurfacePane extends VBox
                 surfaceMap);
     }
 
+    // TODO change setupLayout to Update()
     public void update()
     {
         setupLayout();

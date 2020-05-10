@@ -39,9 +39,9 @@ public class GameController implements GameEnums
         setState(state.selectShip(shipType));
     }
 
-    public void move()
+    public void travel()
     {
-        setState(state.move());
+        setState(state.travel());
     }
 
     public void explore()
@@ -57,6 +57,11 @@ public class GameController implements GameEnums
     public void moveDrone(DroneDirection droneDirection)
     {
         setState(state.moveDrone(droneDirection));
+    }
+
+    public void leavePlanet()
+    {
+        setState(state.leavePlanet());
     }
 
     /* Info */
@@ -115,9 +120,9 @@ public class GameController implements GameEnums
         return gameData.getDronesAmount();
     }
 
-    public String getArtifactsAmount()
+    public String getResourcesAsString(ResourceType resourceType)
     {
-        return gameData.getArtifactsAmount();
+        return gameData.getResourcesAsString(resourceType);
     }
 
     public ResourceType [][] getPlanetSurface()
@@ -160,7 +165,10 @@ public class GameController implements GameEnums
         return gameData.canExplore();
     }
 
-    /* Log */
+    public boolean canLeavePlanet()
+    {
+        return gameData.canLeavePlanet();
+    }
 
     public String getMessage()
     {

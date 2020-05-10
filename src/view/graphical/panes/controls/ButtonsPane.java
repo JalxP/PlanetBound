@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.states.IState;
@@ -23,7 +22,7 @@ public class ButtonsPane extends HBox
     private ActionButton startGameButton;
     private ActionButton militaryShipSelectionButton;
     private ActionButton miningShipSelectionButton;
-    private ActionButton moveButton;
+    private ActionButton travelButton;
     private ActionButton exploreButton;
     private ActionButton upgradeButton;
     private ActionButton endTurnButton;
@@ -32,6 +31,8 @@ public class ButtonsPane extends HBox
     private ActionButton rightButton;
     private ActionButton downButton;
     private ActionButton leftButton;
+
+    private ActionButton leavePlanetButton;
 
     private BorderPane movementButtons;
 
@@ -43,7 +44,7 @@ public class ButtonsPane extends HBox
         startGameButton = new ActionButton("Start Game");
         militaryShipSelectionButton = new ActionButton("Military Ship");
         miningShipSelectionButton = new ActionButton("Mining Ship");
-        moveButton = new ActionButton("Move");
+        travelButton = new ActionButton("Travel");
         exploreButton = new ActionButton("Explore");
         upgradeButton = new ActionButton("Upgrade");
         endTurnButton = new ActionButton("End Turn");
@@ -52,6 +53,8 @@ public class ButtonsPane extends HBox
         rightButton = new ActionButton("→");
         downButton = new ActionButton("↓");
         leftButton = new ActionButton("←");
+
+        leavePlanetButton = new ActionButton("Leave Planet");
 
         movementButtons = new BorderPane();
 
@@ -73,13 +76,14 @@ public class ButtonsPane extends HBox
         startGameButton.managedProperty().bind(startGameButton.visibleProperty());
         militaryShipSelectionButton.managedProperty().bind(militaryShipSelectionButton.visibleProperty());
         miningShipSelectionButton.managedProperty().bind(miningShipSelectionButton.visibleProperty());
-        moveButton.managedProperty().bind(moveButton.visibleProperty());
+        travelButton.managedProperty().bind(travelButton.visibleProperty());
         exploreButton.managedProperty().bind(exploreButton.visibleProperty());
         upgradeButton.managedProperty().bind(upgradeButton.visibleProperty());
         upButton.managedProperty().bind(upButton.visibleProperty());
         rightButton.managedProperty().bind(rightButton.visibleProperty());
         downButton.managedProperty().bind(downButton.visibleProperty());
         leftButton.managedProperty().bind(leftButton.visibleProperty());
+        leavePlanetButton.managedProperty().bind(leavePlanetButton.visibleProperty());
 
         movementButtons.managedProperty().bind(movementButtons.visibleProperty());
     }
@@ -92,15 +96,11 @@ public class ButtonsPane extends HBox
 
         militaryShipSelectionButton.setVisible(false);
         miningShipSelectionButton.setVisible(false);
-        moveButton.setVisible(false);
+        travelButton.setVisible(false);
         exploreButton.setVisible(false);
         upgradeButton.setVisible(false);
         endTurnButton.setVisible(false);
 
-        //upButton.setVisible(false);
-        //rightButton.setVisible(false);
-        //downButton.setVisible(false);
-        //leftButton.setVisible(false);
         movementButtons.setVisible(false);
 
         movementButtons.setTop(upButton);
@@ -113,13 +113,16 @@ public class ButtonsPane extends HBox
         movementButtons.setAlignment(leftButton, Pos.CENTER_LEFT);
         movementButtons.setCenter(drone);
 
+        leavePlanetButton.setVisible(false);
+
         getChildren().addAll(startGameButton,
                 militaryShipSelectionButton,
                 miningShipSelectionButton,
-                moveButton,
+                travelButton,
                 exploreButton,
                 upgradeButton,
                 endTurnButton,
+                leavePlanetButton,
                 movementButtons);
     }
 
@@ -128,7 +131,7 @@ public class ButtonsPane extends HBox
         startGameButton.setOnAction(new StartGameButtonClicked());
         militaryShipSelectionButton.setOnAction(new MilitaryShipSelectionButtonClicked());
         miningShipSelectionButton.setOnAction(new MiningShipSelectionButtonClicked());
-        moveButton.setOnAction(new MoveButtonClicked());
+        travelButton.setOnAction(new MoveButtonClicked());
         exploreButton.setOnAction(new ExploreButtonClicked());
         upgradeButton.setOnAction(new UpgradeButtonClicked());
         endTurnButton.setOnAction(new EndTurnButtonClicked());
@@ -136,6 +139,7 @@ public class ButtonsPane extends HBox
         rightButton.setOnAction(new RightButtonClicked());
         downButton.setOnAction(new DownButtonClicked());
         leftButton.setOnAction(new LeftButtonClicked());
+        leavePlanetButton.setOnAction(new LeavePlanetButtonClicked());
     }
 
     public void update()
@@ -147,7 +151,7 @@ public class ButtonsPane extends HBox
         militaryShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
         miningShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
 
-        moveButton.setVisible(currentState instanceof AwaitMovement);
+        travelButton.setVisible(currentState instanceof AwaitMovement);
 
         exploreButton.setVisible(currentState instanceof AwaitActionType && observableGame.canExplore());
 
@@ -157,14 +161,21 @@ public class ButtonsPane extends HBox
 
         if (currentState instanceof AwaitExplorationPhase)
         {
+            leavePlanetButton.setVisible(true);
             movementButtons.setVisible(true);
 
             upButton.setDisable(!observableGame.droneCanMove(DroneDirection.UP));
             rightButton.setDisable(!observableGame.droneCanMove(DroneDirection.RIGHT));
             downButton.setDisable(!observableGame.droneCanMove(DroneDirection.DOWN));
             leftButton.setDisable(!observableGame.droneCanMove(DroneDirection.LEFT));
-        }
 
+            leavePlanetButton.setDisable(!observableGame.canLeavePlanet());
+        }
+        else
+        {
+            movementButtons.setVisible(false);
+            leavePlanetButton.setVisible(false);
+        }
     }
 
     /* Handlers */
@@ -200,7 +211,7 @@ public class ButtonsPane extends HBox
         @Override
         public void handle(ActionEvent actionEvent)
         {
-            observableGame.move();
+            observableGame.travel();
         }
     }
 
@@ -258,6 +269,14 @@ public class ButtonsPane extends HBox
         public void handle(ActionEvent actionEvent)
         {
             observableGame.moveDrone(DroneDirection.LEFT);
+        }
+    }
+
+    private class LeavePlanetButtonClicked implements EventHandler<ActionEvent>{
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.leavePlanet();
         }
     }
 }

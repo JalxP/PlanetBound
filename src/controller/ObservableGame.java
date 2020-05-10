@@ -50,9 +50,9 @@ public class ObservableGame extends PropertyChangeSupport
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
-    public void move()
+    public void travel()
     {
-        gameController.move();
+        gameController.travel();
 
         firePropertyChange(EVENT_UPDATE_INFO_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_TRAVEL_PANE, null, null);
@@ -81,6 +81,15 @@ public class ObservableGame extends PropertyChangeSupport
     public void moveDrone(DroneDirection droneDirection)
     {
         gameController.moveDrone(droneDirection);
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void leavePlanet()
+    {
+        gameController.leavePlanet();
 
         firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
@@ -143,9 +152,9 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.getDronesAmount();
     }
 
-    public String getArtifactsAmount()
+    public String getResourcesAsString(ResourceType resourceType)
     {
-        return gameController.getArtifactsAmount();
+        return gameController.getResourcesAsString(resourceType);
     }
 
     public ResourceType [][] getPlanetSurface()
@@ -187,6 +196,11 @@ public class ObservableGame extends PropertyChangeSupport
     public boolean canExplore()
     {
         return gameController.canExplore();
+    }
+
+    public boolean canLeavePlanet()
+    {
+        return gameController.canLeavePlanet();
     }
 
     /* Log */

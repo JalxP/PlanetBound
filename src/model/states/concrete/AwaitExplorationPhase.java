@@ -19,8 +19,17 @@ public class AwaitExplorationPhase extends StateAdapter
     {
         getGameData().moveDrone(droneDirection);
 
-        // TODO check if drone can still keep moving here
+        if (getGameData().droneIsAvailable())
+            return this;
+        else
+            return new AwaitActionType(getGameData());
+    }
 
+    @Override
+    public IState leavePlanet()
+    {
+        getGameData().leavePlanet();
+        // TODO
         return this;
     }
 }

@@ -1,27 +1,29 @@
 package model.data;
 
+import model.utility.Utility;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static model.data.Constants.SURFACE_SIDE_SIZE;
+import static model.data.Constants.*;
 
 public class GameData implements GameEnums
 {
     private Ship ship;
     private Crew crew;
-    private TravelSpace travelSpace;
-
+    private List<Sector> sectors;
+    private Logger logger;
     private String message;
-    private StringBuilder log;
 
     public GameData()
     {
         ship = null;
         crew = new Crew();
-        travelSpace = new TravelSpace();
-
+        sectors = new ArrayList<>();
+        sectors.add(new Sector(0));
+        logger = new Logger();
         message = "";
-        log = new StringBuilder();
     }
 
     public void selectShipType(ShipType shipType)
@@ -29,11 +31,12 @@ public class GameData implements GameEnums
         ship = new Ship(shipType);
     }
 
-    public void move()
+    public void travel()
     {
-        travelSpace.move();
+        sectors.add(new Sector(sectors.size()));
 
-        if (travelSpace.isCurrentSectorTravelModeWormHole())
+
+        if (getCurrentSector().isTravelWormHole())
         {
             //TODO Log me
             // -3 fuel
@@ -53,12 +56,22 @@ public class GameData implements GameEnums
 
     public void moveDrone(DroneDirection droneDirection)
     {
-        travelSpace.moveDrone(droneDirection);
-        // move alien
-        // check if alien is next to drone
-        // attack him if so
-        // check drone health
+        getCurrentSector().moveDrone(droneDirection);
+        if (droneCanGatherResource())
+            gatherResource();
 
+        if (!getCurrentSector().alienIsNextToDrone())
+            getCurrentSector().moveAlien();
+
+        while (getCurrentSector().alienIsNextToDrone() && droneIsAvailable())
+        {
+            attack();
+        }
+    }
+
+    public void leavePlanet()
+    {
+        // store the gathered resource
     }
 
     public void endTurn()
@@ -66,6 +79,8 @@ public class GameData implements GameEnums
         // TODO
         // fuel and stuff
     }
+
+
     /* Info */
     public String getShipType()
     {
@@ -87,27 +102,27 @@ public class GameData implements GameEnums
 
     public boolean isCurrentSectorPlanet()
     {
-        return travelSpace.isCurrentSectorPlanet();
+        return getCurrentSector().isPlanet();
     }
 
     public boolean isCurrentSectorTravelModeWormHole()
     {
-        return travelSpace.isCurrentSectorTravelModeWormHole();
+        return getCurrentSector().isTravelWormHole();
     }
 
     public boolean currentSectorHasSpaceStation()
     {
-        return travelSpace.currentSectorHasSpaceStation();
+        return getCurrentSector().hasSpaceStation();
     }
 
     public boolean currentSectorIsEvent()
     {
-        return !travelSpace.isCurrentSectorPlanet();
+        return !getCurrentSector().isPlanet();
     }
 
     public PlanetType getCurrentSectorPlanetType()
     {
-        return travelSpace.getCurrentSectorPlanetType();
+        return getCurrentSector().getPlanetType();
     }
 
     public String getShieldAmount()
@@ -125,28 +140,38 @@ public class GameData implements GameEnums
         return ship.getDronesCurrent() + "";
     }
 
-    public String getArtifactsAmount()
+    public String getResourcesAsString(ResourceType resourceType)
     {
-        return ship.getArtifactsAmount() + "";
+        return ship.getResources(resourceType) + "";
     }
 
     public boolean canUpgrade()
     {
-        return travelSpace.currentSectorHasSpaceStation();
+        return getCurrentSector().hasSpaceStation();
     }
 
     public boolean canExplore()
     {
         boolean hasDrone = ship.getDronesCurrent() > 0;
         boolean hasLandingParty = crew.getAliveCount() > 2;
-        boolean hasResources = travelSpace.getAvailableResourcesOnCurrentSector().size() > 0;
+        boolean hasResources = getCurrentSector().getAvailableResources() > 0;
 
         return hasDrone && hasLandingParty && hasResources;
     }
 
+    public boolean canLeavePlanet()
+    {
+        return getCurrentSector().canLeavePlanet();
+    }
+
+    public boolean droneIsAvailable()
+    {
+        return ship.getDronesCurrent() > 0;
+    }
+
     public boolean gameIsOver()
     {
-        return ship.getArtifactsAmount() >= 5;
+        return ship.getResources(ResourceType.ARTIFACT) >= 5;
     }
 
     public boolean canContinue()
@@ -156,7 +181,7 @@ public class GameData implements GameEnums
 
     public ResourceType [][] getPlanetSurface()
     {
-        ResourceType [][] original = travelSpace.getCurrectSectorPlanetSurface();
+        ResourceType [][] original = getCurrentSector().getPlanetSurface();
         ResourceType [][] surface = new ResourceType[SURFACE_SIDE_SIZE][];
 
         for (int i = 0; i < original.length; i++)
@@ -167,32 +192,121 @@ public class GameData implements GameEnums
 
     public AlienType getAlienType()
     {
-        return travelSpace.getAlienType();
+        return getCurrentSector().getAlienType();
     }
 
     public int [] getDronePosition()
     {
-        return travelSpace.getDronePosition();
+        int [] dronePosition = new int[2];
+        dronePosition[0] = getCurrentSector().getDroneRow();
+        dronePosition[1] = getCurrentSector().getDroneCol();
+
+        return dronePosition;
     }
 
     public int [] getLandingPosition()
     {
-        return travelSpace.getLandingPosition();
+        int [] landingPosition = new int[2];
+        landingPosition[0] = getCurrentSector().getLandingRow();
+        landingPosition[1] = getCurrentSector().getLandingCol();
+
+        return landingPosition;
     }
 
     public int [] getAlienPosition()
     {
-        return travelSpace.getAlienPosition();
+        int [] alienPosition = new int[2];
+        alienPosition[0] = getCurrentSector().getAlienRow();
+        alienPosition[1] = getCurrentSector().getAlienCol();
+
+        return alienPosition;
     }
 
     public boolean droneCanMove(DroneDirection droneDirection)
     {
-        return travelSpace.droneCanMove(droneDirection);
+        return getCurrentSector().droneCanMove(droneDirection);
     }
 
     public List<ResourceType> getAvailableResourcesOnCurrentPlanet()
     {
-        return new ArrayList<>(travelSpace.getAvailableResourcesOnCurrentSector());
+        return new ArrayList<>(getCurrentSector().getPossibleResources());
+    }
+
+    public boolean droneCanGatherResource()
+    {
+        return getCurrentSector().droneCanGatherResource();
+    }
+
+    private void gatherResource()
+    {
+        ResourceType gatheredResource = getCurrentSector().getPlanetResource();
+        getCurrentSector().gatherResource();
+        // TODO log this
+
+    }
+
+    private Sector getCurrentSector()
+    {
+        return sectors.get(sectors.size() - 1);
+    }
+
+    private void attack()
+    {
+        int [] attackPossibilities;
+        int [] deathPossibilities;
+
+        switch (getCurrentSector().getAlienType())
+        {
+            case BLACK:
+                attackPossibilities = BLACK_ALIEN_ATTACK_POSSIBILITIES;
+                deathPossibilities = BLACK_ALIEN_DEATH_POSSIBILITIES;
+                break;
+            case GREEN:
+                attackPossibilities = GREEN_ALIEN_ATTACK_POSSIBILITIES;
+                deathPossibilities =GREEN_ALIEN_DEATH_POSSIBILITIES;
+                break;
+            case BLUE:
+                attackPossibilities = BLUE_ALIEN_ATTACK_POSSIBILITIES;
+                deathPossibilities = BLUE_ALIEN_DEATH_POSSIBILITIES;
+                break;
+            case RED:
+                attackPossibilities = RED_ALIEN_ATTACK_POSSIBILITIES;
+                deathPossibilities = RED_ALIEN_DEATH_POSSIBILITIES;
+                break;
+            default:
+                attackPossibilities = new int[]{};
+                deathPossibilities = new int[]{};
+        }
+
+        /* Alien Attack */
+        System.out.println("ALIEN ATTACK...");
+        // TODO LOG this
+        int roll = Utility.throwDie(6);
+        int finalRoll0 = roll;
+        if (Arrays.stream(attackPossibilities).anyMatch(i -> i == finalRoll0))
+        {
+            System.out.println("ALIEN ATTACK SUCCESS: " + roll);
+            // The alien attack was successful
+            ship.decreaseDroneHealth();
+            if (ship.droneWasDestroyed())
+            {
+                System.out.println("DRONE DESTROYED");
+                // TODO log this
+                return;
+            }
+        }
+
+        System.out.println("DRONE ATTACK...");
+        /* Drone Attack*/
+        roll = Utility.throwDie(6);
+        int finalRoll1 = roll;
+        if (Arrays.stream(deathPossibilities).anyMatch(i -> i == finalRoll1))
+        {
+            System.out.println("DRONE ATTACK SUCCESS: " + roll);
+            // The drone attack was successful
+            // TODO log alien destroyed + rolls, etc.
+            getCurrentSector().generateAlien();
+        }
     }
 
     /* Message */
@@ -205,31 +319,6 @@ public class GameData implements GameEnums
     {
         return message;
     }
-
-    /* Log */
-    private void clearLog()
-    {
-        log.setLength(0);
-    }
-
-    public void setLog(String msg)
-    {
-        clearLog();
-        log.append(msg);
-    }
-
-    public void appendToLog(String msg)
-    {
-        log.append("\n" + msg);
-    }
-
-    public String getLog()
-    {
-        String tmp = log.toString();
-        clearLog();
-        return tmp;
-    }
-
 
 
 }

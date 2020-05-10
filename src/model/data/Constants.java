@@ -28,6 +28,16 @@ public abstract class Constants
     public static final double PROBABILITY_SPACE_STATION = 3/10d;
     public static final double PROBABILITY_WORM_HOLE = 1/8d;
 
+    /* Aliens */
+    public static final int [] BLACK_ALIEN_ATTACK_POSSIBILITIES = {1};
+    public static final int [] BLACK_ALIEN_DEATH_POSSIBILITIES = {5,6};
+    public static final int [] GREEN_ALIEN_ATTACK_POSSIBILITIES = {1,2};
+    public static final int [] GREEN_ALIEN_DEATH_POSSIBILITIES = {4,6};
+    public static final int [] BLUE_ALIEN_ATTACK_POSSIBILITIES = {3,4,5};
+    public static final int [] BLUE_ALIEN_DEATH_POSSIBILITIES = {3,4,5};
+    public static final int [] RED_ALIEN_ATTACK_POSSIBILITIES = {5,6};
+    public static final int [] RED_ALIEN_DEATH_POSSIBILITIES = {1,2};
+
     public static final List<GameEnums.ResourceType> LIST_RESOURCES_ON_GREEN_PLANET = new ArrayList<>(
             Arrays.asList(ResourceType.RED, ResourceType.GREEN));
     public static final List<GameEnums.ResourceType> LIST_RESOURCES_ON_BLACK_PLANET = new ArrayList<>(
@@ -44,7 +54,7 @@ public abstract class Constants
     /* Messages */
     public static final String START_GAME_MESSAGE = "Press Start to begin your game.";
     public static final String SELECT_SHIP_MESSAGE = "Select your type of ship.";
-    public static final String MOVE_SHIP_MESSAGE = "Press Move to move your ship.";
+    public static final String TRAVEL_SHIP_MESSAGE = "Press Travel to advance to next sector.";
     public static final String SELECT_ACTION_MESSAGE = "Select your desired action.";
     public static final String SELECT_EVENT_MESSAGE = "Select your event.";
     public static final String DRONE_ACTION_MESSAGE = "Select drone movement.";

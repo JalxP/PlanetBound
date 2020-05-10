@@ -83,6 +83,14 @@ public class PlanetSurface
         landingRow = droneRow;
         landingCol = droneCol;
 
+        generateAlien();
+    }
+
+    public void generateAlien()
+    {
+        int randomRow;
+        int randomCol;
+
         do
         {
             randomRow = Utility.throwDie(6) - 1;
@@ -112,6 +120,55 @@ public class PlanetSurface
                 droneCol--;
                 break;
         }
+    }
+
+    public void moveAlien()
+    {
+        int rowDistance = Math.abs(droneRow - alienRow);
+        int colDistance = Math.abs(droneCol - alienCol);
+
+        if (rowDistance > colDistance)
+        {
+            if (alienRow > droneRow)
+                alienRow--;
+            else if (alienRow < droneRow)
+                alienRow++;
+        }
+        else
+        {
+            if (alienCol > droneCol)
+                alienCol--;
+            else if (alienCol < droneCol)
+                alienCol++;
+        }
+    }
+
+    public boolean alienIsNextToDrone()
+    {
+        return droneRow + 1 == alienRow && droneCol == alienCol ||
+                droneRow - 1 == alienRow && droneCol == alienCol ||
+                droneCol + 1 == alienCol && droneRow == alienRow ||
+                droneCol - 1 == alienCol && droneRow == alienRow;
+    }
+
+    public boolean droneCanGatherResource()
+    {
+        return surface[droneRow][droneCol] != ResourceType.NONE;
+    }
+
+    public boolean canLeavePlanet()
+    {
+        return droneRow == landingRow && droneCol == landingCol;
+    }
+
+    public ResourceType getPlanetResource()
+    {
+        return surface[droneRow][droneCol];
+    }
+
+    public void gatherResource()
+    {
+        surface[droneRow][droneCol] = ResourceType.NONE;
     }
 
     public void removeResourceFromPlanet(ResourceType resourceType)

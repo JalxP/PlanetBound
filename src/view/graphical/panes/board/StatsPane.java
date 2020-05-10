@@ -10,6 +10,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import static model.data.GameEnums.ResourceType.*;
+
 public class StatsPane extends GridPane
 {
     private final ObservableGame observableGame;
@@ -69,6 +71,6 @@ public class StatsPane extends GridPane
         shieldAmount.setText(" " + observableGame.getShieldAmount());
         fuelAmount.setText(" " + observableGame.getFuelAmount());
         dronesAmount.setText(" " + observableGame.getDronesAmount());
-        artifactsAmount.setText(" " + observableGame.getArtifactsAmount());
+        artifactsAmount.setText(" " + observableGame.getResourcesAsString(ARTIFACT));
     }
 }

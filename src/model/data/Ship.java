@@ -13,6 +13,7 @@ public class Ship
     private int fuelCurrent;
     private final int fuelMax;
     private int dronesCurrent;
+    private int droneHealth;
 
     private int weaponsCurrent;
     //private final int weaponsMax; // TODO initialize weapon stuff
@@ -35,6 +36,7 @@ public class Ship
         }
 
         dronesCurrent = 1;
+        droneHealth = DRONE_MAX_HEALTH;
         shieldCurrent = shieldMax;
         fuelCurrent = fuelMax;
         cargoHold = new CargoHold(maxCargoLevel);
@@ -78,13 +80,25 @@ public class Ship
         return weaponsCurrent;
     }
 
-    public int getArtifactsAmount()
+    public int getResources(ResourceType resourceType)
     {
-        return cargoHold.getArtifacts();
+        return cargoHold.getResources(resourceType);
     }
 
-    /*public int getWeaponsMax()
+    public int getDroneHealth()
     {
-        return weaponsMax;
-    }*/
+        return droneHealth;
+    }
+
+    public void decreaseDroneHealth()
+    {
+        droneHealth--;
+        if (droneHealth < 1)
+            dronesCurrent = 0;
+    }
+
+    public boolean droneWasDestroyed()
+    {
+        return droneHealth < 1;
+    }
 }
