@@ -2,6 +2,7 @@ package model.data;
 
 import model.utility.Utility;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static model.data.Constants.*;
@@ -182,5 +183,16 @@ public class Sector
     public void generateAlien()
     {
         planetSurface.generateAlien();
+        //logger.add(planetSurface.getAllLogs());
+    }
+
+    /* Log */
+    public ArrayList<String> getAllLogs()
+    {
+        return logger.getLogAndClear();
+    }
+    public ArrayList<String> getSurfaceLogs()
+    {
+        return planetSurface.getAllLogs();
     }
 }

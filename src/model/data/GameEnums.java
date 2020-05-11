@@ -41,4 +41,14 @@ public interface GameEnums
         DOWN,
         LEFT
     }
+
+    enum UpgradeType
+    {
+        UPGRADE_CARGO,
+        CONVERT_RESOURCE,
+        HIRE_MEMBER,
+        UPGRADE_WEAPON,
+        FULL_ARMOR,
+        NEW_DRONE
+    }
 }

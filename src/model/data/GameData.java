@@ -34,11 +34,12 @@ public class GameData implements GameEnums
     public void travel()
     {
         sectors.add(new Sector(sectors.size()));
+        logger.add(getCurrentSector().getAllLogs());
 
         if (getCurrentSector().isTravelWormHole())
         {
             int spentFuel = (crew.getCrewStatusByIndex(3)) ? 3 : 4;
-            logger.add("[!]Spent " + spentFuel + "fuel units.");
+            logger.add("[!]Spent " + spentFuel + " fuel units.");
             ship.decreaseFuelBy(spentFuel);
 
             if (ship.getShieldCurrent() < 1)
@@ -57,7 +58,7 @@ public class GameData implements GameEnums
 
     public void explore()
     {
-        // TODO
+        logger.add(getCurrentSector().getSurfaceLogs());
     }
 
     public void moveDrone(DroneDirection droneDirection)
@@ -70,14 +71,15 @@ public class GameData implements GameEnums
             getCurrentSector().moveAlien();
 
         while (getCurrentSector().alienIsNextToDrone() && droneIsAvailable())
-        {
             attack();
-        }
     }
 
     public void leavePlanet()
     {
         // store the gathered resource
+        ship.storeResourceOnCargoHold();
+        logger.add(ship.getAllLogs());
+
     }
 
     public void endTurn()
@@ -85,6 +87,18 @@ public class GameData implements GameEnums
         // TODO
         // fuel and stuff
     }
+
+    public void enterSpaceStation()
+    {
+        logger.add("[OK]The ship has docked on the local space station.");
+    }
+
+    public void upgrade(UpgradeType upgradeType)
+    {
+        System.out.println("Upgrading... " + upgradeType.name());
+    }
+
+
 
 
     /* Info */
@@ -131,6 +145,11 @@ public class GameData implements GameEnums
         return getCurrentSector().getPlanetType();
     }
 
+    public String getCargoHoldMaxAsString()
+    {
+        return (ship == null) ? "*" : ship.getCargoHoldMax() + "";
+    }
+
     public String getShieldAmount()
     {
         return ship.getShieldCurrent() + "/" + ship.getShieldMax();
@@ -151,14 +170,19 @@ public class GameData implements GameEnums
         return ship.getResources(resourceType) + "";
     }
 
-    public boolean canUpgrade()
+    public boolean canEnterSpaceStation()
     {
         return getCurrentSector().hasSpaceStation();
     }
 
+    public boolean canUpgrade(UpgradeType upgradeType)
+    {
+        return true; // TODO CONTINUE HERE!!
+    }
+
     public boolean canExplore()
     {
-        boolean hasDrone = ship.getDronesCurrent() > 0;
+        boolean hasDrone = ship.isDroneOperational();
         boolean hasLandingParty = crew.getAliveCount() > 2;
         boolean hasResources = getCurrentSector().getAvailableResources() > 0;
 
@@ -245,9 +269,10 @@ public class GameData implements GameEnums
 
     private void gatherResource()
     {
-        ResourceType gatheredResource = getCurrentSector().getPlanetResource();
+        ResourceType collectedResource = getCurrentSector().getPlanetResource();
+        ship.storeResourceOnDrone(collectedResource);
         getCurrentSector().gatherResource();
-        // TODO log this
+        logger.add("[OK]The drone has collected the " + collectedResource.name() + " resource.");
 
     }
 
@@ -285,34 +310,34 @@ public class GameData implements GameEnums
         }
 
         /* Alien Attack */
-        System.out.println("ALIEN ATTACK...");
-        // TODO LOG this
+        logger.add("[X]Alien attack.");
         int roll = Utility.throwDie(6);
         int finalRoll0 = roll;
         if (Arrays.stream(attackPossibilities).anyMatch(i -> i == finalRoll0))
         {
-            System.out.println("ALIEN ATTACK SUCCESS: " + roll);
-            // The alien attack was successful
+            logger.add("[!]The alien has attacked the drone -1HP. Rolled: " + roll);
             ship.decreaseDroneHealth();
-            if (ship.droneWasDestroyed())
+            if (!ship.droneIsOperational())
             {
-                System.out.println("DRONE DESTROYED");
-                // TODO log this
+                logger.add("[X]The drone was destroyed.");
                 return;
             }
         }
+        else
+            logger.add("[OK]The alien has missed the drone. Rolled: " + roll);
 
-        System.out.println("DRONE ATTACK...");
         /* Drone Attack*/
+        logger.add("[OK]Drone attack.");
         roll = Utility.throwDie(6);
         int finalRoll1 = roll;
         if (Arrays.stream(deathPossibilities).anyMatch(i -> i == finalRoll1))
         {
-            System.out.println("DRONE ATTACK SUCCESS: " + roll);
-            // The drone attack was successful
-            // TODO log alien destroyed + rolls, etc.
+            logger.add("[OK]The alien was destroyed! Rolled: " + roll);
             getCurrentSector().generateAlien();
+            logger.add(getCurrentSector().getSurfaceLogs());
         }
+        else
+            logger.add("[!]The drone has missed the alien. Rolled: " + roll);
     }
 
     /* Message */
@@ -324,6 +349,11 @@ public class GameData implements GameEnums
     public String getMessage()
     {
         return message;
+    }
+
+    public ArrayList<String> getAllLogs()
+    {
+        return logger.getLogAndClear();
     }
 
 

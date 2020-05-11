@@ -5,6 +5,7 @@ import model.data.GameEnums;
 import model.states.IState;
 import model.states.concrete.StartGame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController implements GameEnums
@@ -64,12 +65,29 @@ public class GameController implements GameEnums
         setState(state.leavePlanet());
     }
 
+    public void enterSpaceStation()
+    {
+        setState(state.enterSpaceStation());
+    }
+
+    public void upgrade(UpgradeType upgradeType)
+    {
+        setState(state.upgrade(upgradeType));
+    }
+
+    public void cancel()
+    {
+        setState(state.cancel());
+    }
+
+
     /* Info */
 
     public String getShipType()
     {
         return gameData.getShipType();
     }
+
     public boolean getCrewStatusByIndex(int i)
     {
         return gameData.getCrewStatusByIndex(i);
@@ -103,6 +121,11 @@ public class GameController implements GameEnums
     public List<ResourceType> getAvailableResourcesOnCurrentPlanet()
     {
         return gameData.getAvailableResourcesOnCurrentPlanet();
+    }
+
+    public String getCargoHoldMaxAsString()
+    {
+        return gameData.getCargoHoldMaxAsString();
     }
 
     public String getShieldAmount()
@@ -155,9 +178,14 @@ public class GameController implements GameEnums
         return gameData.droneCanMove(droneDirection);
     }
 
-    public boolean canUpgrade()
+    public boolean canEnterSpaceStation()
     {
-        return gameData.canUpgrade();
+        return gameData.canEnterSpaceStation();
+    }
+
+    public boolean canUpgrade(UpgradeType upgradeType)
+    {
+        return gameData.canUpgrade(upgradeType);
     }
 
     public boolean canExplore()
@@ -173,6 +201,11 @@ public class GameController implements GameEnums
     public String getMessage()
     {
         return gameData.getMessage();
+    }
+
+    public ArrayList<String> getAllLogs()
+    {
+        return gameData.getAllLogs();
     }
 
 }

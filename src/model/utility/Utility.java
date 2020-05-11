@@ -16,6 +16,7 @@ public abstract class Utility
 
     public static int throwDie(int numSides)
     {
+        random.setSeed(random.nextLong());
         return random.nextInt(numSides) + 1;
     }
 

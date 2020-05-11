@@ -30,6 +30,6 @@ public class AwaitExplorationPhase extends StateAdapter
     {
         getGameData().leavePlanet();
         // TODO
-        return this;
+        return new AwaitActionType(getGameData());
     }
 }

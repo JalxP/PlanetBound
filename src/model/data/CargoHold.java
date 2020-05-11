@@ -2,6 +2,7 @@ package model.data;
 
 import model.utility.Utility;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class CargoHold implements GameEnums
@@ -42,6 +43,11 @@ public class CargoHold implements GameEnums
         return maxLevel;
     }
 
+    public int getCargoHoldMax()
+    {
+        return 6 * currentLevel;
+    }
+
     /* Other methods*/
 
     public boolean canBeUpgraded()
@@ -54,7 +60,7 @@ public class CargoHold implements GameEnums
                 resources.get(ResourceType.BLACK) > 1;
     }
 
-    public void increaseResource(ResourceType resourceType)
+    public void storeResource(ResourceType resourceType)
     {
         if (resourceType == ResourceType.ARTIFACT)
         {
@@ -85,7 +91,7 @@ public class CargoHold implements GameEnums
     private void increaseResource(ResourceType resourceType, String resourceName)
     {
         int resourcesGenerated = Utility.throwDie(6);
-        logger.add("[OK]There were generated " + resourcesGenerated + "resources.");
+        logger.add("[OK]Found " + resourcesGenerated + " resource" + ((resourcesGenerated > 1 ) ? "s.": ".") + " Rolled: " + resourcesGenerated);
 
         int capacity = 6 * currentLevel;
         int before = resources.get(resourceType);
@@ -99,5 +105,10 @@ public class CargoHold implements GameEnums
             logger.add("[!]There was a surplus of " + surplus + " that could not be stored.");
     }
 
+    /* Log */
+    public ArrayList<String> getAllLogs()
+    {
+        return logger.getLogAndClear();
+    }
 
 }

@@ -60,5 +60,6 @@ public abstract class Constants
     public static final String DRONE_ACTION_MESSAGE = "Select drone movement.";
     public static final String VICTORY_MESSAGE = "Congratulations, you won!";
     public static final String DEFEAT_MESSAGE = "You were defeated. Good luck next time.";
+    public static final String SPACE_STATION_MESSAGE = "Select the type of upgrade.";
 
 }

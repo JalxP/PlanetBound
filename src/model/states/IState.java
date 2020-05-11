@@ -14,6 +14,10 @@ public interface IState
     IState explore();
     IState moveDrone(DroneDirection droneDirection);
     IState leavePlanet();
+    IState enterSpaceStation();
+    IState cancel();
+    IState upgrade(UpgradeType upgradeType);
+    //TODO IState convert(ResourceType from, ResourceType to);
     IState endTurn();
     IState endGame();
 }

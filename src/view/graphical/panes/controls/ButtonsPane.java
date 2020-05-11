@@ -20,11 +20,14 @@ public class ButtonsPane extends HBox
     private final ObservableGame observableGame;
 
     private ActionButton startGameButton;
+
     private ActionButton militaryShipSelectionButton;
     private ActionButton miningShipSelectionButton;
+
     private ActionButton travelButton;
     private ActionButton exploreButton;
-    private ActionButton upgradeButton;
+    private ActionButton enterStationButton;
+
     private ActionButton endTurnButton;
 
     private ActionButton upButton;
@@ -34,6 +37,14 @@ public class ButtonsPane extends HBox
 
     private ActionButton leavePlanetButton;
 
+    private ActionButton upgradeCargoButton;
+    private ActionButton convertResourceButton;
+    private ActionButton hireMemberButton;
+    private ActionButton upgradeWeapon;
+    private ActionButton fillArmorButton;
+    private ActionButton buyDroneButton;
+    private ActionButton cancelButton;
+
     private BorderPane movementButtons;
 
     private ImageView drone;
@@ -41,18 +52,30 @@ public class ButtonsPane extends HBox
     public ButtonsPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
+
         startGameButton = new ActionButton("Start Game");
+
         militaryShipSelectionButton = new ActionButton("Military Ship");
         miningShipSelectionButton = new ActionButton("Mining Ship");
+
         travelButton = new ActionButton("Travel");
         exploreButton = new ActionButton("Explore");
-        upgradeButton = new ActionButton("Upgrade");
+        enterStationButton = new ActionButton("Enter Space Station");
+
         endTurnButton = new ActionButton("End Turn");
 
         upButton = new ActionButton("↑");
         rightButton = new ActionButton("→");
         downButton = new ActionButton("↓");
         leftButton = new ActionButton("←");
+
+        upgradeCargoButton = new ActionButton("Upgrade Cargo Hold");
+        convertResourceButton = new ActionButton("Convert Resource");
+        hireMemberButton = new ActionButton("Hire Crew Member");
+        upgradeWeapon = new ActionButton("Upgrade Weapon");
+        fillArmorButton = new ActionButton("Replenish Armor");
+        buyDroneButton = new ActionButton("Buy Drone");
+        cancelButton = new ActionButton("Cancel");
 
         leavePlanetButton = new ActionButton("Leave Planet");
 
@@ -78,14 +101,20 @@ public class ButtonsPane extends HBox
         miningShipSelectionButton.managedProperty().bind(miningShipSelectionButton.visibleProperty());
         travelButton.managedProperty().bind(travelButton.visibleProperty());
         exploreButton.managedProperty().bind(exploreButton.visibleProperty());
-        upgradeButton.managedProperty().bind(upgradeButton.visibleProperty());
+        enterStationButton.managedProperty().bind(enterStationButton.visibleProperty());
         upButton.managedProperty().bind(upButton.visibleProperty());
         rightButton.managedProperty().bind(rightButton.visibleProperty());
         downButton.managedProperty().bind(downButton.visibleProperty());
         leftButton.managedProperty().bind(leftButton.visibleProperty());
         leavePlanetButton.managedProperty().bind(leavePlanetButton.visibleProperty());
-
         movementButtons.managedProperty().bind(movementButtons.visibleProperty());
+        upgradeCargoButton.managedProperty().bind(upgradeCargoButton.visibleProperty());
+        convertResourceButton.managedProperty().bind(convertResourceButton.visibleProperty());
+        hireMemberButton.managedProperty().bind(hireMemberButton.visibleProperty());
+        upgradeWeapon.managedProperty().bind(upgradeWeapon.visibleProperty());
+        fillArmorButton.managedProperty().bind(fillArmorButton.visibleProperty());
+        buyDroneButton.managedProperty().bind(buyDroneButton.visibleProperty());
+        cancelButton.managedProperty().bind(cancelButton.visibleProperty());
     }
 
     private void setupLayout()
@@ -98,7 +127,7 @@ public class ButtonsPane extends HBox
         miningShipSelectionButton.setVisible(false);
         travelButton.setVisible(false);
         exploreButton.setVisible(false);
-        upgradeButton.setVisible(false);
+        enterStationButton.setVisible(false);
         endTurnButton.setVisible(false);
 
         movementButtons.setVisible(false);
@@ -113,6 +142,14 @@ public class ButtonsPane extends HBox
         movementButtons.setAlignment(leftButton, Pos.CENTER_LEFT);
         movementButtons.setCenter(drone);
 
+        upgradeCargoButton.setVisible(false);
+        convertResourceButton.setVisible(false);
+        hireMemberButton.setVisible(false);
+        upgradeWeapon.setVisible(false);
+        fillArmorButton.setVisible(false);
+        buyDroneButton.setVisible(false);
+        cancelButton.setVisible(false);
+
         leavePlanetButton.setVisible(false);
 
         getChildren().addAll(startGameButton,
@@ -120,10 +157,17 @@ public class ButtonsPane extends HBox
                 miningShipSelectionButton,
                 travelButton,
                 exploreButton,
-                upgradeButton,
+                enterStationButton,
                 endTurnButton,
                 leavePlanetButton,
-                movementButtons);
+                movementButtons,
+                upgradeCargoButton,
+                convertResourceButton,
+                hireMemberButton,
+                upgradeWeapon,
+                fillArmorButton,
+                buyDroneButton,
+                cancelButton);
     }
 
     private void setupListeners()
@@ -133,13 +177,20 @@ public class ButtonsPane extends HBox
         miningShipSelectionButton.setOnAction(new MiningShipSelectionButtonClicked());
         travelButton.setOnAction(new MoveButtonClicked());
         exploreButton.setOnAction(new ExploreButtonClicked());
-        upgradeButton.setOnAction(new UpgradeButtonClicked());
+        enterStationButton.setOnAction(new EnterStationButtonClicked());
         endTurnButton.setOnAction(new EndTurnButtonClicked());
         upButton.setOnAction(new UpButtonClicked());
         rightButton.setOnAction(new RightButtonClicked());
         downButton.setOnAction(new DownButtonClicked());
         leftButton.setOnAction(new LeftButtonClicked());
         leavePlanetButton.setOnAction(new LeavePlanetButtonClicked());
+        upgradeCargoButton.setOnAction(new UpgradeCargoButtonClicked());
+        convertResourceButton.setOnAction(new ConvertResourceButtonClicked());
+        hireMemberButton.setOnAction(new HireMemberButtonClicked());
+        upgradeWeapon.setOnAction(new UpgradeWeaponButtonClicked());
+        fillArmorButton.setOnAction(new FillArmorButtonClicked());
+        buyDroneButton.setOnAction(new BuyDroneButtonClicked());
+        cancelButton.setOnAction(new CancelButtonClicked());
     }
 
     public void update()
@@ -155,7 +206,7 @@ public class ButtonsPane extends HBox
 
         exploreButton.setVisible(currentState instanceof AwaitActionType && observableGame.canExplore());
 
-        upgradeButton.setVisible(currentState instanceof AwaitActionType && observableGame.canUpgrade());
+        enterStationButton.setVisible(currentState instanceof AwaitActionType && observableGame.canEnterSpaceStation());
 
         endTurnButton.setVisible(currentState instanceof AwaitActionType);
 
@@ -176,6 +227,21 @@ public class ButtonsPane extends HBox
             movementButtons.setVisible(false);
             leavePlanetButton.setVisible(false);
         }
+
+        upgradeCargoButton.setVisible(currentState instanceof AwaitUpgrade);
+        convertResourceButton.setVisible(currentState instanceof AwaitUpgrade);
+        hireMemberButton.setVisible(currentState instanceof AwaitUpgrade);
+        upgradeWeapon.setVisible(currentState instanceof AwaitUpgrade);
+        fillArmorButton.setVisible(currentState instanceof AwaitUpgrade);
+        buyDroneButton.setVisible(currentState instanceof AwaitUpgrade);
+        cancelButton.setVisible(currentState instanceof AwaitUpgrade);
+
+        upgradeCargoButton.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_CARGO));
+        convertResourceButton.setDisable(!observableGame.canUpgrade(UpgradeType.CONVERT_RESOURCE));
+        hireMemberButton.setDisable(!observableGame.canUpgrade(UpgradeType.HIRE_MEMBER));
+        upgradeWeapon.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_WEAPON));
+        fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
+        buyDroneButton.setDisable(!observableGame.canUpgrade(UpgradeType.NEW_DRONE));
     }
 
     /* Handlers */
@@ -224,15 +290,17 @@ public class ButtonsPane extends HBox
         }
     }
 
-    private class UpgradeButtonClicked implements EventHandler<ActionEvent>{
+    private class EnterStationButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
-            // observableGame.upgrade(); TODO
+            observableGame.enterSpaceStation();
         }
     }
 
-    private class EndTurnButtonClicked implements EventHandler<ActionEvent>{
+    private class EndTurnButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
@@ -240,7 +308,8 @@ public class ButtonsPane extends HBox
         }
     }
 
-    private class UpButtonClicked implements EventHandler<ActionEvent>{
+    private class UpButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
@@ -248,7 +317,8 @@ public class ButtonsPane extends HBox
         }
     }
 
-    private class RightButtonClicked implements EventHandler<ActionEvent>{
+    private class RightButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
@@ -256,7 +326,8 @@ public class ButtonsPane extends HBox
         }
     }
 
-    private class DownButtonClicked implements EventHandler<ActionEvent>{
+    private class DownButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
@@ -264,7 +335,8 @@ public class ButtonsPane extends HBox
         }
     }
 
-    private class LeftButtonClicked implements EventHandler<ActionEvent>{
+    private class LeftButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
@@ -272,11 +344,75 @@ public class ButtonsPane extends HBox
         }
     }
 
-    private class LeavePlanetButtonClicked implements EventHandler<ActionEvent>{
+    private class LeavePlanetButtonClicked implements EventHandler<ActionEvent>
+    {
         @Override
         public void handle(ActionEvent actionEvent)
         {
             observableGame.leavePlanet();
+        }
+    }
+
+    private class UpgradeCargoButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.upgrade(UpgradeType.UPGRADE_CARGO);
+        }
+    }
+
+    private class ConvertResourceButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.upgrade(UpgradeType.CONVERT_RESOURCE);
+        }
+    }
+
+    private class HireMemberButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.upgrade(UpgradeType.HIRE_MEMBER);
+        }
+    }
+
+    private class UpgradeWeaponButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.upgrade(UpgradeType.UPGRADE_WEAPON);
+        }
+    }
+
+    private class FillArmorButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.upgrade(UpgradeType.FULL_ARMOR);
+        }
+    }
+
+    private class BuyDroneButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.upgrade(UpgradeType.NEW_DRONE);
+        }
+    }
+
+    private class CancelButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.cancel();
         }
     }
 }

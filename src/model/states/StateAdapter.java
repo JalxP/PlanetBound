@@ -64,6 +64,24 @@ public class StateAdapter implements IState, GameEnums
     }
 
     @Override
+    public IState enterSpaceStation()
+    {
+        return this;
+    }
+
+    @Override
+    public IState cancel()
+    {
+        return this;
+    }
+
+    @Override
+    public IState upgrade(UpgradeType upgradeType)
+    {
+        return this;
+    }
+
+    @Override
     public IState endTurn()
     {
         return this;

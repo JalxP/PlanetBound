@@ -87,11 +87,11 @@ public class RootPane extends VBox implements PropertyChangeListener
                 interactionPane.update();
                 break;
             case EVENT_UPDATE_LOG_PANE:
-                //logPane.update();
+                logPane.update();
                 break;
 
 
         }
-        System.out.println("<DEBUG> Got ("+ evt.getPropertyName() + ") @ " + this.getClass());
+        // System.out.println("<DEBUG> Got ("+ evt.getPropertyName() + ") @ " + this.getClass());
     }
 }

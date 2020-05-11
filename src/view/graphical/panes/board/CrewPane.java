@@ -1,10 +1,14 @@
 package view.graphical.panes.board;
 
 import controller.ObservableGame;
+import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import view.graphical.resources.Images;
 
 import java.util.ArrayList;
@@ -12,18 +16,26 @@ import java.util.List;
 
 import static view.graphical.resources.ResourcesPaths.*;
 
-public class CrewPane extends GridPane
+public class CrewPane extends VBox
 {
     private ObservableGame observableGame;
 
     private List<ImageView> aliveCrew;
     private List<ImageView> deadCrew;
 
+    private Text crewTitle;
+    private GridPane crew;
+
     public CrewPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
         aliveCrew = new ArrayList<>();
         deadCrew = new ArrayList<>();
+
+        crewTitle = new Text("Crew");
+        crewTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+
+        crew = new GridPane();
 
         aliveCrew.add(new ImageView(Images.getImage(CAPTAIN)));
         aliveCrew.add(new ImageView(Images.getImage(NAVIGATION)));
@@ -58,19 +70,24 @@ public class CrewPane extends GridPane
     private void setupLayout()
     {
         for (int i = 0; i < 6; i++)
-            add(deadCrew.get(i), i, 0);
+            crew.add(deadCrew.get(i), i, 0);
+
+        getChildren().addAll(crewTitle,
+                crew);
     }
 
     public void update()
     {
         getChildren().clear();
+        crew.getChildren().clear();
         for (int i = 0; i < 6; i++)
         {
             if (observableGame.getCrewStatusByIndex(i))
-                add(aliveCrew.get(i), i, 0);
+                crew.add(aliveCrew.get(i), i, 0);
             else
-                add(deadCrew.get(i), i, 0);
+                crew.add(deadCrew.get(i), i, 0);
         }
-
+        getChildren().addAll(crewTitle,
+                crew);
     }
 }

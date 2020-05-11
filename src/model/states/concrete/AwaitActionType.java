@@ -34,4 +34,12 @@ public class AwaitActionType extends StateAdapter
 
         return new Defeat(getGameData());
     }
+
+    @Override
+    public IState enterSpaceStation()
+    {
+        getGameData().enterSpaceStation();
+
+        return new AwaitUpgrade(getGameData());
+    }
 }

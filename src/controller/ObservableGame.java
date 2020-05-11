@@ -7,6 +7,7 @@ import static view.graphical.EventNames.*;
 import static model.data.GameEnums.*;
 
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ObservableGame extends PropertyChangeSupport
@@ -96,6 +97,33 @@ public class ObservableGame extends PropertyChangeSupport
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
+    public void enterSpaceStation()
+    {
+        gameController.enterSpaceStation();
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void upgrade(UpgradeType upgradeType)
+    {
+        gameController.upgrade(upgradeType);
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void cancel()
+    {
+        gameController.cancel();
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
     /* Info */
     public String getShipType()
     {
@@ -135,6 +163,11 @@ public class ObservableGame extends PropertyChangeSupport
     public List<ResourceType> getAvailableResourcesOnCurrentPlanet()
     {
         return gameController.getAvailableResourcesOnCurrentPlanet();
+    }
+
+    public String getCargoHoldMaxAsString()
+    {
+        return gameController.getCargoHoldMaxAsString();
     }
 
     public String getShieldAmount()
@@ -187,10 +220,14 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.droneCanMove(droneDirection);
     }
 
-
-    public boolean canUpgrade()
+    public boolean canEnterSpaceStation()
     {
-        return gameController.canUpgrade();
+        return gameController.canEnterSpaceStation();
+    }
+
+    public boolean canUpgrade(UpgradeType upgradeType)
+    {
+        return gameController.canUpgrade(upgradeType);
     }
 
     public boolean canExplore()
@@ -207,5 +244,10 @@ public class ObservableGame extends PropertyChangeSupport
     public String getMessage()
     {
         return gameController.getMessage();
+    }
+
+    public ArrayList<String> getAllLogs()
+    {
+        return gameController.getAllLogs();
     }
 }

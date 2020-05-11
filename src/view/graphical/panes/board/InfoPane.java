@@ -14,9 +14,9 @@ public class InfoPane extends VBox
     private final ObservableGame observableGame;
 
     private final Text shipType;
-    private final Text crewTitle;
     private final CrewPane crewPane;
     private final StatsPane statsPane;
+    private final CargoHoldPane cargoHoldPane;
 
     public InfoPane(ObservableGame observableGame)
     {
@@ -24,12 +24,9 @@ public class InfoPane extends VBox
         shipType = new Text("Ship Type");
         shipType.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 
-        crewTitle = new Text("Crew");
-        crewTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-
         crewPane = new CrewPane(observableGame);
-
         statsPane = new StatsPane(observableGame);
+        cargoHoldPane = new CargoHoldPane(observableGame);
 
 
         setupLayout();
@@ -41,10 +38,11 @@ public class InfoPane extends VBox
         getChildren().clear();
         getChildren().addAll(shipType,
                 new Separator(),
-                crewTitle,
                 crewPane,
                 new Separator(),
-                statsPane);
+                statsPane,
+                new Separator(),
+                cargoHoldPane);
     }
 
     private void setupListeners()
@@ -57,5 +55,6 @@ public class InfoPane extends VBox
         shipType.setText(observableGame.getShipType());
         crewPane.update();
         statsPane.update();
+        cargoHoldPane.update();
     }
 }

@@ -2,18 +2,21 @@ package model.data;
 
 import model.data.GameEnums.*;
 
+import java.util.ArrayList;
+
 import static model.data.Constants.*;
 
 public class Ship
 {
     private ShipType shipType;
     private CargoHold cargoHold;
+    private Drone drone;
     private int shieldCurrent;
     private final int shieldMax;
     private int fuelCurrent;
     private final int fuelMax;
-    private int dronesCurrent;
-    private int droneHealth;
+
+    private Logger logger;
 
     private int weaponsCurrent;
     //private final int weaponsMax; // TODO initialize weapon stuff
@@ -35,11 +38,11 @@ public class Ship
             fuelMax = MINING_SHIP_MAX_FUEL_CAPACITY;
         }
 
-        dronesCurrent = 1;
-        droneHealth = DRONE_MAX_HEALTH;
         shieldCurrent = shieldMax;
         fuelCurrent = fuelMax;
         cargoHold = new CargoHold(maxCargoLevel);
+        drone = new Drone();
+        logger = new Logger();
     }
 
 
@@ -72,7 +75,12 @@ public class Ship
 
     public int getDronesCurrent()
     {
-        return dronesCurrent;
+        return (drone.isOperational()) ? 1 : 0;
+    }
+
+    public boolean isDroneOperational()
+    {
+        return drone.isOperational();
     }
 
     public int getWeaponsCurrent()
@@ -87,19 +95,22 @@ public class Ship
 
     public int getDroneHealth()
     {
-        return droneHealth;
+        return drone.getHealth();
+    }
+
+    public int getCargoHoldMax()
+    {
+        return cargoHold.getCargoHoldMax();
     }
 
     public void decreaseDroneHealth()
     {
-        droneHealth--;
-        if (droneHealth < 1)
-            dronesCurrent = 0;
+        drone.decreaseHealth();
     }
 
-    public boolean droneWasDestroyed()
+    public boolean droneIsOperational()
     {
-        return droneHealth < 1;
+        return drone.isOperational();
     }
 
     public void decreaseShieldsBy(int amount)
@@ -110,5 +121,23 @@ public class Ship
     public void decreaseFuelBy(int amount)
     {
         fuelCurrent -= amount;
+    }
+
+    public void storeResourceOnCargoHold()
+    {
+        cargoHold.storeResource(drone.getStoredResource());
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public void storeResourceOnDrone(ResourceType resourceType)
+    {
+        drone.storeResource(resourceType);
+    }
+
+    /* Log */
+
+    public ArrayList<String> getAllLogs()
+    {
+        return logger.getLogAndClear();
     }
 }

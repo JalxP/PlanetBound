@@ -74,7 +74,7 @@ public class PlanetSurface
 
         surface[randomRow][randomCol] = Utility.pickRandomResourceFromPossible(availableResources);
 
-        logger.add("[OK]New " + surface[randomRow][randomCol].name() + " generated at (" + randomRow + "," + randomCol + ")");
+        logger.add("[OK]New " + surface[randomRow][randomCol].name() + " resource generated at (" + (randomRow+1) + "," + (randomCol+1) + ")");
 
         do
         {
@@ -83,7 +83,7 @@ public class PlanetSurface
         } while (surface[randomRow][randomCol] != ResourceType.NONE);
 
         // TODO add randomRow and randomCol to LOG
-        logger.add("[OK]New landing zone generated at (" + randomRow + "," + randomCol + ")");
+        logger.add("[OK]New landing zone generated at (" + (randomRow+1) + "," + (randomCol+1) + ")");
 
         droneRow = randomRow;
         droneCol = randomCol;
@@ -109,7 +109,7 @@ public class PlanetSurface
         alienCol = randomCol;
         alienType = Utility.getRandomAlienType();
 
-        logger.add("[OK]New " + alienType.name() + " generated at (" + randomRow + "," + randomCol + ")");
+        logger.add("[OK]New " + alienType.name() + " alien generated at (" + (randomRow+1) + "," + (randomCol+1) + ")");
     }
 
     public void moveDrone(DroneDirection droneDirection)
@@ -180,11 +180,6 @@ public class PlanetSurface
         surface[droneRow][droneCol] = ResourceType.NONE;
     }
 
-    public void removeResourceFromPlanet(ResourceType resourceType)
-    {
-        availableResources.removeIf(r -> r == resourceType);
-    }
-
     public ResourceType[][] getSurface()
     {
         return surface;
@@ -228,5 +223,11 @@ public class PlanetSurface
     public List<ResourceType> getAvailableResources()
     {
         return availableResources;
+    }
+
+    /* Log */
+    public ArrayList<String> getAllLogs()
+    {
+        return logger.getLogAndClear();
     }
 }

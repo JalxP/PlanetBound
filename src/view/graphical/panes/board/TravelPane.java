@@ -82,15 +82,25 @@ public class TravelPane extends VBox
         redResource = new ImageView(Images.getImage(SURFACE_RED));
         artifact = new ImageView(Images.getImage(SURFACE_ARTIFACT));
 
+        setupSize();
+        setupLayout();
+        setupToolTips();
+    }
+
+    private void setupToolTips()
+    {
+        Tooltip.install(unknownPlanet, new Tooltip(UNKNOWN_PLANET));
+        Tooltip.install(greenPlanet, new Tooltip(GREEN_PLANET));
+        Tooltip.install(blackPlanet, new Tooltip(BLACK_PLANET));
+        Tooltip.install(redPlanet, new Tooltip(RED_PLANET));
+        Tooltip.install(bluePlanet, new Tooltip(BLUE_PLANET));
         Tooltip.install(blackResource, new Tooltip(SURFACE_BLACK));
         Tooltip.install(blueResource, new Tooltip(SURFACE_BLUE));
         Tooltip.install(greenResource, new Tooltip(SURFACE_GREEN));
         Tooltip.install(redResource, new Tooltip(SURFACE_RED));
         Tooltip.install(artifact, new Tooltip(SURFACE_ARTIFACT));
-
-        setupSize();
-        setupLayout();
-        setupToolTips();
+        Tooltip.install(spaceStation, new Tooltip(SPACE_STATION));
+        Tooltip.install(eventToken, new Tooltip(EVENT_TOKEN));
     }
 
     private void setupSize()
@@ -197,14 +207,5 @@ public class TravelPane extends VBox
                 new Separator(),
                 availableResourcesTitle,
                 availableResources);
-    }
-
-    private void setupToolTips()
-    {
-        Tooltip.install(unknownPlanet, new Tooltip(UNKNOWN_PLANET));
-        Tooltip.install(greenPlanet, new Tooltip(GREEN_PLANET));
-        Tooltip.install(blackPlanet, new Tooltip(BLACK_PLANET));
-        Tooltip.install(redPlanet, new Tooltip(RED_PLANET));
-        Tooltip.install(bluePlanet, new Tooltip(BLUE_PLANET));
     }
 }
