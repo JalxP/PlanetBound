@@ -109,8 +109,9 @@ public class GameData implements GameEnums
 
     public void convertResource(ResourceType from, ResourceType to)
     {
-        // TODO this
+        ship.convertResource(from, to);
         ship.setCanConvertResources(false);
+        logger.add("[OK]Converted 1 " + from.name() + " resource into 1 " + to.name() + " resource.");
     }
 
 

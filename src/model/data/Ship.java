@@ -152,6 +152,11 @@ public class Ship
         cargoHold.setCanConvertResources(option);
     }
 
+    public void convertResource(ResourceType from, ResourceType to)
+    {
+        cargoHold.convertResource(from, to);
+    }
+
     public boolean canConvertResources()
     {
         return cargoHold.canConvertResources();

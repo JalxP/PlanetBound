@@ -73,19 +73,22 @@ public class CargoHold implements GameEnums
             return;
         }
 
+        int resourcesGenerated = Utility.throwDie(6);
+        logger.add("[OK]Found " + resourcesGenerated + " resource" + ((resourcesGenerated > 1 ) ? "s.": ".") + " Rolled: " + resourcesGenerated);
+
         switch (resourceType)
         {
             case RED:
-                increaseResource(ResourceType.RED, "Red Resource");
+                increaseResource(ResourceType.RED, resourcesGenerated);
                 break;
             case GREEN:
-                increaseResource(ResourceType.GREEN, "Green Resource");
+                increaseResource(ResourceType.GREEN, resourcesGenerated);
                 break;
             case BLUE:
-                increaseResource(ResourceType.BLUE, "Blue Resource");
+                increaseResource(ResourceType.BLUE, resourcesGenerated);
                 break;
             case BLACK:
-                increaseResource(ResourceType.BLACK, "Black Resource");
+                increaseResource(ResourceType.BLACK, resourcesGenerated);
                 break;
             default:
                 break;
@@ -106,10 +109,8 @@ public class CargoHold implements GameEnums
         return resources.get(resourceType) > 0;
     }
 
-    private void increaseResource(ResourceType resourceType, String resourceName)
+    private void increaseResource(ResourceType resourceType, int resourcesGenerated)
     {
-        int resourcesGenerated = Utility.throwDie(6);
-        logger.add("[OK]Found " + resourcesGenerated + " resource" + ((resourcesGenerated > 1 ) ? "s.": ".") + " Rolled: " + resourcesGenerated);
 
         int capacity = 6 * currentLevel;
         int before = resources.get(resourceType);
@@ -117,7 +118,7 @@ public class CargoHold implements GameEnums
         resources.put(resourceType, Math.min(before + resourcesGenerated, capacity));
         int stored = resources.get(resourceType) - before;
 
-        logger.add("[OK]Stored " + stored + " " + resourceName + ((stored > 1) ? "s." : "."));
+        logger.add("[OK]Stored " + stored + " " + resourceType.name() + " resource" + ((stored > 1) ? "s." : "."));
 
         if (surplus > 0)
             logger.add("[!]There was a surplus of " + surplus + " that could not be stored.");
@@ -126,6 +127,12 @@ public class CargoHold implements GameEnums
     public void setCanConvertResources(boolean option)
     {
         canConvertResources = option;
+    }
+
+    public void convertResource(ResourceType from, ResourceType to)
+    {
+        resources.put(from, (resources.get(from) - 1));
+        increaseResource(to, 1);
     }
 
     public boolean canConvertResources()
