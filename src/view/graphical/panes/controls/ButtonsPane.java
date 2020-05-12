@@ -4,50 +4,62 @@ import controller.ObservableGame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.states.IState;
 import model.states.concrete.*;
+import view.graphical.panes.board.ConversionPane;
 import view.graphical.resources.Images;
 
 import static model.data.GameEnums.*;
 import static view.graphical.ConstantsUI.*;
-import static view.graphical.resources.ResourcesPaths.SURFACE_DRONE;
+import static view.graphical.resources.ResourcesPaths.*;
 
 public class ButtonsPane extends HBox
 {
     private final ObservableGame observableGame;
 
-    private ActionButton startGameButton;
+    private final ActionButton startGameButton;
 
-    private ActionButton militaryShipSelectionButton;
-    private ActionButton miningShipSelectionButton;
+    private final ActionButton militaryShipSelectionButton;
+    private final ActionButton miningShipSelectionButton;
 
-    private ActionButton travelButton;
-    private ActionButton exploreButton;
-    private ActionButton enterStationButton;
+    private final ActionButton travelButton;
+    private final ActionButton exploreButton;
+    private final ActionButton enterStationButton;
 
-    private ActionButton endTurnButton;
+    private final ActionButton endTurnButton;
 
-    private ActionButton upButton;
-    private ActionButton rightButton;
-    private ActionButton downButton;
-    private ActionButton leftButton;
+    private final ActionButton upButton;
+    private final ActionButton rightButton;
+    private final ActionButton downButton;
+    private final ActionButton leftButton;
 
-    private ActionButton leavePlanetButton;
+    private final ActionButton leavePlanetButton;
 
-    private ActionButton upgradeCargoButton;
-    private ActionButton convertResourceButton;
-    private ActionButton hireMemberButton;
-    private ActionButton upgradeWeapon;
-    private ActionButton fillArmorButton;
-    private ActionButton buyDroneButton;
-    private ActionButton cancelButton;
+    private final ActionButton maintainShipButton;
+    private final ActionButton acquireShieldButton;
+    private final ActionButton acquireAmmoButton;
+    private final ActionButton acquireFuelButton;
+    public  final ActionButton acquireDroneRepair;
 
-    private BorderPane movementButtons;
+    private final ActionButton convertResourceButton;
+    private final ActionButton fillArmorButton;
 
-    private ImageView drone;
+    private final ActionButton upgradeCargoButton;
+    private final ActionButton hireMemberButton;
+    private final ActionButton upgradeWeapon;
+    private final ActionButton buyDroneButton;
+    private final ActionButton cancelButton;
+
+    private final BorderPane movementButtons;
+
+    private final ImageView drone;
+    private final ConversionPane conversionPane;
+
 
     public ButtonsPane(ObservableGame observableGame)
     {
@@ -79,15 +91,25 @@ public class ButtonsPane extends HBox
 
         leavePlanetButton = new ActionButton("Leave Planet");
 
+        maintainShipButton = new ActionButton("Maintain Ship");
+        acquireShieldButton = new ActionButton("+1 Shield");
+        acquireAmmoButton = new ActionButton("+1 Ammo");
+        acquireFuelButton = new ActionButton("+1 Fuel");
+        acquireDroneRepair = new ActionButton("Repair Drone");
+
         movementButtons = new BorderPane();
 
         drone = new ImageView(Images.getImage(SURFACE_DRONE));
+
+        conversionPane = new ConversionPane(observableGame);
 
         setupSize();
         setupLayout();
         setupListeners();
         bindButtonsVisibilityToLayout();
     }
+
+
 
     private void setupSize()
     {
@@ -107,6 +129,11 @@ public class ButtonsPane extends HBox
         downButton.managedProperty().bind(downButton.visibleProperty());
         leftButton.managedProperty().bind(leftButton.visibleProperty());
         leavePlanetButton.managedProperty().bind(leavePlanetButton.visibleProperty());
+        maintainShipButton.managedProperty().bind(maintainShipButton.visibleProperty());
+        acquireShieldButton.managedProperty().bind(acquireShieldButton.visibleProperty());
+        acquireAmmoButton.managedProperty().bind(acquireAmmoButton.visibleProperty());
+        acquireFuelButton.managedProperty().bind(acquireFuelButton.visibleProperty());
+        acquireDroneRepair.managedProperty().bind(acquireDroneRepair.visibleProperty());
         movementButtons.managedProperty().bind(movementButtons.visibleProperty());
         upgradeCargoButton.managedProperty().bind(upgradeCargoButton.visibleProperty());
         convertResourceButton.managedProperty().bind(convertResourceButton.visibleProperty());
@@ -115,6 +142,7 @@ public class ButtonsPane extends HBox
         fillArmorButton.managedProperty().bind(fillArmorButton.visibleProperty());
         buyDroneButton.managedProperty().bind(buyDroneButton.visibleProperty());
         cancelButton.managedProperty().bind(cancelButton.visibleProperty());
+        conversionPane.managedProperty().bind(conversionPane.visibleProperty());
     }
 
     private void setupLayout()
@@ -152,14 +180,26 @@ public class ButtonsPane extends HBox
 
         leavePlanetButton.setVisible(false);
 
+        maintainShipButton.setVisible(false);
+        acquireShieldButton.setVisible(false);
+        acquireAmmoButton.setVisible(false);
+        acquireFuelButton.setVisible(false);
+        acquireDroneRepair.setVisible(false);
+
+        conversionPane.setVisible(false);
+
         getChildren().addAll(startGameButton,
                 militaryShipSelectionButton,
                 miningShipSelectionButton,
                 travelButton,
                 exploreButton,
                 enterStationButton,
-                endTurnButton,
                 leavePlanetButton,
+                maintainShipButton,
+                acquireShieldButton,
+                acquireAmmoButton,
+                acquireFuelButton,
+                acquireDroneRepair,
                 movementButtons,
                 upgradeCargoButton,
                 convertResourceButton,
@@ -167,7 +207,9 @@ public class ButtonsPane extends HBox
                 upgradeWeapon,
                 fillArmorButton,
                 buyDroneButton,
-                cancelButton);
+                conversionPane,
+                cancelButton,
+                endTurnButton);
     }
 
     private void setupListeners()
@@ -184,6 +226,11 @@ public class ButtonsPane extends HBox
         downButton.setOnAction(new DownButtonClicked());
         leftButton.setOnAction(new LeftButtonClicked());
         leavePlanetButton.setOnAction(new LeavePlanetButtonClicked());
+        maintainShipButton.setOnAction(new MaintainShipButtonClicked());
+        acquireShieldButton.setOnAction(new AcquireShieldButtonClicked());
+        acquireAmmoButton.setOnAction(new AcquireAmmoButtonClicked());
+        acquireFuelButton.setOnAction(new AcquireFuelButtonClicked());
+        acquireDroneRepair.setOnAction(new AcquireDroneRepairButtonClicked());
         upgradeCargoButton.setOnAction(new UpgradeCargoButtonClicked());
         convertResourceButton.setOnAction(new ConvertResourceButtonClicked());
         hireMemberButton.setOnAction(new HireMemberButtonClicked());
@@ -195,21 +242,26 @@ public class ButtonsPane extends HBox
 
     public void update()
     {
+        conversionPane.update();
         IState currentState = observableGame.getState();
 
+        /* Start Phase*/
         startGameButton.setVisible(currentState instanceof StartGame);
 
+        /* Ship Selection Phase */
         militaryShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
         miningShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
 
+        /* Travel Phase */
         travelButton.setVisible(currentState instanceof AwaitMovement);
 
+        /* Pick Action Phase*/
         exploreButton.setVisible(currentState instanceof AwaitActionType && observableGame.canExplore());
-
         enterStationButton.setVisible(currentState instanceof AwaitActionType && observableGame.canEnterSpaceStation());
-
         endTurnButton.setVisible(currentState instanceof AwaitActionType);
+        maintainShipButton.setVisible(currentState instanceof AwaitActionType && observableGame.canMaintainShip());
 
+        /* Exploration Phase */
         if (currentState instanceof AwaitExplorationPhase)
         {
             leavePlanetButton.setVisible(true);
@@ -228,19 +280,47 @@ public class ButtonsPane extends HBox
             leavePlanetButton.setVisible(false);
         }
 
-        upgradeCargoButton.setVisible(currentState instanceof AwaitUpgrade);
-        convertResourceButton.setVisible(currentState instanceof AwaitUpgrade);
-        hireMemberButton.setVisible(currentState instanceof AwaitUpgrade);
-        upgradeWeapon.setVisible(currentState instanceof AwaitUpgrade);
+        /* Maintenance Phase */
+        boolean isMaintenance = currentState instanceof AwaitMaintenance;
+        convertResourceButton.setVisible(isMaintenance);
+        acquireDroneRepair.setVisible(isMaintenance);
+        acquireShieldButton.setVisible(isMaintenance);
+        acquireAmmoButton.setVisible(isMaintenance);
+        acquireFuelButton.setVisible(isMaintenance);
+        if (isMaintenance)
+        {
+            // check which ones to disable
+            convertResourceButton.setDisable(!observableGame.canConvert());
+            acquireDroneRepair.setDisable(!observableGame.canMaintain(MaintenanceType.REPAIR_DRONE));
+            acquireShieldButton.setDisable(!observableGame.canMaintain(MaintenanceType.ACQUIRE_SHIELD_UNIT));
+            acquireAmmoButton.setDisable(!observableGame.canMaintain(MaintenanceType.ACQUIRE_AMMO_UNIT));
+            acquireFuelButton.setDisable(!observableGame.canMaintain(MaintenanceType.ACQUIRE_FUEL_UNIT));
+        }
+
+        /* Conversion Phase*/
+        conversionPane.setVisible(currentState instanceof AwaitResourceConversion);
+
+        /* Upgrade Phase*/
+
+        convertResourceButton.setVisible(currentState instanceof AwaitUpgrade || currentState instanceof AwaitMaintenance);
         fillArmorButton.setVisible(currentState instanceof AwaitUpgrade);
-        buyDroneButton.setVisible(currentState instanceof AwaitUpgrade);
-        cancelButton.setVisible(currentState instanceof AwaitUpgrade);
+
+        fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
+        convertResourceButton.setDisable(!observableGame.canConvert());
+
+        boolean isUpgrade = currentState instanceof AwaitUpgrade;
+        upgradeCargoButton.setVisible(isUpgrade);
+        hireMemberButton.setVisible(isUpgrade);
+        upgradeWeapon.setVisible(isUpgrade);
+        buyDroneButton.setVisible(isUpgrade);
+
+        cancelButton.setVisible(isMaintenance || isUpgrade);
 
         upgradeCargoButton.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_CARGO));
-        convertResourceButton.setDisable(!observableGame.canUpgrade(UpgradeType.CONVERT_RESOURCE));
+
         hireMemberButton.setDisable(!observableGame.canUpgrade(UpgradeType.HIRE_MEMBER));
         upgradeWeapon.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_WEAPON));
-        fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
+
         buyDroneButton.setDisable(!observableGame.canUpgrade(UpgradeType.NEW_DRONE));
     }
 
@@ -367,7 +447,8 @@ public class ButtonsPane extends HBox
         @Override
         public void handle(ActionEvent actionEvent)
         {
-            observableGame.upgrade(UpgradeType.CONVERT_RESOURCE);
+            System.out.println("... OK ...");
+            observableGame.startConversion();
         }
     }
 
@@ -413,6 +494,51 @@ public class ButtonsPane extends HBox
         public void handle(ActionEvent actionEvent)
         {
             observableGame.cancel();
+        }
+    }
+
+    private class MaintainShipButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.startMaintenance();
+        }
+    }
+
+    private class AcquireShieldButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.maintain(MaintenanceType.ACQUIRE_SHIELD_UNIT);
+        }
+    }
+
+    private class AcquireAmmoButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.maintain(MaintenanceType.ACQUIRE_AMMO_UNIT);
+        }
+    }
+
+    private class AcquireFuelButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.maintain(MaintenanceType.ACQUIRE_FUEL_UNIT);
+        }
+    }
+
+    private class AcquireDroneRepairButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.maintain(MaintenanceType.REPAIR_DRONE);
         }
     }
 }

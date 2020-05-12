@@ -5,12 +5,14 @@ import static model.data.Constants.*;
 public class Drone implements GameEnums
 {
     private int health;
+    private final int maxHealth;
     private ResourceType resourceCollected;
     private boolean operational;
 
     public Drone()
     {
-        health = DRONE_MAX_HEALTH;
+        maxHealth = DRONE_MAX_HEALTH;
+        health = maxHealth;
         resourceCollected = ResourceType.NONE;
         operational = true;
     }
@@ -27,9 +29,19 @@ public class Drone implements GameEnums
         return storedResource;
     }
 
+    public void repair()
+    {
+        health = maxHealth;
+    }
+
     public int getHealth()
     {
         return health;
+    }
+
+    public int getDroneHealthMax()
+    {
+        return maxHealth;
     }
 
     public void decreaseHealth()

@@ -43,9 +43,13 @@ public class CargoHoldPane extends VBox
 
         String cargoHoldMax = observableGame.getCargoHoldMaxAsString();
         blackResourceAmount = new Text("0/" + cargoHoldMax);
+        blackResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
         blueResourceAmount = new Text("0/" + cargoHoldMax);
+        blueResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
         greenResourceAmount = new Text("0/" + cargoHoldMax);
+        greenResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
         redResourceAmount = new Text("0/" + cargoHoldMax);
+        redResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
 
         cargoHold = new GridPane();
 

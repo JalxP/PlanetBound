@@ -80,6 +80,25 @@ public class GameController implements GameEnums
         setState(state.cancel());
     }
 
+    public void startMaintenance()
+    {
+        setState(state.startMaintenance());
+    }
+
+    public void maintain(MaintenanceType maintenanceType)
+    {
+        setState(state.maintain(maintenanceType));
+    }
+
+    public void startConversion()
+    {
+        setState(state.startConversion());
+    }
+
+    public void convertResource(ResourceType from, ResourceType to)
+    {
+        setState(state.convertResource(from, to));
+    }
 
     /* Info */
 
@@ -138,14 +157,19 @@ public class GameController implements GameEnums
         return gameData.getFuelAmount();
     }
 
-    public String getDronesAmount()
+    public String getDroneHealth()
     {
-        return gameData.getDronesAmount();
+        return gameData.getDroneHealth();
     }
 
     public String getResourcesAsString(ResourceType resourceType)
     {
         return gameData.getResourcesAsString(resourceType);
+    }
+
+    public boolean hasResources(ResourceType resourceType)
+    {
+        return gameData.hasResources(resourceType);
     }
 
     public ResourceType [][] getPlanetSurface()
@@ -196,6 +220,21 @@ public class GameController implements GameEnums
     public boolean canLeavePlanet()
     {
         return gameData.canLeavePlanet();
+    }
+
+    public boolean canMaintainShip()
+    {
+        return gameData.canMaintainShip();
+    }
+
+    public boolean canMaintain(MaintenanceType maintenanceType)
+    {
+        return gameData.canMaintain(maintenanceType);
+    }
+
+    public boolean canConvert()
+    {
+        return gameData.canConvert();
     }
 
     public String getMessage()

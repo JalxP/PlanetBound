@@ -16,7 +16,7 @@ public abstract class Constants
     public static final int MINING_SHIP_MAX_SHIELD_CAPACITY = 18;
     public static final int MINING_SHIP_MAX_CARGO_LEVEL = 4;
 
-    public static final int MILITARY_SHIP_MAX_WEAPON_CAPACITY = 6;
+    public static final int MILITARY_SHIP_MAX_WEAPON_CAPACITY = 9;
     public static final int MILITARY_SHIP_MAX_FUEL_CAPACITY = 35;
     public static final int MILITARY_SHIP_MAX_SHIELD_CAPACITY = 9;
     public static final int MILITARY_SHIP_MAX_CARGO_LEVEL = 2;
@@ -58,6 +58,8 @@ public abstract class Constants
     public static final String SELECT_ACTION_MESSAGE = "Select your desired action.";
     public static final String SELECT_EVENT_MESSAGE = "Select your event.";
     public static final String DRONE_ACTION_MESSAGE = "Select drone movement.";
+    public static final String SELECT_MAINTENANCE_MESSAGE = "Select the type of maintenance.";
+    public static final String SELECT_CONVERSION_MESSAGE = "Select the type of resources to convert.";
     public static final String VICTORY_MESSAGE = "Congratulations, you won!";
     public static final String DEFEAT_MESSAGE = "You were defeated. Good luck next time.";
     public static final String SPACE_STATION_MESSAGE = "Select the type of upgrade.";

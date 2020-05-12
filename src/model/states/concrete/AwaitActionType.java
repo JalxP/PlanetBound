@@ -23,6 +23,12 @@ public class AwaitActionType extends StateAdapter
     }
 
     @Override
+    public IState startMaintenance()
+    {
+        return new AwaitMaintenance(getGameData());
+    }
+
+    @Override
     public IState endTurn()
     {
         getGameData().endTurn();

@@ -32,18 +32,22 @@ public class StatsPane extends GridPane
         shieldLabel = new Text("Shields");
         shieldLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         shieldAmount = new Text("   *");
+        shieldAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
 
         fuelLabel = new Text("Fuel");
         fuelLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         fuelAmount = new Text("   *");
+        fuelAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
 
         artifactsLabel = new Text("Artifacts");
         artifactsLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         artifactsAmount = new Text("  *");
+        artifactsAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
 
-        dronesLabel = new Text("Drones");
+        dronesLabel = new Text("Drone");
         dronesLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         dronesAmount = new Text("  *");
+        dronesAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
 
 
         setupLayout();
@@ -70,7 +74,7 @@ public class StatsPane extends GridPane
     {
         shieldAmount.setText(" " + observableGame.getShieldAmount());
         fuelAmount.setText(" " + observableGame.getFuelAmount());
-        dronesAmount.setText(" " + observableGame.getDronesAmount());
+        dronesAmount.setText(" " + observableGame.getDroneHealth());
         artifactsAmount.setText(" " + observableGame.getResourcesAsString(ARTIFACT));
     }
 }

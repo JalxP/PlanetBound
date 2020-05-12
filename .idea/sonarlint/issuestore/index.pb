@@ -89,3 +89,15 @@ e
 5src/view/graphical/panes/board/PlanetSurfacePane.java,b\2\b2324c29fcdd527a6708ca9b2778f235ac5bc8bc
 Q
 !src/model/data/PlanetSurface.java,f\0\f085ba516def949e8e73b956a7ed2bc0fa9a0de6
+J
+src/model/data/Logger.java,c\d\cd35fe66228ef81972c10c951d3fd237e0b71b04
+[
++src/view/graphical/panes/board/LogPane.java,f\1\f156399013771ef5abe909eb074beadad3c8dae6
+[
++src/model/states/concrete/AwaitUpgrade.java,4\5\45d2e4a1830e2a36870be586de236dcd56534465
+f
+6src/model/states/concrete/AwaitResourceConversion.java,0\6\06c7cbff600b36760fb04a9c3f2b24f76b6f7d3d
+_
+/src/model/states/concrete/AwaitMaintenance.java,c\8\c82362e07cf7175ade90cfc616118daab15eb964
+a
+1src/view/graphical/panes/board/CargoHoldPane.java,9\d\9d6159051ec333eb90c076efa7bbc494fa652753

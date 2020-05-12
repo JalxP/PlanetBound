@@ -124,6 +124,42 @@ public class ObservableGame extends PropertyChangeSupport
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
+    public void startMaintenance()
+    {
+        gameController.startMaintenance();
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void maintain(MaintenanceType maintenanceType)
+    {
+        gameController.maintain(maintenanceType);
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void startConversion()
+    {
+        gameController.startConversion();
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null); // TODO check what needs to be fired
+    }
+
+    public void convertResource(ResourceType from, ResourceType to)
+    {
+        gameController.convertResource(from, to);
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null); // TODO check what needs to be fired
+    }
+
     /* Info */
     public String getShipType()
     {
@@ -180,14 +216,19 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.getFuelAmount();
     }
 
-    public String getDronesAmount()
+    public String getDroneHealth()
     {
-        return gameController.getDronesAmount();
+        return gameController.getDroneHealth();
     }
 
     public String getResourcesAsString(ResourceType resourceType)
     {
         return gameController.getResourcesAsString(resourceType);
+    }
+
+    public boolean hasResources(ResourceType resourceType)
+    {
+        return gameController.hasResources(resourceType);
     }
 
     public ResourceType [][] getPlanetSurface()
@@ -238,6 +279,21 @@ public class ObservableGame extends PropertyChangeSupport
     public boolean canLeavePlanet()
     {
         return gameController.canLeavePlanet();
+    }
+
+    public boolean canMaintainShip()
+    {
+        return gameController.canMaintainShip();
+    }
+
+    public boolean canMaintain(MaintenanceType maintenanceType)
+    {
+        return gameController.canMaintain(maintenanceType);
+    }
+
+    public boolean canConvert()
+    {
+        return gameController.canConvert();
     }
 
     /* Log */

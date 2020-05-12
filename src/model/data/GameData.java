@@ -34,6 +34,8 @@ public class GameData implements GameEnums
     public void travel()
     {
         sectors.add(new Sector(sectors.size()));
+        if (sectors.size() > 1)
+            ship.setCanConvertResources(true);
         logger.add(getCurrentSector().getAllLogs());
 
         if (getCurrentSector().isTravelWormHole())
@@ -84,6 +86,7 @@ public class GameData implements GameEnums
 
     public void endTurn()
     {
+
         // TODO
         // fuel and stuff
     }
@@ -95,10 +98,20 @@ public class GameData implements GameEnums
 
     public void upgrade(UpgradeType upgradeType)
     {
-        System.out.println("Upgrading... " + upgradeType.name());
+        // TODO this
     }
 
+    public void maintain(MaintenanceType maintenanceType)
+    {
+        ship.maintain(maintenanceType);
+        logger.add(ship.getAllLogs());
+    }
 
+    public void convertResource(ResourceType from, ResourceType to)
+    {
+        // TODO this
+        ship.setCanConvertResources(false);
+    }
 
 
     /* Info */
@@ -160,14 +173,21 @@ public class GameData implements GameEnums
         return ship.getFuelCurrent() + "/" + ship.getFuelMax();
     }
 
-    public String getDronesAmount()
+    public String getDroneHealth()
     {
-        return ship.getDronesCurrent() + "";
+        return ship.getDroneHealth() + "/" + ship.getDroneHealthMax();
     }
 
     public String getResourcesAsString(ResourceType resourceType)
     {
         return ship.getResources(resourceType) + "";
+    }
+
+    public boolean hasResources(ResourceType resourceType)
+    {
+        if (ship == null)
+            return false;
+        return ship.hasResources(resourceType);
     }
 
     public boolean canEnterSpaceStation()
@@ -177,7 +197,37 @@ public class GameData implements GameEnums
 
     public boolean canUpgrade(UpgradeType upgradeType)
     {
+
+
         return true; // TODO CONTINUE HERE!!
+    }
+
+    public boolean canMaintainShip()
+    {
+        return crew.getCrewStatusByIndex(5) && ship.hasResources();
+    }
+
+    public boolean canMaintain(MaintenanceType maintenanceType)
+    {
+        switch (maintenanceType)
+        {
+            case ACQUIRE_SHIELD_UNIT:
+                return ship.canAcquireShield();
+            case ACQUIRE_AMMO_UNIT:
+                return ship.canAcquireAmmo();
+            case ACQUIRE_FUEL_UNIT:
+                return ship.canAcquireFuel();
+            case REPAIR_DRONE:
+                return ship.canAcquireDroneRepair();
+            default: return false;
+        }
+    }
+
+    public boolean canConvert()
+    {
+        if (ship == null)
+            return false;
+        return ship.canConvertResources();
     }
 
     public boolean canExplore()
@@ -196,7 +246,7 @@ public class GameData implements GameEnums
 
     public boolean droneIsAvailable()
     {
-        return ship.getDronesCurrent() > 0;
+        return ship.getDroneHealth() > 0;
     }
 
     public boolean gameIsOver()

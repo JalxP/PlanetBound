@@ -15,11 +15,11 @@ public class Ship
     private final int shieldMax;
     private int fuelCurrent;
     private final int fuelMax;
+    private int weaponsCurrent;
+    private int weaponsMax;
 
     private Logger logger;
 
-    private int weaponsCurrent;
-    //private final int weaponsMax; // TODO initialize weapon stuff
 
     public Ship(ShipType shipType)
     {
@@ -30,16 +30,19 @@ public class Ship
             maxCargoLevel = MILITARY_SHIP_MAX_CARGO_LEVEL;
             shieldMax = MILITARY_SHIP_MAX_SHIELD_CAPACITY;
             fuelMax = MILITARY_SHIP_MAX_FUEL_CAPACITY;
+            weaponsMax = MILITARY_SHIP_MAX_WEAPON_CAPACITY;
         }
         else
         {
             maxCargoLevel = MINING_SHIP_MAX_CARGO_LEVEL;
             shieldMax = MINING_SHIP_MAX_SHIELD_CAPACITY;
             fuelMax = MINING_SHIP_MAX_FUEL_CAPACITY;
+            weaponsMax = MINING_SHIP_MAX_WEAPON_CAPACITY;
         }
 
         shieldCurrent = shieldMax;
         fuelCurrent = fuelMax;
+        weaponsCurrent = weaponsMax;
         cargoHold = new CargoHold(maxCargoLevel);
         drone = new Drone();
         logger = new Logger();
@@ -73,11 +76,6 @@ public class Ship
         return fuelMax;
     }
 
-    public int getDronesCurrent()
-    {
-        return (drone.isOperational()) ? 1 : 0;
-    }
-
     public boolean isDroneOperational()
     {
         return drone.isOperational();
@@ -93,9 +91,19 @@ public class Ship
         return cargoHold.getResources(resourceType);
     }
 
+    public boolean hasResources(ResourceType resourceType)
+    {
+        return cargoHold.hasResources(resourceType);
+    }
+
     public int getDroneHealth()
     {
         return drone.getHealth();
+    }
+
+    public int getDroneHealthMax()
+    {
+        return drone.getDroneHealthMax();
     }
 
     public int getCargoHoldMax()
@@ -134,6 +142,91 @@ public class Ship
         drone.storeResource(resourceType);
     }
 
+    public boolean hasResources()
+    {
+        return cargoHold.hasResources();
+    }
+
+    public void setCanConvertResources(boolean option)
+    {
+        cargoHold.setCanConvertResources(option);
+    }
+
+    public boolean canConvertResources()
+    {
+        return cargoHold.canConvertResources();
+    }
+
+    public void maintain(MaintenanceType maintenanceType)
+    {
+        switch (maintenanceType)
+        {
+            case ACQUIRE_SHIELD_UNIT:
+                acquireShield();
+                break;
+            case ACQUIRE_AMMO_UNIT:
+                acquireAmmo();
+                break;
+            case ACQUIRE_FUEL_UNIT:
+                acquireFuel();
+                break;
+            case REPAIR_DRONE:
+                acquireDroneRepair();
+                break;
+        }
+    }
+
+    private void acquireShield()
+    {
+            cargoHold.acquireShield();
+            shieldCurrent++;
+            logger.add(cargoHold.getAllLogs());
+            logger.add("[OK]Acquired +1 shield.");
+    }
+
+    public boolean canAcquireShield()
+    {
+        return cargoHold.canAcquireShield();
+    }
+
+    private void acquireAmmo()
+    {
+        cargoHold.acquireAmmo();
+        weaponsCurrent++;
+        logger.add(cargoHold.getAllLogs());
+        logger.add("[OK]Acquired +1 ammo.");
+    }
+
+    public boolean canAcquireAmmo()
+    {
+        return cargoHold.canAcquireAmmo();
+    }
+
+    public boolean canAcquireFuel()
+    {
+        return cargoHold.canAcquireFuel();
+    }
+
+    private void acquireFuel()
+    {
+        cargoHold.acquireFuel();
+        fuelCurrent++;
+        logger.add(cargoHold.getAllLogs());
+        logger.add("[OK]Acquired +1 fuel.");
+    }
+
+    public boolean canAcquireDroneRepair()
+    {
+        return cargoHold.canAcquireDroneRepair();
+    }
+
+    public void acquireDroneRepair()
+    {
+        cargoHold.acquireDroneRepair();
+        drone.repair();
+        logger.add(cargoHold.getAllLogs());
+        logger.add("[OK]Fully repaired the drone.");
+    }
     /* Log */
 
     public ArrayList<String> getAllLogs()

@@ -17,7 +17,10 @@ public interface IState
     IState enterSpaceStation();
     IState cancel();
     IState upgrade(UpgradeType upgradeType);
-    //TODO IState convert(ResourceType from, ResourceType to);
+    IState startMaintenance();
+    IState maintain(MaintenanceType maintenanceType);
+    IState startConversion();
+    IState convertResource(ResourceType from, ResourceType to);
     IState endTurn();
     IState endGame();
 }

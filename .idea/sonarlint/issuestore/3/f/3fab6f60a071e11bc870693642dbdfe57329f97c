@@ -1,10 +1,9 @@
 
 N
-java:S1068
-"2Remove this unused "observableGame" private field.(˜–¸8ºØãÉ™.
-_
-java:S2184"BCast one of the operands of this addition operation to a "double".(Û×Ûİ8œ¿ÛÑ™.
+java:S1068"2Remove this unused "observableGame" private field.(˜–¸8ºØãÉ™.
+b
+java:S2184"ECast one of the operands of this subtraction operation to a "double".(ÙôÊÉ8×‰×‚ .
 T
-java:S1135"2Complete the task associated to this TODO comment.(ËÈºÿÿÿÿÿ8ºØãÉ™.
+java:S1135+"2Complete the task associated to this TODO comment.(¥·€şşÿÿÿÿ8ºØãÉ™.
 T
-java:S1135)"2Complete the task associated to this TODO comment.(¥·€şşÿÿÿÿ8ºØãÉ™.
+java:S1135"2Complete the task associated to this TODO comment.(ËÈºÿÿÿÿÿ8ºØãÉ™.

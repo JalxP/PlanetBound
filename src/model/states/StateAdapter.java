@@ -82,6 +82,30 @@ public class StateAdapter implements IState, GameEnums
     }
 
     @Override
+    public IState startMaintenance()
+    {
+        return this;
+    }
+
+    @Override
+    public IState maintain(MaintenanceType maintenanceType)
+    {
+        return this;
+    }
+
+    @Override
+    public IState startConversion()
+    {
+        return this;
+    }
+
+    @Override
+    public IState convertResource(ResourceType from, ResourceType to)
+    {
+        return this;
+    }
+
+    @Override
     public IState endTurn()
     {
         return this;

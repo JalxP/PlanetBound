@@ -10,12 +10,12 @@ public interface GameEnums
 
     enum ResourceType
     {
-        NONE,
-        RED,
-        GREEN,
-        BLUE,
         BLACK,
-        ARTIFACT
+        BLUE,
+        GREEN,
+        RED,
+        ARTIFACT,
+        NONE
     }
 
     enum PlanetType
@@ -45,10 +45,17 @@ public interface GameEnums
     enum UpgradeType
     {
         UPGRADE_CARGO,
-        CONVERT_RESOURCE,
         HIRE_MEMBER,
         UPGRADE_WEAPON,
         FULL_ARMOR,
         NEW_DRONE
+    }
+
+    enum MaintenanceType
+    {
+        ACQUIRE_SHIELD_UNIT,
+        ACQUIRE_AMMO_UNIT,
+        ACQUIRE_FUEL_UNIT,
+        REPAIR_DRONE
     }
 }

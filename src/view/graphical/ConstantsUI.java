@@ -11,6 +11,6 @@ public abstract class ConstantsUI
     public static final int MENU_PANE_HEIGHT = 20;
     public static final int VIEW_PANE_HEIGHT = 400;
     public static final int INTERACTION_PANE_MESSAGE_HEIGHT = 20;
-    public static final int INTERACTION_PANE_HEIGHT = 180;
+    public static final int INTERACTION_PANE_HEIGHT = 200;
     public static final int LOG_PANE_HEIGHT = 180;
 }

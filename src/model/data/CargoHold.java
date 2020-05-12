@@ -12,6 +12,8 @@ public class CargoHold implements GameEnums
     private int currentLevel = 1;
     private final int maxLevel;
 
+    private boolean canConvertResources;
+
     private Logger logger;
 
     public CargoHold(int maxLevel)
@@ -23,6 +25,8 @@ public class CargoHold implements GameEnums
         resources.put(ResourceType.GREEN, 0);
         resources.put(ResourceType.RED, 0);
         resources.put(ResourceType.ARTIFACT, 0);
+
+        canConvertResources = false;
 
         logger = new Logger();
     }
@@ -88,6 +92,20 @@ public class CargoHold implements GameEnums
         }
     }
 
+    public boolean hasResources()
+    {
+        for(ResourceType resourceType : resources.keySet())
+            if (resources.get(resourceType) > 0)
+                return true;
+
+        return false;
+    }
+
+    public boolean hasResources(ResourceType resourceType)
+    {
+        return resources.get(resourceType) > 0;
+    }
+
     private void increaseResource(ResourceType resourceType, String resourceName)
     {
         int resourcesGenerated = Utility.throwDie(6);
@@ -103,6 +121,80 @@ public class CargoHold implements GameEnums
 
         if (surplus > 0)
             logger.add("[!]There was a surplus of " + surplus + " that could not be stored.");
+    }
+
+    public void setCanConvertResources(boolean option)
+    {
+        canConvertResources = option;
+    }
+
+    public boolean canConvertResources()
+    {
+        return canConvertResources && hasResources();
+    }
+
+    public boolean canAcquireShield()
+    {
+        return resources.get(ResourceType.BLACK) > 1 &&
+                resources.get(ResourceType.GREEN) > 1 &&
+                resources.get(ResourceType.BLUE) > 1;
+    }
+
+    public void acquireShield()
+    {
+        resources.put(ResourceType.BLACK, (resources.get(ResourceType.BLACK) - 1));
+        resources.put(ResourceType.GREEN, (resources.get(ResourceType.GREEN) - 1));
+        resources.put(ResourceType.BLUE, (resources.get(ResourceType.BLUE) - 1));
+
+        logger.add("[!]Spent 1 Black resource, 1 Green resource and 1 Blue resource.");
+    }
+
+    public boolean canAcquireAmmo()
+    {
+        return resources.get(ResourceType.BLACK) > 0 &&
+                resources.get(ResourceType.BLUE) > 0;
+    }
+
+    public void acquireAmmo()
+    {
+        resources.put(ResourceType.BLACK, (resources.get(ResourceType.BLACK) - 1));
+        resources.put(ResourceType.BLUE, (resources.get(ResourceType.BLUE) - 1));
+
+        logger.add("[!]Spent 1 Black resource and 1 Blue resource.");
+    }
+
+    public boolean canAcquireFuel()
+    {
+        return resources.get(ResourceType.BLACK) > 0 &&
+                resources.get(ResourceType.RED) > 0 &&
+                resources.get(ResourceType.GREEN) > 0;
+    }
+
+    public void acquireFuel()
+    {
+        resources.put(ResourceType.BLACK, (resources.get(ResourceType.BLACK) - 1));
+        resources.put(ResourceType.GREEN, (resources.get(ResourceType.GREEN) - 1));
+        resources.put(ResourceType.RED, (resources.get(ResourceType.RED) - 1));
+
+        logger.add("[!]Spent 1 Black resource, 1 Green resource and 1 Red resource.");
+    }
+
+    public boolean canAcquireDroneRepair()
+    {
+        return resources.get(ResourceType.BLACK) > 0 &&
+                resources.get(ResourceType.RED) > 0 &&
+                resources.get(ResourceType.GREEN) > 0 &&
+                resources.get(ResourceType.BLUE) > 0;
+    }
+
+    public void acquireDroneRepair()
+    {
+        resources.put(ResourceType.BLACK, (resources.get(ResourceType.BLACK) - 1));
+        resources.put(ResourceType.BLUE, (resources.get(ResourceType.BLUE) - 1));
+        resources.put(ResourceType.GREEN, (resources.get(ResourceType.GREEN) - 1));
+        resources.put(ResourceType.RED, (resources.get(ResourceType.RED) - 1));
+
+        logger.add("[!]Spent 1 Black resource, 1 Blue resource, 1 Green resource and 1 Red resource.");
     }
 
     /* Log */
