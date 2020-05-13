@@ -115,6 +115,15 @@ public class ObservableGame extends PropertyChangeSupport
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
+    public void selectEvent(EventType eventType)
+    {
+        gameController.selectEvent(eventType);
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
     public void cancel()
     {
         gameController.cancel();

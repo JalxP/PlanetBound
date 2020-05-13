@@ -58,4 +58,15 @@ public interface GameEnums
         ACQUIRE_FUEL_UNIT,
         REPAIR_DRONE
     }
+
+    enum EventType
+    {
+        RANDOM,
+        CREW_DEATH,
+        SALVAGE_SHIP,
+        CARGO_LOSS,
+        FUEL_LOSS,
+        NONE,
+        CREW_RESCUE
+    }
 }

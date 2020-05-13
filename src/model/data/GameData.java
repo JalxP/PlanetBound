@@ -101,6 +101,42 @@ public class GameData implements GameEnums
         // TODO this
     }
 
+    public void selectEvent(EventType eventType)
+    {
+        if (eventType == EventType.RANDOM)
+            eventType = Utility.getRandomEventType();
+        switch (eventType)
+        {
+            case RANDOM:
+                break;
+            case CREW_DEATH:
+                crew.killMember();
+                logger.add("[X]A crew member was injured due to a system malfunction");
+                break;
+            case SALVAGE_SHIP:
+                ship.addResourceToCargoHold(Utility.getRandomResourceType());
+                logger.add("[OK]You ship comes across an abandoned ship and you find a random resource.");
+                logger.add(ship.getAllLogs());
+                break;
+            case CARGO_LOSS:
+                ship.loseRandomResource();
+                logger.add("[!]A cargo mishap causes you to lose some of your resources.");
+                logger.add(ship.getAllLogs());
+                break;
+            case FUEL_LOSS:
+                ship.loseFuel();
+                logger.add("[!]You accidentally use too much fuel in a test run and lost -1 fuel");
+                break;
+            case NONE:
+                logger.add("[OK]Nothing happens.");
+                break;
+            case CREW_RESCUE:
+                crew.increaseCrew();
+                logger.add("[OK]“You find a ship in distress with a lone crew member.");
+                break;
+        }
+    }
+
     public void maintain(MaintenanceType maintenanceType)
     {
         ship.maintain(maintenanceType);
@@ -116,6 +152,11 @@ public class GameData implements GameEnums
 
 
     /* Info */
+    public boolean lostGame()
+    {
+        return ship.getFuelCurrent() <= 0 || crew.getAliveCount() <= 0;
+    }
+
     public String getShipType()
     {
         if (ship.getShipType() == ShipType.MILITARY)
@@ -205,6 +246,7 @@ public class GameData implements GameEnums
 
     public boolean canMaintainShip()
     {
+        if (ship == null) return false;
         return crew.getCrewStatusByIndex(5) && ship.hasResources();
     }
 
@@ -226,13 +268,13 @@ public class GameData implements GameEnums
 
     public boolean canConvert()
     {
-        if (ship == null)
-            return false;
+        if (ship == null) return false;
         return ship.canConvertResources();
     }
 
     public boolean canExplore()
     {
+        if (ship == null) return false;
         boolean hasDrone = ship.isDroneOperational();
         boolean hasLandingParty = crew.getAliveCount() > 2;
         boolean hasResources = getCurrentSector().getAvailableResources() > 0;

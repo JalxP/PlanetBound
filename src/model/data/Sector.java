@@ -147,6 +147,7 @@ public class Sector
 
     public boolean canLeavePlanet()
     {
+        if (planetSurface == null) return false;
         return planetSurface.canLeavePlanet();
     }
 

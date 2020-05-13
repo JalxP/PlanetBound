@@ -21,6 +21,7 @@ public interface IState
     IState maintain(MaintenanceType maintenanceType);
     IState startConversion();
     IState convertResource(ResourceType from, ResourceType to);
+    IState selectEvent(EventType eventType);
     IState endTurn();
     IState endGame();
 }

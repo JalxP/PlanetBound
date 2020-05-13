@@ -75,6 +75,11 @@ public class GameController implements GameEnums
         setState(state.upgrade(upgradeType));
     }
 
+    public void selectEvent(EventType eventType)
+    {
+        setState(state.selectEvent(eventType));
+    }
+
     public void cancel()
     {
         setState(state.cancel());

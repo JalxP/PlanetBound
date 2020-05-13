@@ -106,6 +106,12 @@ public class StateAdapter implements IState, GameEnums
     }
 
     @Override
+    public IState selectEvent(EventType eventType)
+    {
+        return this;
+    }
+
+    @Override
     public IState endTurn()
     {
         return this;

@@ -123,6 +123,10 @@ public class ConversionPane extends HBox
     public void update()
     {
         convertResourcesButton.setDisable(true);
+        for (Toggle t : fromGroup.getToggles())
+            t.setSelected(false);
+        for (Toggle t : toGroup.getToggles())
+            t.setSelected(false);
 
         fromBlack.setDisable(!observableGame.hasResources(ResourceType.BLACK));
         fromBlue.setDisable(!observableGame.hasResources(ResourceType.BLUE));

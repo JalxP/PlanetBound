@@ -101,3 +101,5 @@ _
 /src/model/states/concrete/AwaitMaintenance.java,c\8\c82362e07cf7175ade90cfc616118daab15eb964
 a
 1src/view/graphical/panes/board/CargoHoldPane.java,9\d\9d6159051ec333eb90c076efa7bbc494fa652753
+b
+2src/view/graphical/panes/board/ConversionPane.java,6\1\6197eec7c0d9774fd2336befcbe8edcbf04023c0

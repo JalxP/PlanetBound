@@ -4,6 +4,7 @@ import model.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.function.Predicate;
 
 public class CargoHold implements GameEnums
 {
@@ -98,8 +99,12 @@ public class CargoHold implements GameEnums
     public boolean hasResources()
     {
         for(ResourceType resourceType : resources.keySet())
+        {
+            if (resourceType == ResourceType.ARTIFACT)
+                continue;
             if (resources.get(resourceType) > 0)
                 return true;
+        }
 
         return false;
     }
@@ -109,7 +114,7 @@ public class CargoHold implements GameEnums
         return resources.get(resourceType) > 0;
     }
 
-    private void increaseResource(ResourceType resourceType, int resourcesGenerated)
+    public void increaseResource(ResourceType resourceType, int resourcesGenerated)
     {
 
         int capacity = 6 * currentLevel;
@@ -122,6 +127,28 @@ public class CargoHold implements GameEnums
 
         if (surplus > 0)
             logger.add("[!]There was a surplus of " + surplus + " that could not be stored.");
+    }
+
+    public void decreaseResource(ResourceType resourceType, int amount)
+    {
+        int previousAmount = resources.get(resourceType);
+        int newAmount = Math.max(previousAmount - amount, 0);
+        int lostAmount = newAmount - previousAmount;
+        resources.put(resourceType, newAmount);
+        logger.add("[X]Lost " + lostAmount + " " + resourceType.name() + " resource" + ((lostAmount > 1) ? "s." : ".") + "Rolled: " + amount);
+    }
+
+    public void loseRandomResource()
+    {
+        if (!hasResources()) return;
+        ResourceType resourceType;
+        do
+        {
+            resourceType = Utility.getRandomResourceType();
+        } while (!hasResources(resourceType));
+
+        int amount = Utility.throwDie(3);
+        decreaseResource(resourceType, amount);
     }
 
     public void setCanConvertResources(boolean option)

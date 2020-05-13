@@ -162,6 +162,23 @@ public class Ship
         return cargoHold.canConvertResources();
     }
 
+    public void addResourceToCargoHold(ResourceType resourceType)
+    {
+        cargoHold.increaseResource(resourceType,1);
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public void loseRandomResource()
+    {
+        cargoHold.loseRandomResource();
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public void loseFuel()
+    {
+        fuelCurrent--;
+    }
+
     public void maintain(MaintenanceType maintenanceType)
     {
         switch (maintenanceType)

@@ -23,6 +23,15 @@ public class Crew
         while(crewStatuses.size() < 6) crewStatuses.add(true);
     }
 
+    public void increaseCrew()
+    {
+        for (int i = 0; i < crewStatuses.size(); i++)
+        {
+            if (!crewStatuses.get(i))
+                crewStatuses.set(i, true);
+        }
+    }
+
     public int getAliveCount()
     {
         int count = 0;

@@ -1,6 +1,7 @@
 package model.utility;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -34,6 +35,21 @@ public abstract class Utility
     public static AlienType getRandomAlienType()
     {
         List<AlienType> values = List.of(AlienType.values());
+        return values.get(random.nextInt(values.size()));
+    }
+
+    public static EventType getRandomEventType()
+    {
+        List<EventType> values = new ArrayList<>(List.of(EventType.values()));
+        values.remove(EventType.RANDOM);
+        return values.get(random.nextInt(values.size()));
+    }
+
+    public static ResourceType getRandomResourceType()
+    {
+        List<ResourceType> values = new ArrayList<>(List.of(ResourceType.values()));
+        values.remove(ResourceType.ARTIFACT);
+        values.remove(ResourceType.NONE);
         return values.get(random.nextInt(values.size()));
     }
 

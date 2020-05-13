@@ -3,18 +3,20 @@ package view.graphical.panes.controls;
 import controller.ObservableGame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Pos;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import model.data.GameEnums;
 import model.states.IState;
 import model.states.concrete.*;
 import view.graphical.panes.board.ConversionPane;
 import view.graphical.resources.Images;
 
 import static model.data.GameEnums.*;
+import model.data.GameEnums.*;
 import static view.graphical.ConstantsUI.*;
 import static view.graphical.resources.ResourcesPaths.*;
 
@@ -55,6 +57,9 @@ public class ButtonsPane extends HBox
     private final ActionButton buyDroneButton;
     private final ActionButton cancelButton;
 
+    private final ActionButton selectEventButton;
+    private final ActionButton autoEventButton;
+
     private final BorderPane movementButtons;
 
     private final ImageView drone;
@@ -88,6 +93,9 @@ public class ButtonsPane extends HBox
         fillArmorButton = new ActionButton("Replenish Armor");
         buyDroneButton = new ActionButton("Buy Drone");
         cancelButton = new ActionButton("Cancel");
+
+        selectEventButton = new ActionButton("Select Event");
+        autoEventButton = new ActionButton("Random Event");
 
         leavePlanetButton = new ActionButton("Leave Planet");
 
@@ -143,6 +151,8 @@ public class ButtonsPane extends HBox
         buyDroneButton.managedProperty().bind(buyDroneButton.visibleProperty());
         cancelButton.managedProperty().bind(cancelButton.visibleProperty());
         conversionPane.managedProperty().bind(conversionPane.visibleProperty());
+        selectEventButton.managedProperty().bind(selectEventButton.visibleProperty());
+        autoEventButton.managedProperty().bind(autoEventButton.visibleProperty());
     }
 
     private void setupLayout()
@@ -188,6 +198,9 @@ public class ButtonsPane extends HBox
 
         conversionPane.setVisible(false);
 
+        selectEventButton.setVisible(false);
+        autoEventButton.setVisible(false);
+
         getChildren().addAll(startGameButton,
                 militaryShipSelectionButton,
                 miningShipSelectionButton,
@@ -209,6 +222,8 @@ public class ButtonsPane extends HBox
                 buyDroneButton,
                 conversionPane,
                 cancelButton,
+                selectEventButton,
+                autoEventButton,
                 endTurnButton);
     }
 
@@ -238,6 +253,8 @@ public class ButtonsPane extends HBox
         fillArmorButton.setOnAction(new FillArmorButtonClicked());
         buyDroneButton.setOnAction(new BuyDroneButtonClicked());
         cancelButton.setOnAction(new CancelButtonClicked());
+        selectEventButton.setOnAction(new SelectEventButtonClicked());
+        autoEventButton.setOnAction(new AutoEventButtonClicked());
     }
 
     public void update()
@@ -245,76 +262,83 @@ public class ButtonsPane extends HBox
         conversionPane.update();
         IState currentState = observableGame.getState();
 
-        /* Start Phase*/
-        startGameButton.setVisible(currentState instanceof StartGame);
+        boolean isStart = currentState instanceof StartGame;
+        boolean isShipSelection = currentState instanceof AwaitShipSelection;
+        boolean isActionSelection = currentState instanceof AwaitActionType;
+        boolean isExploration = currentState instanceof AwaitExplorationPhase;
+        boolean isUpgrade = currentState instanceof AwaitUpgrade;
+        boolean isMaintenance = currentState instanceof AwaitMaintenance;
+        boolean isConversion = currentState instanceof AwaitResourceConversion;
+        boolean isEvent = currentState instanceof AwaitEventSelection;
+
+        /* Start Phase */
+        startGameButton.setVisible(isStart);
 
         /* Ship Selection Phase */
-        militaryShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
-        miningShipSelectionButton.setVisible(currentState instanceof AwaitShipSelection);
+        militaryShipSelectionButton.setVisible(isShipSelection);
+        miningShipSelectionButton.setVisible(isShipSelection);
 
         /* Travel Phase */
         travelButton.setVisible(currentState instanceof AwaitMovement);
 
-        /* Pick Action Phase*/
-        exploreButton.setVisible(currentState instanceof AwaitActionType && observableGame.canExplore());
-        enterStationButton.setVisible(currentState instanceof AwaitActionType && observableGame.canEnterSpaceStation());
-        endTurnButton.setVisible(currentState instanceof AwaitActionType);
-        maintainShipButton.setVisible(currentState instanceof AwaitActionType && observableGame.canMaintainShip());
+        /* Action Phase */
+        exploreButton.setVisible(isActionSelection);
+        enterStationButton.setVisible(isActionSelection);
+        endTurnButton.setVisible(isActionSelection);
+        maintainShipButton.setVisible(isActionSelection);
+        if (isActionSelection)
+        {
+            exploreButton.setDisable(!observableGame.canExplore());
+            enterStationButton.setDisable(!observableGame.canEnterSpaceStation());
+            maintainShipButton.setDisable(!observableGame.canMaintainShip());
+        }
 
         /* Exploration Phase */
-        if (currentState instanceof AwaitExplorationPhase)
+        leavePlanetButton.setVisible(isExploration);
+        movementButtons.setVisible(isExploration);
+        if (isExploration)
         {
-            leavePlanetButton.setVisible(true);
-            movementButtons.setVisible(true);
-
+            leavePlanetButton.setDisable(!observableGame.canLeavePlanet());
             upButton.setDisable(!observableGame.droneCanMove(DroneDirection.UP));
             rightButton.setDisable(!observableGame.droneCanMove(DroneDirection.RIGHT));
             downButton.setDisable(!observableGame.droneCanMove(DroneDirection.DOWN));
             leftButton.setDisable(!observableGame.droneCanMove(DroneDirection.LEFT));
-
-            leavePlanetButton.setDisable(!observableGame.canLeavePlanet());
-        }
-        else
-        {
-            movementButtons.setVisible(false);
-            leavePlanetButton.setVisible(false);
         }
 
         /* Maintenance Phase */
-        boolean isMaintenance = currentState instanceof AwaitMaintenance;
-        convertResourceButton.setVisible(isMaintenance);
         acquireDroneRepair.setVisible(isMaintenance);
         acquireShieldButton.setVisible(isMaintenance);
         acquireAmmoButton.setVisible(isMaintenance);
         acquireFuelButton.setVisible(isMaintenance);
         if (isMaintenance)
         {
-            // check which ones to disable
-            convertResourceButton.setDisable(!observableGame.canConvert());
             acquireDroneRepair.setDisable(!observableGame.canMaintain(MaintenanceType.REPAIR_DRONE));
             acquireShieldButton.setDisable(!observableGame.canMaintain(MaintenanceType.ACQUIRE_SHIELD_UNIT));
             acquireAmmoButton.setDisable(!observableGame.canMaintain(MaintenanceType.ACQUIRE_AMMO_UNIT));
             acquireFuelButton.setDisable(!observableGame.canMaintain(MaintenanceType.ACQUIRE_FUEL_UNIT));
         }
 
-        /* Conversion Phase*/
-        conversionPane.setVisible(currentState instanceof AwaitResourceConversion);
+        convertResourceButton.setVisible(isUpgrade || isMaintenance);
+        cancelButton.setVisible(isMaintenance || isUpgrade);
+        if (isMaintenance || isUpgrade)
+            convertResourceButton.setDisable(!observableGame.canConvert());
+
+        /* Conversion Phase */
+        conversionPane.setVisible(isConversion);
+
+        /* Event Phase */
+        selectEventButton.setVisible(isEvent);
+        autoEventButton.setVisible(isEvent);
 
         /* Upgrade Phase*/
-
-        convertResourceButton.setVisible(currentState instanceof AwaitUpgrade || currentState instanceof AwaitMaintenance);
-        fillArmorButton.setVisible(currentState instanceof AwaitUpgrade);
-
-        fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
-        convertResourceButton.setDisable(!observableGame.canConvert());
-
-        boolean isUpgrade = currentState instanceof AwaitUpgrade;
+        fillArmorButton.setVisible(isUpgrade);
         upgradeCargoButton.setVisible(isUpgrade);
         hireMemberButton.setVisible(isUpgrade);
         upgradeWeapon.setVisible(isUpgrade);
         buyDroneButton.setVisible(isUpgrade);
 
-        cancelButton.setVisible(isMaintenance || isUpgrade);
+        fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
+        convertResourceButton.setDisable(!observableGame.canConvert());
 
         upgradeCargoButton.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_CARGO));
 
@@ -447,7 +471,6 @@ public class ButtonsPane extends HBox
         @Override
         public void handle(ActionEvent actionEvent)
         {
-            System.out.println("... OK ...");
             observableGame.startConversion();
         }
     }
@@ -539,6 +562,53 @@ public class ButtonsPane extends HBox
         public void handle(ActionEvent actionEvent)
         {
             observableGame.maintain(MaintenanceType.REPAIR_DRONE);
+        }
+    }
+
+    private class SelectEventButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.selectEvent(getEventType());
+        }
+        private GameEnums.EventType getEventType()
+        {
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("Event Selection");
+            dialog.setHeaderText("Select the desired event:");
+
+            ButtonType selectButton = new ButtonType("Select");
+            dialog.getDialogPane().getButtonTypes().add(selectButton);
+
+            ComboBox<GameEnums.EventType> choices = new ComboBox<>();
+            choices.getItems().addAll(GameEnums.EventType.CREW_DEATH,
+                    GameEnums.EventType.SALVAGE_SHIP,
+                    GameEnums.EventType.CARGO_LOSS,
+                    GameEnums.EventType.FUEL_LOSS,
+                    GameEnums.EventType.CREW_RESCUE,
+                    GameEnums.EventType.NONE);
+
+            choices.setValue(GameEnums.EventType.NONE);
+
+            HBox hBox = new HBox();
+            hBox.getChildren().addAll(choices);
+            hBox.setAlignment(Pos.CENTER);
+
+            dialog.getDialogPane().setContent(hBox);
+
+            dialog.showAndWait();
+
+            return choices.getValue();
+        }
+    }
+
+    private class AutoEventButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.selectEvent(GameEnums.EventType.RANDOM);
         }
     }
 }
