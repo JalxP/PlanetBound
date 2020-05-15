@@ -98,7 +98,35 @@ public class GameData implements GameEnums
 
     public void upgrade(UpgradeType upgradeType)
     {
-        // TODO this
+        switch (upgradeType)
+        {
+            case UPGRADE_CARGO:
+                ship.upgradeCargoHold();
+                logger.add("[OK]Your cargo hold was upgraded.");
+                logger.add(ship.getAllLogs());
+                break;
+            case HIRE_MEMBER:
+                crew.increaseCrew();
+                ship.upgradeCrew();
+                logger.add("[OK]Hired new crew member.");
+                logger.add(ship.getAllLogs());
+                break;
+            case UPGRADE_WEAPON:
+                ship.upgradeWeaponSystem();
+                logger.add("[OK]Your weapon system was upgraded.");
+                logger.add(ship.getAllLogs());
+                break;
+            case FULL_ARMOR:
+                ship.upgradeFullArmor();
+                logger.add("[OK]Your armor was fully restored.");
+                logger.add(ship.getAllLogs());
+                break;
+            case NEW_DRONE:
+                ship.upgradeNewDrone();
+                logger.add("[OK]A new drone was acquired.");
+                logger.add(ship.getAllLogs());
+                break;
+        }
     }
 
     public void selectEvent(EventType eventType)
@@ -215,6 +243,16 @@ public class GameData implements GameEnums
         return ship.getFuelCurrent() + "/" + ship.getFuelMax();
     }
 
+    public String getAvailableDrones()
+    {
+        return ship.getAvailableDrones() + "";
+    }
+
+    public String getAmmoAmount()
+    {
+        return ship.getWeaponsCurrent() + "";
+    }
+
     public String getDroneHealth()
     {
         return ship.getDroneHealth() + "/" + ship.getDroneHealthMax();
@@ -239,9 +277,20 @@ public class GameData implements GameEnums
 
     public boolean canUpgrade(UpgradeType upgradeType)
     {
-
-
-        return true; // TODO CONTINUE HERE!!
+        switch (upgradeType)
+        {
+            case UPGRADE_CARGO:
+                return ship.canUpgradeCargoHold();
+            case HIRE_MEMBER:
+                return crew.getAliveCount() < 6 && ship.canUpgradeCrew();
+            case UPGRADE_WEAPON:
+                return ship.canUpgradeWeapon();
+            case FULL_ARMOR:
+                return ship.canUpgradeFullArmor();
+            case NEW_DRONE:
+                return ship.canUpgradeNewDrone();
+        }
+        return false;
     }
 
     public boolean canMaintainShip()
@@ -275,7 +324,7 @@ public class GameData implements GameEnums
     public boolean canExplore()
     {
         if (ship == null) return false;
-        boolean hasDrone = ship.isDroneOperational();
+        boolean hasDrone = ship.hasAvailableDrones();
         boolean hasLandingParty = crew.getAliveCount() > 2;
         boolean hasResources = getCurrentSector().getAvailableResources() > 0;
 
@@ -292,7 +341,7 @@ public class GameData implements GameEnums
         return ship.getDroneHealth() > 0;
     }
 
-    public boolean gameIsOver()
+    public boolean collectedAllArtifacts()
     {
         return ship.getResources(ResourceType.ARTIFACT) >= 5;
     }

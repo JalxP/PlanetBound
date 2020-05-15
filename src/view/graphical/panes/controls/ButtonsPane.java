@@ -336,16 +336,14 @@ public class ButtonsPane extends HBox
         hireMemberButton.setVisible(isUpgrade);
         upgradeWeapon.setVisible(isUpgrade);
         buyDroneButton.setVisible(isUpgrade);
-
-        fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
-        convertResourceButton.setDisable(!observableGame.canConvert());
-
-        upgradeCargoButton.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_CARGO));
-
-        hireMemberButton.setDisable(!observableGame.canUpgrade(UpgradeType.HIRE_MEMBER));
-        upgradeWeapon.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_WEAPON));
-
-        buyDroneButton.setDisable(!observableGame.canUpgrade(UpgradeType.NEW_DRONE));
+        if (isUpgrade)
+        {
+            fillArmorButton.setDisable(!observableGame.canUpgrade(UpgradeType.FULL_ARMOR));
+            upgradeCargoButton.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_CARGO));
+            hireMemberButton.setDisable(!observableGame.canUpgrade(UpgradeType.HIRE_MEMBER));
+            upgradeWeapon.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_WEAPON));
+            buyDroneButton.setDisable(!observableGame.canUpgrade(UpgradeType.NEW_DRONE));
+        }
     }
 
     /* Handlers */

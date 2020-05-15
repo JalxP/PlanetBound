@@ -25,12 +25,4 @@ public class AwaitMovement extends StateAdapter
 
         return new AwaitEventSelection(getGameData());
     }
-
-    @Override
-    public IState explore()
-    {
-        getGameData().explore();
-
-        return new AwaitExplorationPhase(getGameData());
-    }
 }

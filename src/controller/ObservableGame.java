@@ -225,6 +225,16 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.getFuelAmount();
     }
 
+    public String getAvailableDrones()
+    {
+        return gameController.getAvailableDrones();
+    }
+
+    public String getAmmoAmount()
+    {
+        return gameController.getAmmoAmount();
+    }
+
     public String getDroneHealth()
     {
         return gameController.getDroneHealth();

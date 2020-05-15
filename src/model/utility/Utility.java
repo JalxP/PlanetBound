@@ -7,7 +7,6 @@ import java.util.Random;
 
 import model.data.Constants;
 import model.data.GameEnums.*;
-import model.data.Constants.*;
 
 public abstract class Utility
 {

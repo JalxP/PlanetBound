@@ -31,7 +31,6 @@ public class AwaitMaintenance extends StateAdapter
     @Override
     public IState cancel()
     {
-        // set canBeMaintained = false;
         return new AwaitActionType(getGameData());
     }
 }

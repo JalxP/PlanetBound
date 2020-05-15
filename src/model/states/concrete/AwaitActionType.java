@@ -17,7 +17,7 @@ public class AwaitActionType extends StateAdapter
     @Override
     public IState explore()
     {
-        getGameData().explore(); // TODO is this needed?
+        getGameData().explore();
 
         return new AwaitExplorationPhase(getGameData());
     }
@@ -33,7 +33,7 @@ public class AwaitActionType extends StateAdapter
     {
         getGameData().endTurn();
 
-        if (getGameData().gameIsOver())
+        if (getGameData().collectedAllArtifacts())
             return new Victory(getGameData());
         else if (getGameData().canContinue())
             return new AwaitMovement(getGameData());

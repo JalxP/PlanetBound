@@ -4,7 +4,6 @@ import model.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.function.Predicate;
 
 public class CargoHold implements GameEnums
 {
@@ -55,14 +54,88 @@ public class CargoHold implements GameEnums
 
     /* Other methods*/
 
+    private boolean hasAmountOfEachResource(int redAmount, int greenAmount, int blueAmount, int blackAmount)
+    {
+        return resources.get(ResourceType.RED) >= redAmount &&
+                resources.get(ResourceType.GREEN) >= greenAmount &&
+                resources.get(ResourceType.BLUE) >= blueAmount &&
+                resources.get(ResourceType.BLACK) >= blackAmount;
+    }
+
+    public boolean canUpgradeWeaponSystem()
+    {
+        return hasAmountOfEachResource(2,2,2,2);
+    }
+
+    public void upgradeWeaponSystem()
+    {
+        decreaseResource(ResourceType.RED, 2);
+        decreaseResource(ResourceType.GREEN, 2);
+        decreaseResource(ResourceType.BLUE,2);
+        decreaseResource(ResourceType.BLACK, 2);
+
+        logger.add("[OK]Cost: -2 RED resources, -2 GREEN resources, -2 BLUE resources, -2 BLACK resources");
+    }
+
+    public boolean canUpgradeCrew()
+    {
+        return hasAmountOfEachResource(1,1,1,1);
+    }
+
+    public void upgradeCrew()
+    {
+        decreaseResource(ResourceType.RED,1);
+        decreaseResource(ResourceType.GREEN,1);
+        decreaseResource(ResourceType.BLUE,1);
+        decreaseResource(ResourceType.BLACK,1);
+
+        logger.add("[OK]Cost: -1 RED resources, -1 GREEN resources, -1 BLUE resources, -1 BLACK resources");
+    }
+
+    public boolean canUpgradeFullArmor()
+    {
+        return hasAmountOfEachResource(1,1,1,1);
+    }
+
+    public void upgradeFullArmor()
+    {
+        decreaseResource(ResourceType.RED,1);
+        decreaseResource(ResourceType.GREEN,1);
+        decreaseResource(ResourceType.BLUE,1);
+        decreaseResource(ResourceType.BLACK,1);
+
+        logger.add("[OK]Cost: -1 RED resources, -1 GREEN resources, -1 BLUE resources, -1 BLACK resources");
+    }
+
+    public boolean canUpgradeNewDrone()
+    {
+        return hasAmountOfEachResource(2,2,2,2);
+    }
+
+    public void upgradeNewDrone()
+    {
+        decreaseResource(ResourceType.RED, 2);
+        decreaseResource(ResourceType.GREEN, 2);
+        decreaseResource(ResourceType.BLUE,2);
+        decreaseResource(ResourceType.BLACK, 2);
+
+        logger.add("[OK]Cost: -2 RED resources, -2 GREEN resources, -2 BLUE resources, -2 BLACK resources");
+    }
+
     public boolean canBeUpgraded()
     {
-        /* Can upgrade if has at least 2 resources of each */
-        return currentLevel < maxLevel &&
-                resources.get(ResourceType.RED) > 1 &&
-                resources.get(ResourceType.GREEN) > 1 &&
-                resources.get(ResourceType.BLUE) > 1 &&
-                resources.get(ResourceType.BLACK) > 1;
+        return currentLevel < maxLevel && hasAmountOfEachResource(2,2,2,2);
+    }
+
+    public void upgradeCargoHold()
+    {
+        currentLevel++;
+        decreaseResource(ResourceType.RED, 2);
+        decreaseResource(ResourceType.GREEN, 2);
+        decreaseResource(ResourceType.BLUE,2);
+        decreaseResource(ResourceType.BLACK, 2);
+
+        logger.add("[OK]Cost: -2 RED resources, -2 GREEN resources, -2 BLUE resources, -2 BLACK resources");
     }
 
     public void storeResource(ResourceType resourceType)
@@ -133,9 +206,7 @@ public class CargoHold implements GameEnums
     {
         int previousAmount = resources.get(resourceType);
         int newAmount = Math.max(previousAmount - amount, 0);
-        int lostAmount = newAmount - previousAmount;
         resources.put(resourceType, newAmount);
-        logger.add("[X]Lost " + lostAmount + " " + resourceType.name() + " resource" + ((lostAmount > 1) ? "s." : ".") + "Rolled: " + amount);
     }
 
     public void loseRandomResource()
@@ -148,7 +219,13 @@ public class CargoHold implements GameEnums
         } while (!hasResources(resourceType));
 
         int amount = Utility.throwDie(3);
+        int previousAmount = resources.get(resourceType);
+        int newAmount = Math.max(previousAmount - amount, 0);
+        int lostAmount = newAmount - previousAmount;
+
         decreaseResource(resourceType, amount);
+        logger.add("[X]Lost " + lostAmount + " " + resourceType.name() + " resource" + ((lostAmount > 1) ? "s." : ".") + "Rolled: " + amount);
+
     }
 
     public void setCanConvertResources(boolean option)
@@ -169,9 +246,7 @@ public class CargoHold implements GameEnums
 
     public boolean canAcquireShield()
     {
-        return resources.get(ResourceType.BLACK) > 1 &&
-                resources.get(ResourceType.GREEN) > 1 &&
-                resources.get(ResourceType.BLUE) > 1;
+        return hasAmountOfEachResource(0, 1,1,1);
     }
 
     public void acquireShield()
@@ -185,8 +260,7 @@ public class CargoHold implements GameEnums
 
     public boolean canAcquireAmmo()
     {
-        return resources.get(ResourceType.BLACK) > 0 &&
-                resources.get(ResourceType.BLUE) > 0;
+        return hasAmountOfEachResource(0, 0, 1, 1);
     }
 
     public void acquireAmmo()
@@ -199,9 +273,7 @@ public class CargoHold implements GameEnums
 
     public boolean canAcquireFuel()
     {
-        return resources.get(ResourceType.BLACK) > 0 &&
-                resources.get(ResourceType.RED) > 0 &&
-                resources.get(ResourceType.GREEN) > 0;
+        return hasAmountOfEachResource(1,1,0,1);
     }
 
     public void acquireFuel()
@@ -215,10 +287,7 @@ public class CargoHold implements GameEnums
 
     public boolean canAcquireDroneRepair()
     {
-        return resources.get(ResourceType.BLACK) > 0 &&
-                resources.get(ResourceType.RED) > 0 &&
-                resources.get(ResourceType.GREEN) > 0 &&
-                resources.get(ResourceType.BLUE) > 0;
+        return hasAmountOfEachResource(1,1,1,1);
     }
 
     public void acquireDroneRepair()

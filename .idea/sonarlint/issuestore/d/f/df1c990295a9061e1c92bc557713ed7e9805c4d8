@@ -1,5 +1,9 @@
 
-Q
-java:S2864d"4Iterate over the "entrySet" instead of the "keySet".(úŠ®Ù8™ŞËª .
 “
-java:S1319Ğ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(û¤„Œüÿÿÿÿ8§Ëç .
+java:S1319°"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(û¤„Œüÿÿÿÿ8§Ëç .
+R
+java:S2864®"4Iterate over the "entrySet" instead of the "keySet".(úŠ®Ù8ãÕîü .
+…
+java:S4144s"cUpdate this method so that its implementation is not identical to "upgradeWeaponSystem" on line 70.( Åí‰üÿÿÿÿ8¼‚¦£¡.
+}
+java:S4144d"[Update this method so that its implementation is not identical to "upgradeCrew" on line 85.(‹ú’§ùÿÿÿÿ8İ®œŸ¡.

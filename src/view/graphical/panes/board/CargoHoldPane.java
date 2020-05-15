@@ -28,11 +28,13 @@ public class CargoHoldPane extends VBox
     private ImageView blueResource;
     private ImageView greenResource;
     private ImageView redResource;
+    private ImageView artifactResource;
 
     private Text blackResourceAmount;
     private Text blueResourceAmount;
     private Text greenResourceAmount;
     private Text redResourceAmount;
+    private Text artifactResourceAmount;
 
 
     public CargoHoldPane(ObservableGame observableGame)
@@ -42,14 +44,17 @@ public class CargoHoldPane extends VBox
         cargoHoldTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 
         String cargoHoldMax = observableGame.getCargoHoldMaxAsString();
-        blackResourceAmount = new Text("0/" + cargoHoldMax);
+        blackResourceAmount = new Text("0" + cargoHoldMax);
         blackResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
-        blueResourceAmount = new Text("0/" + cargoHoldMax);
+        blueResourceAmount = new Text("0" + cargoHoldMax);
         blueResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
-        greenResourceAmount = new Text("0/" + cargoHoldMax);
+        greenResourceAmount = new Text("0" + cargoHoldMax);
         greenResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
-        redResourceAmount = new Text("0/" + cargoHoldMax);
+        redResourceAmount = new Text("0" + cargoHoldMax);
         redResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
+        artifactResourceAmount = new Text("0");
+        artifactResourceAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
+
 
         cargoHold = new GridPane();
 
@@ -57,6 +62,7 @@ public class CargoHoldPane extends VBox
         blueResource = new ImageView(Images.getImage(SURFACE_BLUE));
         greenResource = new ImageView(Images.getImage(SURFACE_GREEN));
         redResource = new ImageView(Images.getImage(SURFACE_RED));
+        artifactResource = new ImageView(Images.getImage(SURFACE_ARTIFACT));
 
         installTooltips();
         setupLayout();
@@ -68,6 +74,7 @@ public class CargoHoldPane extends VBox
         Tooltip.install(blueResource, new Tooltip(SURFACE_BLUE));
         Tooltip.install(greenResource, new Tooltip(SURFACE_GREEN));
         Tooltip.install(redResource, new Tooltip(SURFACE_RED));
+        Tooltip.install(artifactResource, new Tooltip(SURFACE_ARTIFACT));
     }
 
     private void setupLayout()
@@ -87,6 +94,8 @@ public class CargoHoldPane extends VBox
         cargoHold.add(new Separator(Orientation.VERTICAL), 8,0);
         cargoHold.add(redResource, 9,0);
         cargoHold.add(redResourceAmount,10,0);
+        cargoHold.add(artifactResource,0,1);
+        cargoHold.add(artifactResourceAmount, 1,1);
 
         getChildren().addAll(cargoHoldTitle,
                 cargoHold);
@@ -101,6 +110,7 @@ public class CargoHoldPane extends VBox
         blueResourceAmount.setText(observableGame.getResourcesAsString(ResourceType.BLUE));
         greenResourceAmount.setText(observableGame.getResourcesAsString(ResourceType.GREEN));
         redResourceAmount.setText(observableGame.getResourcesAsString(ResourceType.RED));
+        artifactResourceAmount.setText(observableGame.getResourcesAsString(ResourceType.ARTIFACT));
 
         cargoHold.add(blackResource, 0, 0);
         cargoHold.add(blackResourceAmount, 1, 0);
@@ -113,6 +123,8 @@ public class CargoHoldPane extends VBox
         cargoHold.add(new Separator(Orientation.VERTICAL), 8,0);
         cargoHold.add(redResource, 9,0);
         cargoHold.add(redResourceAmount,10,0);
+        cargoHold.add(artifactResource,0,1);
+        cargoHold.add(artifactResourceAmount, 1,1);
 
         getChildren().addAll(cargoHoldTitle,
                 cargoHold);

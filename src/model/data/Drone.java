@@ -7,14 +7,12 @@ public class Drone implements GameEnums
     private int health;
     private final int maxHealth;
     private ResourceType resourceCollected;
-    private boolean operational;
 
     public Drone()
     {
         maxHealth = DRONE_MAX_HEALTH;
         health = maxHealth;
         resourceCollected = ResourceType.NONE;
-        operational = true;
     }
 
     public void storeResource(ResourceType resourceType)
@@ -47,7 +45,6 @@ public class Drone implements GameEnums
     public void decreaseHealth()
     {
         health--;
-        operational = isOperational();
     }
 
     public boolean isOperational()

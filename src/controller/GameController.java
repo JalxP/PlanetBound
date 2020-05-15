@@ -162,6 +162,16 @@ public class GameController implements GameEnums
         return gameData.getFuelAmount();
     }
 
+    public String getAvailableDrones()
+    {
+        return gameData.getAvailableDrones();
+    }
+
+    public String getAmmoAmount()
+    {
+        return gameData.getAmmoAmount();
+    }
+
     public String getDroneHealth()
     {
         return gameData.getDroneHealth();

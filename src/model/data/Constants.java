@@ -15,11 +15,13 @@ public abstract class Constants
     public static final int MINING_SHIP_MAX_FUEL_CAPACITY = 53;
     public static final int MINING_SHIP_MAX_SHIELD_CAPACITY = 18;
     public static final int MINING_SHIP_MAX_CARGO_LEVEL = 4;
+    public static final int MINING_SHIP_MAX_WEAPON_LEVEL = 1;
 
     public static final int MILITARY_SHIP_MAX_WEAPON_CAPACITY = 9;
     public static final int MILITARY_SHIP_MAX_FUEL_CAPACITY = 35;
     public static final int MILITARY_SHIP_MAX_SHIELD_CAPACITY = 9;
     public static final int MILITARY_SHIP_MAX_CARGO_LEVEL = 2;
+    public static final int MILITARY_SHIP_MAX_WEAPON_LEVEL = 2;
 
     public static final int DRONE_MAX_HEALTH = 6;
 

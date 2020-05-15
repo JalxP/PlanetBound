@@ -11,15 +11,17 @@ public class Ship
     private ShipType shipType;
     private CargoHold cargoHold;
     private Drone drone;
+    private int dronesAmount; // se a hp de um drone chegar a zero iniciar outro
     private int shieldCurrent;
     private final int shieldMax;
     private int fuelCurrent;
     private final int fuelMax;
     private int weaponsCurrent;
     private int weaponsMax;
+    private int weaponsCurrentLevel;
+    private int weaponsMaxLevel;
 
     private Logger logger;
-
 
     public Ship(ShipType shipType)
     {
@@ -31,6 +33,7 @@ public class Ship
             shieldMax = MILITARY_SHIP_MAX_SHIELD_CAPACITY;
             fuelMax = MILITARY_SHIP_MAX_FUEL_CAPACITY;
             weaponsMax = MILITARY_SHIP_MAX_WEAPON_CAPACITY;
+            weaponsMaxLevel = MILITARY_SHIP_MAX_WEAPON_LEVEL;
         }
         else
         {
@@ -38,13 +41,16 @@ public class Ship
             shieldMax = MINING_SHIP_MAX_SHIELD_CAPACITY;
             fuelMax = MINING_SHIP_MAX_FUEL_CAPACITY;
             weaponsMax = MINING_SHIP_MAX_WEAPON_CAPACITY;
+            weaponsMaxLevel = MINING_SHIP_MAX_WEAPON_LEVEL;
         }
 
+        weaponsCurrentLevel = 1;
         shieldCurrent = shieldMax;
         fuelCurrent = fuelMax;
         weaponsCurrent = weaponsMax;
         cargoHold = new CargoHold(maxCargoLevel);
         drone = new Drone();
+        dronesAmount = 1;
         logger = new Logger();
     }
 
@@ -59,6 +65,11 @@ public class Ship
     public int getShieldCurrent()
     {
         return shieldCurrent;
+    }
+
+    public CargoHold getCargoHold()
+    {
+        return cargoHold;
     }
 
     public int getShieldMax()
@@ -84,6 +95,11 @@ public class Ship
     public int getWeaponsCurrent()
     {
         return weaponsCurrent;
+    }
+
+    public int getAvailableDrones()
+    {
+        return dronesAmount;
     }
 
     public int getResources(ResourceType resourceType)
@@ -114,11 +130,18 @@ public class Ship
     public void decreaseDroneHealth()
     {
         drone.decreaseHealth();
+        if (!drone.isOperational())
+            dronesAmount--;
     }
 
     public boolean droneIsOperational()
     {
         return drone.isOperational();
+    }
+
+    public boolean hasAvailableDrones()
+    {
+        return dronesAmount > 0;
     }
 
     public void decreaseShieldsBy(int amount)
@@ -196,6 +219,68 @@ public class Ship
                 acquireDroneRepair();
                 break;
         }
+    }
+
+    public boolean canUpgradeCargoHold()
+    {
+        return cargoHold.canBeUpgraded();
+    }
+
+    public void upgradeCargoHold()
+    {
+        cargoHold.upgradeCargoHold();
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public boolean canUpgradeFullArmor()
+    {
+        return shieldCurrent < shieldMax && cargoHold.canUpgradeFullArmor();
+    }
+
+    public void upgradeFullArmor()
+    {
+        shieldCurrent = shieldMax;
+        cargoHold.upgradeFullArmor();
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public boolean canUpgradeNewDrone()
+    {
+        return cargoHold.canUpgradeNewDrone();
+    }
+
+    public void upgradeNewDrone()
+    {
+        dronesAmount++;
+        cargoHold.upgradeNewDrone();
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public boolean canUpgradeCrew()
+    {
+        return cargoHold.canUpgradeCrew();
+    }
+
+    public void upgradeCrew()
+    {
+        cargoHold.upgradeCrew();
+        logger.add(cargoHold.getAllLogs());
+    }
+
+    public boolean canUpgradeWeapon()
+    {
+        boolean canUpgradeLevel = weaponsCurrentLevel < weaponsMaxLevel;
+        boolean canUpgrade = shipType == ShipType.MILITARY;
+        boolean hasResources = cargoHold.canUpgradeWeaponSystem();
+
+        return canUpgradeLevel && canUpgrade && hasResources;
+    }
+
+    public void upgradeWeaponSystem()
+    {
+        weaponsCurrentLevel++;
+        cargoHold.upgradeWeaponSystem();
+        logger.add(cargoHold.getAllLogs());
     }
 
     private void acquireShield()
