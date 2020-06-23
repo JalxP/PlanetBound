@@ -2,8 +2,11 @@ package model.states;
 
 import model.data.GameData;
 import model.data.GameEnums;
+import model.states.concrete.StartGame;
 
-public class StateAdapter implements IState, GameEnums
+import java.io.Serializable;
+
+public class StateAdapter implements IState, GameEnums, Serializable
 
 {
     private GameData gameData;
@@ -120,6 +123,6 @@ public class StateAdapter implements IState, GameEnums
     @Override
     public IState endGame()
     {
-        return this;
+        return new StartGame(new GameData());
     }
 }

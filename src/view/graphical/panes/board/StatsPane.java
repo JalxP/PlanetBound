@@ -1,11 +1,9 @@
 package view.graphical.panes.board;
 
 import controller.ObservableGame;
-import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -13,8 +11,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-
-import static model.data.GameEnums.ResourceType.*;
 
 public class StatsPane extends HBox
 {
@@ -62,7 +58,7 @@ public class StatsPane extends HBox
         fuelAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
 
         ammoHBox = new HBox();
-        ammoLabel = new Text("Ammo");
+        ammoLabel = new Text("Ammo (Lvl 1)");
         ammoLabel.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         ammoAmount = new Text("*");
         ammoAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
@@ -118,6 +114,7 @@ public class StatsPane extends HBox
         shieldAmount.setText(observableGame.getShieldAmount());
         fuelAmount.setText(observableGame.getFuelAmount());
         dronesAmount.setText(observableGame.getAvailableDrones());
+        ammoLabel.setText("Ammo Lvl (" + observableGame.getLevelOfAmmo() +")");
         ammoAmount.setText(observableGame.getAmmoAmount());
         droneHealthAmount.setText(observableGame.getDroneHealth());
     }

@@ -103,3 +103,7 @@ a
 1src/view/graphical/panes/board/CargoHoldPane.java,9\d\9d6159051ec333eb90c076efa7bbc494fa652753
 b
 2src/view/graphical/panes/board/ConversionPane.java,6\1\6197eec7c0d9774fd2336befcbe8edcbf04023c0
+S
+#.idea/artifacts/PlanetBound_jar.xml,e\e\ee31dc07e083bbc1fc211b0768c44686b2dd22ac
+H
+src/META-INF/MANIFEST.MF,e\4\e4b1fd2293ba1e598e6bec4e0ee3b6b6851eb5a2

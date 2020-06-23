@@ -1,10 +1,11 @@
 package model.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Crew
+public class Crew implements Serializable
 {
     private final List<String> crewNames;
     private List<Boolean> crewStatuses;

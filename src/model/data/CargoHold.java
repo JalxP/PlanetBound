@@ -2,10 +2,11 @@ package model.data;
 
 import model.utility.Utility;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-public class CargoHold implements GameEnums
+public class CargoHold implements GameEnums, Serializable
 {
     private EnumMap<ResourceType, Integer> resources;
 
@@ -140,6 +141,9 @@ public class CargoHold implements GameEnums
 
     public void storeResource(ResourceType resourceType)
     {
+        if (resourceType == ResourceType.NONE)
+            return;
+
         if (resourceType == ResourceType.ARTIFACT)
         {
             int amount = resources.get(ResourceType.ARTIFACT);

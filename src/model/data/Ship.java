@@ -2,11 +2,12 @@ package model.data;
 
 import model.data.GameEnums.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static model.data.Constants.*;
 
-public class Ship
+public class Ship implements Serializable
 {
     private ShipType shipType;
     private CargoHold cargoHold;
@@ -252,6 +253,7 @@ public class Ship
     public void upgradeNewDrone()
     {
         dronesAmount++;
+        drone.setToMaxHealth();
         cargoHold.upgradeNewDrone();
         logger.add(cargoHold.getAllLogs());
     }
@@ -324,7 +326,7 @@ public class Ship
 
     public boolean canAcquireDroneRepair()
     {
-        return cargoHold.canAcquireDroneRepair();
+        return cargoHold.canAcquireDroneRepair() && dronesAmount > 0;
     }
 
     public void acquireDroneRepair()
@@ -334,6 +336,16 @@ public class Ship
         logger.add(cargoHold.getAllLogs());
         logger.add("[OK]Fully repaired the drone.");
     }
+    public String getLevelOfCargoHold()
+    {
+        return cargoHold.getCurrentLevel() + "";
+    }
+
+    public String getLevelOfAmmo()
+    {
+        return weaponsCurrentLevel + "";
+    }
+
     /* Log */
 
     public ArrayList<String> getAllLogs()

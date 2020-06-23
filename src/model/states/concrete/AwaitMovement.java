@@ -20,6 +20,9 @@ public class AwaitMovement extends StateAdapter
     {
         getGameData().travel();
 
+        if (!getGameData().canContinue())
+            return new Defeat(getGameData());
+
         if (getGameData().isCurrentSectorPlanet())
             return new AwaitActionType(getGameData());
 

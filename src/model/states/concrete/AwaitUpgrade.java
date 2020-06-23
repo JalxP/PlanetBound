@@ -23,6 +23,12 @@ public class AwaitUpgrade extends StateAdapter
     }
 
     @Override
+    public IState startConversion()
+    {
+        return new AwaitResourceConversion(getGameData());
+    }
+
+    @Override
     public IState cancel()
     {
         return new AwaitActionType(getGameData());

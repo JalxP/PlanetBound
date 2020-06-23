@@ -40,7 +40,7 @@ public class CargoHoldPane extends VBox
     public CargoHoldPane(ObservableGame observableGame)
     {
         this.observableGame = observableGame;
-        cargoHoldTitle = new Text("Cargo Hold");
+        cargoHoldTitle = new Text("Cargo Hold (Lvl 1)");
         cargoHoldTitle.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 
         String cargoHoldMax = observableGame.getCargoHoldMaxAsString();
@@ -105,6 +105,8 @@ public class CargoHoldPane extends VBox
     {
         getChildren().clear();
         cargoHold.getChildren().clear();
+
+        cargoHoldTitle.setText("Cargo Hold (Lvl " + observableGame.getLevelOfCargoHold() + ")");
 
         blackResourceAmount.setText(observableGame.getResourcesAsString(ResourceType.BLACK));
         blueResourceAmount.setText(observableGame.getResourcesAsString(ResourceType.BLUE));

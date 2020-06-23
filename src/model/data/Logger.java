@@ -1,8 +1,9 @@
 package model.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Logger
+public class Logger implements Serializable
 {
     ArrayList<String> log;
 

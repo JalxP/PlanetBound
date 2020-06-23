@@ -2,13 +2,15 @@ package model.data;
 
 import model.utility.Utility;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static model.data.Constants.*;
 import static model.data.GameEnums.*;
 
-public class Sector
+public class Sector implements Serializable
 {
     private boolean isPlanet;
     private boolean hasSpaceStation;
@@ -81,6 +83,8 @@ public class Sector
 
     List<ResourceType> getPossibleResources()
     {
+        if (planetSurface == null)
+            return Collections.emptyList();
         return planetSurface.getAvailableResources();
     }
 
@@ -89,9 +93,9 @@ public class Sector
         return planetSurface.getSurface();
     }
 
-    public int getAvailableResources()
+    public boolean hasAvailableResources()
     {
-        return availableResources;
+        return planetSurface.hasAvailableResources();
     }
 
     public AlienType getAlienType()
@@ -181,19 +185,25 @@ public class Sector
         return planetSurface.alienIsNextToDrone();
     }
 
+    public void generateSurface()
+    {
+        planetSurface.generateSurface();
+    }
+
     public void generateAlien()
     {
         planetSurface.generateAlien();
-        //logger.add(planetSurface.getAllLogs());
     }
-
     /* Log */
     public ArrayList<String> getAllLogs()
     {
         return logger.getLogAndClear();
     }
+
     public ArrayList<String> getSurfaceLogs()
     {
         return planetSurface.getAllLogs();
     }
+
+
 }

@@ -3,17 +3,24 @@ package model.data;
 import model.data.GameEnums.*;
 import model.utility.Utility;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static model.data.Constants.*;
 
-public class PlanetSurface
+public class PlanetSurface implements Serializable
 {
     private final PlanetType planetType;
     private ResourceType[][] surface;
     private List<ResourceType> possibleResources;
     private List<ResourceType> availableResources;
+    private int availableExtractions;
+
+    private int resourceRow;
+    private int resourceCol;
+    private ResourceType resourceType;
+    private boolean lastResourceWasGathered;
 
     private int landingRow;
     private int landingCol;
@@ -31,11 +38,11 @@ public class PlanetSurface
     {
         this.planetType = planetType;
         surface = new ResourceType[SURFACE_SIDE_SIZE][SURFACE_SIDE_SIZE];
+        lastResourceWasGathered = true;
 
         logger = new Logger();
 
         getPossibleResources();
-        generateSurface();
     }
 
     private void getPossibleResources()
@@ -57,24 +64,42 @@ public class PlanetSurface
             default: break;
         }
         availableResources = new ArrayList<>(possibleResources);
+        availableExtractions = availableResources.size();
     }
 
-    private void generateSurface()
+    public void generateSurface()
     {
-        for (int i = 0; i < SURFACE_SIDE_SIZE; i++)
+        if (lastResourceWasGathered)
         {
-            for (int j = 0; j < SURFACE_SIDE_SIZE; j++)
-            {
-                surface[i][j] = ResourceType.NONE;
-            }
+            for (int i = 0; i < SURFACE_SIDE_SIZE; i++)
+                for (int j = 0; j < SURFACE_SIDE_SIZE; j++)
+                    surface[i][j] = ResourceType.NONE;
+
+            generateResource();
+            generateLandingZone();
+            generateAlien();
         }
+        else
+            surface[resourceRow][resourceCol] = resourceType;
+    }
 
-        int randomRow = Utility.throwDie(6) - 1; // TODO add this to LOG
-        int randomCol = Utility.throwDie(6) - 1; // TODO add this to LOG
+    private void generateResource()
+    {
+        resourceRow = Utility.throwDie(6) - 1;
+        resourceCol = Utility.throwDie(6) - 1;
 
-        surface[randomRow][randomCol] = Utility.pickRandomResourceFromPossible(availableResources);
+        resourceType = Utility.pickRandomResourceFromPossible(availableResources);
+        surface[resourceRow][resourceCol] = resourceType;
 
-        logger.add("[OK]New " + surface[randomRow][randomCol].name() + " resource generated at (" + (randomRow+1) + "," + (randomCol+1) + ")");
+        logger.add("[OK]New " + surface[resourceRow][resourceCol].name() + " resource generated at (" + (resourceRow+1) + "," + (resourceCol+1) + ")");
+
+        lastResourceWasGathered = false;
+    }
+
+    private void generateLandingZone()
+    {
+        int randomRow;
+        int randomCol;
 
         do
         {
@@ -82,15 +107,12 @@ public class PlanetSurface
             randomCol = Utility.throwDie(6) - 1;
         } while (surface[randomRow][randomCol] != ResourceType.NONE);
 
-        // TODO add randomRow and randomCol to LOG
         logger.add("[OK]New landing zone generated at (" + (randomRow+1) + "," + (randomCol+1) + ")");
 
         droneRow = randomRow;
         droneCol = randomCol;
         landingRow = droneRow;
         landingCol = droneCol;
-
-        generateAlien();
     }
 
     public void generateAlien()
@@ -178,6 +200,11 @@ public class PlanetSurface
     public void gatherResource()
     {
         surface[droneRow][droneCol] = ResourceType.NONE;
+        if (resourceType == ResourceType.ARTIFACT)
+            availableResources.remove(resourceType);
+        resourceType = ResourceType.NONE;
+        lastResourceWasGathered = true;
+        availableExtractions--;
     }
 
     public ResourceType[][] getSurface()
@@ -220,12 +247,18 @@ public class PlanetSurface
         return alienType;
     }
 
+    public boolean hasAvailableResources()
+    {
+        return availableExtractions > 0;
+    }
+
     public List<ResourceType> getAvailableResources()
     {
         return availableResources;
     }
 
     /* Log */
+
     public ArrayList<String> getAllLogs()
     {
         return logger.getLogAndClear();

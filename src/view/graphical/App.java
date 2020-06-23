@@ -20,9 +20,7 @@ public class App extends Application
         Scene scene = new Scene(paneOrganizer.getRoot(), WINDOW_WIDTH, WINDOW_HEIGHT);
 
         stage.setScene(scene);
-        stage.setTitle("Planet Bound v0.1");
-        // stage.setResizable(false);
-
+        stage.setTitle("Planet Bound v1.0");
         stage.show();
     }
 

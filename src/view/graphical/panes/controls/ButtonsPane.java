@@ -1,9 +1,9 @@
 package view.graphical.panes.controls;
 
 import controller.ObservableGame;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -15,7 +15,6 @@ import model.states.concrete.*;
 import view.graphical.panes.board.ConversionPane;
 import view.graphical.resources.Images;
 
-import static model.data.GameEnums.*;
 import model.data.GameEnums.*;
 import static view.graphical.ConstantsUI.*;
 import static view.graphical.resources.ResourcesPaths.*;
@@ -25,6 +24,8 @@ public class ButtonsPane extends HBox
     private final ObservableGame observableGame;
 
     private final ActionButton startGameButton;
+    private final ActionButton playAgainButton;
+    private final ActionButton exitGameButton;
 
     private final ActionButton militaryShipSelectionButton;
     private final ActionButton miningShipSelectionButton;
@@ -46,7 +47,7 @@ public class ButtonsPane extends HBox
     private final ActionButton acquireShieldButton;
     private final ActionButton acquireAmmoButton;
     private final ActionButton acquireFuelButton;
-    public  final ActionButton acquireDroneRepair;
+    public final ActionButton acquireDroneRepair;
 
     private final ActionButton convertResourceButton;
     private final ActionButton fillArmorButton;
@@ -71,6 +72,8 @@ public class ButtonsPane extends HBox
         this.observableGame = observableGame;
 
         startGameButton = new ActionButton("Start Game");
+        playAgainButton = new ActionButton("Play Again");
+        exitGameButton = new ActionButton("Exit Game");
 
         militaryShipSelectionButton = new ActionButton("Military Ship");
         miningShipSelectionButton = new ActionButton("Mining Ship");
@@ -114,9 +117,9 @@ public class ButtonsPane extends HBox
         setupSize();
         setupLayout();
         setupListeners();
+        setupTooltips();
         bindButtonsVisibilityToLayout();
     }
-
 
 
     private void setupSize()
@@ -127,6 +130,8 @@ public class ButtonsPane extends HBox
     private void bindButtonsVisibilityToLayout()
     {
         startGameButton.managedProperty().bind(startGameButton.visibleProperty());
+        playAgainButton.managedProperty().bind(playAgainButton.visibleProperty());
+        exitGameButton.managedProperty().bind(exitGameButton.visibleProperty());
         militaryShipSelectionButton.managedProperty().bind(militaryShipSelectionButton.visibleProperty());
         miningShipSelectionButton.managedProperty().bind(miningShipSelectionButton.visibleProperty());
         travelButton.managedProperty().bind(travelButton.visibleProperty());
@@ -155,12 +160,31 @@ public class ButtonsPane extends HBox
         autoEventButton.managedProperty().bind(autoEventButton.visibleProperty());
     }
 
+    private void setupTooltips()
+    {
+        /* Upgrades */
+        upgradeCargoButton.setTooltip(new Tooltip("Cost: 2 of each"));
+        hireMemberButton.setTooltip(new Tooltip("Cost: 1 of each"));
+        upgradeWeapon.setTooltip(new Tooltip("Cost: 2 of each"));
+        fillArmorButton.setTooltip(new Tooltip("Cost: 1 of each"));
+        buyDroneButton.setTooltip(new Tooltip("Cost: 2 of each"));
+
+        /* Maintenance */
+        acquireShieldButton.setTooltip(new Tooltip("Cost: 1 GREEN, 1 BLUE, 1 BLACK"));
+        acquireAmmoButton.setTooltip(new Tooltip("Cost: 1 BLUE, 1 BLACK"));
+        acquireFuelButton.setTooltip(new Tooltip("Cost: 1 RED, 1 GREEN, 1 BLACK"));
+        acquireDroneRepair.setTooltip(new Tooltip("Cost: 1 of each"));
+
+    }
+
     private void setupLayout()
     {
         getChildren().clear();
         setAlignment(Pos.CENTER);
         setSpacing(10);
 
+        exitGameButton.setVisible(false);
+        playAgainButton.setVisible(false);
         militaryShipSelectionButton.setVisible(false);
         miningShipSelectionButton.setVisible(false);
         travelButton.setVisible(false);
@@ -202,6 +226,8 @@ public class ButtonsPane extends HBox
         autoEventButton.setVisible(false);
 
         getChildren().addAll(startGameButton,
+                playAgainButton,
+                exitGameButton,
                 militaryShipSelectionButton,
                 miningShipSelectionButton,
                 travelButton,
@@ -230,6 +256,8 @@ public class ButtonsPane extends HBox
     private void setupListeners()
     {
         startGameButton.setOnAction(new StartGameButtonClicked());
+        playAgainButton.setOnAction(new PlayAgainGameButtonClicked());
+        exitGameButton.setOnAction(new ExitGameButtonClicked());
         militaryShipSelectionButton.setOnAction(new MilitaryShipSelectionButtonClicked());
         miningShipSelectionButton.setOnAction(new MiningShipSelectionButtonClicked());
         travelButton.setOnAction(new MoveButtonClicked());
@@ -263,6 +291,7 @@ public class ButtonsPane extends HBox
         IState currentState = observableGame.getState();
 
         boolean isStart = currentState instanceof StartGame;
+        boolean isVictoryOrDefeat = currentState instanceof Victory || currentState instanceof Defeat;
         boolean isShipSelection = currentState instanceof AwaitShipSelection;
         boolean isActionSelection = currentState instanceof AwaitActionType;
         boolean isExploration = currentState instanceof AwaitExplorationPhase;
@@ -344,6 +373,10 @@ public class ButtonsPane extends HBox
             upgradeWeapon.setDisable(!observableGame.canUpgrade(UpgradeType.UPGRADE_WEAPON));
             buyDroneButton.setDisable(!observableGame.canUpgrade(UpgradeType.NEW_DRONE));
         }
+
+        /* Victory or Defeat */
+        playAgainButton.setVisible(isVictoryOrDefeat);
+        exitGameButton.setVisible(isVictoryOrDefeat);
     }
 
     /* Handlers */
@@ -353,6 +386,24 @@ public class ButtonsPane extends HBox
         public void handle(ActionEvent actionEvent)
         {
             observableGame.startGame();
+        }
+    }
+
+    private class PlayAgainGameButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            observableGame.endGame();
+        }
+    }
+
+    private class ExitGameButtonClicked implements EventHandler<ActionEvent>
+    {
+        @Override
+        public void handle(ActionEvent actionEvent)
+        {
+            Platform.exit();
         }
     }
 

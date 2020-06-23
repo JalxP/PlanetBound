@@ -2,13 +2,14 @@ package model.data;
 
 import model.utility.Utility;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static model.data.Constants.*;
 
-public class GameData implements GameEnums
+public class GameData implements GameEnums, Serializable
 {
     private Ship ship;
     private Crew crew;
@@ -56,10 +57,19 @@ public class GameData implements GameEnums
                 ship.decreaseShieldsBy(spentShields);
             }
         }
+        else
+        {
+            logger.add("[!]Spent 1 fuel unit.");
+            ship.decreaseFuelBy(1);
+        }
     }
 
     public void explore()
     {
+        getCurrentSector().generateSurface();
+
+        logger.add("[!]Spent 1 fuel unit.");
+        ship.decreaseFuelBy(1);
         logger.add(getCurrentSector().getSurfaceLogs());
     }
 
@@ -78,7 +88,6 @@ public class GameData implements GameEnums
 
     public void leavePlanet()
     {
-        // store the gathered resource
         ship.storeResourceOnCargoHold();
         logger.add(ship.getAllLogs());
 
@@ -88,7 +97,7 @@ public class GameData implements GameEnums
     {
 
         // TODO
-        // fuel and stuff
+        // fuel and stuff 
     }
 
     public void enterSpaceStation()
@@ -187,6 +196,8 @@ public class GameData implements GameEnums
 
     public String getShipType()
     {
+        if (ship == null)
+            return "";
         if (ship.getShipType() == ShipType.MILITARY)
             return "Military Ship";
         else
@@ -235,31 +246,43 @@ public class GameData implements GameEnums
 
     public String getShieldAmount()
     {
+        if (ship == null)
+            return "*";
         return ship.getShieldCurrent() + "/" + ship.getShieldMax();
     }
 
     public String getFuelAmount()
     {
+        if (ship == null)
+            return "*";
         return ship.getFuelCurrent() + "/" + ship.getFuelMax();
     }
 
     public String getAvailableDrones()
     {
+        if (ship == null)
+            return "*";
         return ship.getAvailableDrones() + "";
     }
 
     public String getAmmoAmount()
     {
+        if (ship == null)
+            return "*";
         return ship.getWeaponsCurrent() + "";
     }
 
     public String getDroneHealth()
     {
+        if (ship == null)
+            return "*";
         return ship.getDroneHealth() + "/" + ship.getDroneHealthMax();
     }
 
     public String getResourcesAsString(ResourceType resourceType)
     {
+        if (ship == null)
+            return "0*";
         return ship.getResources(resourceType) + "";
     }
 
@@ -326,9 +349,10 @@ public class GameData implements GameEnums
         if (ship == null) return false;
         boolean hasDrone = ship.hasAvailableDrones();
         boolean hasLandingParty = crew.getAliveCount() > 2;
-        boolean hasResources = getCurrentSector().getAvailableResources() > 0;
+        boolean hasResources = getCurrentSector().hasAvailableResources();
+        boolean hasEnoughFuel = ship.getFuelCurrent() > 0;
 
-        return hasDrone && hasLandingParty && hasResources;
+        return hasDrone && hasLandingParty && hasResources && hasEnoughFuel;
     }
 
     public boolean canLeavePlanet()
@@ -482,7 +506,22 @@ public class GameData implements GameEnums
             logger.add("[!]The drone has missed the alien. Rolled: " + roll);
     }
 
+    public String getLevelOfCargoHold()
+    {
+        if (ship == null)
+            return "*";
+        return ship.getLevelOfCargoHold();
+    }
+
+    public String getLevelOfAmmo()
+    {
+        if (ship == null)
+            return "*";
+        return ship.getLevelOfAmmo();
+    }
+
     /* Message */
+
     public void setMessage(String msg)
     {
         message = msg;
@@ -497,6 +536,4 @@ public class GameData implements GameEnums
     {
         return logger.getLogAndClear();
     }
-
-
 }

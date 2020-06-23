@@ -2,7 +2,7 @@ package view.graphical;
 
 public abstract class ConstantsUI
 {
-    public static final int WINDOW_WIDTH = 1280;
+    public static final int WINDOW_WIDTH = 850;
     public static final int WINDOW_HEIGHT = 800;
 
     public static final int DIM_X_ACTION_BUTTON = 80;

@@ -5,10 +5,11 @@ import model.data.GameEnums;
 import model.states.IState;
 import model.states.concrete.StartGame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameController implements GameEnums
+public class GameController implements GameEnums, Serializable
 {
     private GameData gameData;
     private IState state;
@@ -103,6 +104,12 @@ public class GameController implements GameEnums
     public void convertResource(ResourceType from, ResourceType to)
     {
         setState(state.convertResource(from, to));
+    }
+
+    public void endGame()
+    {
+        setState(state.endGame());
+        gameData = state.getGameData();
     }
 
     /* Info */
@@ -252,6 +259,16 @@ public class GameController implements GameEnums
         return gameData.canConvert();
     }
 
+    public String getLevelOfCargoHold()
+    {
+        return gameData.getLevelOfCargoHold();
+    }
+
+    public String getLevelOfAmmo()
+    {
+        return gameData.getLevelOfAmmo();
+    }
+
     public String getMessage()
     {
         return gameData.getMessage();
@@ -261,5 +278,4 @@ public class GameController implements GameEnums
     {
         return gameData.getAllLogs();
     }
-
 }

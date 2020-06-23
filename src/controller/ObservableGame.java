@@ -65,6 +65,7 @@ public class ObservableGame extends PropertyChangeSupport
     {
         gameController.explore();
 
+        firePropertyChange(EVENT_UPDATE_INFO_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_PLANET_SURFACE_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
@@ -157,7 +158,7 @@ public class ObservableGame extends PropertyChangeSupport
 
         firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
-        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null); // TODO check what needs to be fired
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
     public void convertResource(ResourceType from, ResourceType to)
@@ -166,7 +167,16 @@ public class ObservableGame extends PropertyChangeSupport
 
         firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
         firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
-        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null); // TODO check what needs to be fired
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
+    public void endGame()
+    {
+        gameController.endGame();
+
+        firePropertyChange(EVENT_UPDATE_FULL_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
     }
 
     /* Info */
@@ -315,7 +325,26 @@ public class ObservableGame extends PropertyChangeSupport
         return gameController.canConvert();
     }
 
+    public String getLevelOfCargoHold()
+    {
+        return gameController.getLevelOfCargoHold();
+    }
+
+    public String getLevelOfAmmo()
+    {
+        return gameController.getLevelOfAmmo();
+    }
+
+    public void updateInterface()
+    {
+        firePropertyChange(EVENT_UPDATE_INFO_VIEW_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_TRAVEL_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_INTERACTION_PANE, null, null);
+        firePropertyChange(EVENT_UPDATE_LOG_PANE, null, null);
+    }
+
     /* Log */
+
     public String getMessage()
     {
         return gameController.getMessage();

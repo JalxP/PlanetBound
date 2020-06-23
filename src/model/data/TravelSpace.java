@@ -112,8 +112,4 @@ public class TravelSpace
         return getCurrentSector().alienIsNextToDrone();
     }
 
-    public void generateAlien()
-    {
-        getCurrentSector().generateAlien();
-    }
 }

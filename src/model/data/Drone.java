@@ -1,8 +1,10 @@
 package model.data;
 
+import java.io.Serializable;
+
 import static model.data.Constants.*;
 
-public class Drone implements GameEnums
+public class Drone implements GameEnums, Serializable
 {
     private int health;
     private final int maxHealth;
@@ -49,7 +51,11 @@ public class Drone implements GameEnums
 
     public boolean isOperational()
     {
-        return health > 1;
+        return health > 0;
     }
 
+    public void setToMaxHealth()
+    {
+        health = maxHealth;
+    }
 }
