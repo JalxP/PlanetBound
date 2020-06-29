@@ -47,7 +47,7 @@ public class ButtonsPane extends HBox
     private final ActionButton acquireShieldButton;
     private final ActionButton acquireAmmoButton;
     private final ActionButton acquireFuelButton;
-    public final ActionButton acquireDroneRepair;
+    private final ActionButton acquireDroneRepair;
 
     private final ActionButton convertResourceButton;
     private final ActionButton fillArmorButton;

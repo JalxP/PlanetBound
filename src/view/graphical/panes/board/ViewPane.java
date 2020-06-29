@@ -22,8 +22,6 @@ public class ViewPane extends HBox
         travelPane = new TravelPane(observableGame);
         planetSurfacePane = new PlanetSurfacePane(observableGame);
 
-        // TODO add events to listen here
-
         setupSize();
         setupPrimaryLayout();
     }

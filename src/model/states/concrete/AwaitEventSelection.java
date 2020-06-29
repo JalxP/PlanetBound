@@ -19,7 +19,6 @@ public class AwaitEventSelection extends StateAdapter
     {
         getGameData().selectEvent(eventType);
 
-        // if not defeat
         if (getGameData().lostGame())
             return new Defeat(getGameData());
 
